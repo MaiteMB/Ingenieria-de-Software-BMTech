@@ -76,5 +76,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BEBMTech\BEBMTech.csproj">
+      <Project>{2177e226-bac3-4cf7-b429-08735abdf037}</Project>
+      <Name>BEBMTech</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BLLBMTech\BLLBMTech.csproj">
+      <Project>{c457ea75-7d64-47d9-b07f-8f36c7c43804}</Project>
+      <Name>BLLBMTech</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
