@@ -1,0 +1,4 @@
+CREATE DATABASE BMTech;
+USE BMTech;
+GO
+
