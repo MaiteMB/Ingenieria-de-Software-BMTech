@@ -48,6 +48,7 @@
     <Compile Include="Roles\Familia.cs" />
     <Compile Include="Roles\RolRelacion.cs" />
     <Compile Include="Roles\Patente.cs" />
+    <Compile Include="Cliente\Cliente.cs" />
     <Compile Include="Usuario\Usuario.cs" />
   </ItemGroup>
   <ItemGroup />
