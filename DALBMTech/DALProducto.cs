@@ -1,0 +1,218 @@
+﻿using BEBMTech.Producto;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DALBMTech
+{
+    public class DALProducto
+    {
+        private readonly DAL_AccesoSQL dbConnection;
+
+        public DALProducto()
+        {
+            dbConnection = DAL_AccesoSQL.GetInstance();
+        }
+
+        public List<Producto> BuscarProducto(string criterio, bool incluirInactivos = false)
+        {
+            List<Producto> productos = new List<Producto>();
+
+            string query = @"
+                SELECT idProducto, codigo, descripcion, marca, modelo, precio, stock, activo
+                FROM Producto
+                WHERE
+                    (@incluirInactivos = 1 OR activo = 1)
+                    AND
+                    (
+                        codigo LIKE @criterio OR
+                        descripcion LIKE @criterio OR
+                        marca LIKE @criterio OR
+                        modelo LIKE @criterio
+                    )
+                ORDER BY descripcion";
+
+            try
+            {
+                using (var conexion = dbConnection.GetConnection())
+                using (var command = new SqlCommand(query, conexion))
+                {
+                    command.Parameters.Add("@criterio", SqlDbType.VarChar).Value = "%" + criterio + "%";
+                    command.Parameters.Add("@incluirInactivos", SqlDbType.Bit).Value = incluirInactivos;
+
+                    conexion.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            productos.Add(MapProducto(reader));
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("Error en la base de datos al buscar productos.", ex);
+            }
+
+            return productos;
+        }
+
+        public Producto ObtenerProductoPorCodigo(string codigo)
+        {
+            string query = @"
+                SELECT idProducto, codigo, descripcion, marca, modelo, precio, stock, activo
+                FROM Producto
+                WHERE codigo = @codigo";
+
+            try
+            {
+                using (var conexion = dbConnection.GetConnection())
+                using (var command = new SqlCommand(query, conexion))
+                {
+                    command.Parameters.Add("@codigo", SqlDbType.VarChar).Value = codigo;
+
+                    conexion.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        return reader.Read() ? MapProducto(reader) : null;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("Error en la base de datos al obtener el producto.", ex);
+            }
+        }
+
+        public bool InsertarProducto(Producto producto)
+        {
+            string query = @"
+                INSERT INTO Producto
+                (
+                    codigo,
+                    descripcion,
+                    marca,
+                    modelo,
+                    precio,
+                    stock,
+                    activo
+                )
+                VALUES
+                (
+                    @codigo,
+                    @descripcion,
+                    @marca,
+                    @modelo,
+                    @precio,
+                    @stock,
+                    @activo
+                )";
+
+            try
+            {
+                using (var conexion = dbConnection.GetConnection())
+                using (var command = new SqlCommand(query, conexion))
+                {
+                    command.Parameters.Add("@codigo", SqlDbType.VarChar).Value = producto.codigo;
+                    command.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = producto.descripcion;
+                    command.Parameters.Add("@marca", SqlDbType.VarChar).Value = producto.marca;
+                    command.Parameters.Add("@modelo", SqlDbType.VarChar).Value = producto.modelo;
+                    command.Parameters.Add("@precio", SqlDbType.Decimal).Value = producto.precio;
+                    command.Parameters.Add("@stock", SqlDbType.Int).Value = producto.stock;
+                    command.Parameters.Add("@activo", SqlDbType.Bit).Value = producto.activo;
+
+                    conexion.Open();
+
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("Error en la base de datos al insertar el producto.", ex);
+            }
+        }
+
+        public bool ModificarProducto(Producto producto)
+        {
+            string query = @"
+                UPDATE Producto
+                SET
+                    descripcion = @descripcion,
+                    marca = @marca,
+                    modelo = @modelo,
+                    precio = @precio,
+                    stock = @stock
+                WHERE idProducto = @idProducto";
+
+            try
+            {
+                using (var conexion = dbConnection.GetConnection())
+                using (var command = new SqlCommand(query, conexion))
+                {
+                    command.Parameters.Add("@idProducto", SqlDbType.Int).Value = producto.idProducto;
+                    command.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = producto.descripcion;
+                    command.Parameters.Add("@marca", SqlDbType.VarChar).Value = producto.marca;
+                    command.Parameters.Add("@modelo", SqlDbType.VarChar).Value = producto.modelo;
+                    command.Parameters.Add("@precio", SqlDbType.Decimal).Value = producto.precio;
+                    command.Parameters.Add("@stock", SqlDbType.Int).Value = producto.stock;
+
+                    conexion.Open();
+
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("Error en la base de datos al modificar el producto.", ex);
+            }
+        }
+
+        public bool CambiarEstadoProducto(int idProducto, bool activo)
+        {
+            string query = @"
+                UPDATE Producto
+                SET activo = @activo
+                WHERE idProducto = @idProducto";
+
+            try
+            {
+                using (var conexion = dbConnection.GetConnection())
+                using (var command = new SqlCommand(query, conexion))
+                {
+                    command.Parameters.Add("@idProducto", SqlDbType.Int).Value = idProducto;
+                    command.Parameters.Add("@activo", SqlDbType.Bit).Value = activo;
+
+                    conexion.Open();
+
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("Error en la base de datos al cambiar el estado del producto.", ex);
+            }
+        }
+
+        private Producto MapProducto(SqlDataReader reader)
+        {
+            return new Producto
+            {
+                idProducto = reader.GetInt32(0),
+                codigo = reader.GetString(1),
+                descripcion = reader.GetString(2),
+                marca = reader.GetString(3),
+                modelo = reader.GetString(4),
+                precio = reader.GetDecimal(5),
+                stock = reader.GetInt32(6),
+                activo = reader.GetBoolean(7)
+            };
+        }
+    }
+}
