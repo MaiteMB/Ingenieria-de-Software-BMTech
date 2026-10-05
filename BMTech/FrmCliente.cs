@@ -1,14 +1,7 @@
-﻿using BEBMTech;
-using BEBMTech.Usuario;
+﻿using BEBMTech.Cliente;
 using BLLBMTech;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BMTech
@@ -26,7 +19,8 @@ namespace BMTech
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-
+            LimpiarCampos();
+            MostrarMensaje("", true);
         }
 
         private void btnBuscarCliente_Click(object sender, EventArgs e)
@@ -97,12 +91,6 @@ namespace BMTech
         private void FrmCliente_Load(object sender, EventArgs e)
         {
 
-        }
-
-        private void btnLimpiar_Click_1(object sender, EventArgs e)
-        {
-            LimpiarCampos();
-            MostrarMensaje("", true);
         }
         private void MostrarMensaje(string mensaje, bool correcto)
         {
