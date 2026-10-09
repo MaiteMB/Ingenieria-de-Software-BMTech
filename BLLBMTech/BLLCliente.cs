@@ -1,6 +1,7 @@
-﻿using BEBMTech.Cliente;
+using BEBMTech.Cliente;
 using DALBMTech;
 using System;
+using System.Collections.Generic;
 
 namespace BLLBMTech
 {
@@ -23,6 +24,16 @@ namespace BLLBMTech
             return dalCliente.BuscarCliente(dni.Trim());
         }
 
+
+        public List<Cliente> BuscarClientes(string criterio)
+        {
+            if (criterio == null)
+            {
+                criterio = "";
+            }
+
+            return dalCliente.BuscarClientes(criterio.Trim());
+        }
         public bool RegistrarCliente(Cliente cliente)
         {
             ValidarCliente(cliente);
@@ -34,6 +45,7 @@ namespace BLLBMTech
                 throw new Exception("El cliente ya se encuentra registrado.");
             }
 
+            cliente.digitoVerificador = new ServiciosBMTech.Seguridad.DigitoVerificador().CalcularCliente(cliente);
             return dalCliente.InsertarCliente(cliente);
         }
 
@@ -71,3 +83,4 @@ namespace BLLBMTech
         }
     }
 }
+

@@ -1,11 +1,8 @@
-﻿using BEBMTech.Producto;
+using BEBMTech.Producto;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DALBMTech
 {
@@ -23,7 +20,7 @@ namespace DALBMTech
             List<Producto> productos = new List<Producto>();
 
             string query = @"
-                SELECT idProducto, codigo, descripcion, marca, modelo, precio, stock, activo
+                SELECT idProducto, codigo, descripcion, marca, modelo, precio, stock, activo, digitoVerificador
                 FROM Producto
                 WHERE
                     (@incluirInactivos = 1 OR activo = 1)
@@ -66,7 +63,7 @@ namespace DALBMTech
         public Producto ObtenerProductoPorCodigo(string codigo)
         {
             string query = @"
-                SELECT idProducto, codigo, descripcion, marca, modelo, precio, stock, activo
+                SELECT idProducto, codigo, descripcion, marca, modelo, precio, stock, activo, digitoVerificador
                 FROM Producto
                 WHERE codigo = @codigo";
 
@@ -91,6 +88,26 @@ namespace DALBMTech
             }
         }
 
+        public Producto ObtenerProductoPorId(int idProducto)
+        {
+            string query = @"
+                SELECT idProducto, codigo, descripcion, marca, modelo, precio, stock, activo, digitoVerificador
+                FROM Producto
+                WHERE idProducto = @idProducto";
+
+            using (var conexion = dbConnection.GetConnection())
+            using (var command = new SqlCommand(query, conexion))
+            {
+                command.Parameters.Add("@idProducto", SqlDbType.Int).Value = idProducto;
+                conexion.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    return reader.Read() ? MapProducto(reader) : null;
+                }
+            }
+        }
+
         public bool InsertarProducto(Producto producto)
         {
             string query = @"
@@ -102,7 +119,8 @@ namespace DALBMTech
                     modelo,
                     precio,
                     stock,
-                    activo
+                    activo,
+                    digitoVerificador
                 )
                 VALUES
                 (
@@ -112,7 +130,8 @@ namespace DALBMTech
                     @modelo,
                     @precio,
                     @stock,
-                    @activo
+                    @activo,
+                    @digitoVerificador
                 )";
 
             try
@@ -120,16 +139,9 @@ namespace DALBMTech
                 using (var conexion = dbConnection.GetConnection())
                 using (var command = new SqlCommand(query, conexion))
                 {
-                    command.Parameters.Add("@codigo", SqlDbType.VarChar).Value = producto.codigo;
-                    command.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = producto.descripcion;
-                    command.Parameters.Add("@marca", SqlDbType.VarChar).Value = producto.marca;
-                    command.Parameters.Add("@modelo", SqlDbType.VarChar).Value = producto.modelo;
-                    command.Parameters.Add("@precio", SqlDbType.Decimal).Value = producto.precio;
-                    command.Parameters.Add("@stock", SqlDbType.Int).Value = producto.stock;
-                    command.Parameters.Add("@activo", SqlDbType.Bit).Value = producto.activo;
+                    CargarParametrosProducto(command, producto);
 
                     conexion.Open();
-
                     return command.ExecuteNonQuery() > 0;
                 }
             }
@@ -148,7 +160,8 @@ namespace DALBMTech
                     marca = @marca,
                     modelo = @modelo,
                     precio = @precio,
-                    stock = @stock
+                    stock = @stock,
+                    digitoVerificador = @digitoVerificador
                 WHERE idProducto = @idProducto";
 
             try
@@ -162,9 +175,9 @@ namespace DALBMTech
                     command.Parameters.Add("@modelo", SqlDbType.VarChar).Value = producto.modelo;
                     command.Parameters.Add("@precio", SqlDbType.Decimal).Value = producto.precio;
                     command.Parameters.Add("@stock", SqlDbType.Int).Value = producto.stock;
+                    command.Parameters.Add("@digitoVerificador", SqlDbType.Int).Value = producto.digitoVerificador;
 
                     conexion.Open();
-
                     return command.ExecuteNonQuery() > 0;
                 }
             }
@@ -174,11 +187,12 @@ namespace DALBMTech
             }
         }
 
-        public bool CambiarEstadoProducto(int idProducto, bool activo)
+        public bool CambiarEstadoProducto(Producto producto)
         {
             string query = @"
                 UPDATE Producto
-                SET activo = @activo
+                SET activo = @activo,
+                    digitoVerificador = @digitoVerificador
                 WHERE idProducto = @idProducto";
 
             try
@@ -186,11 +200,11 @@ namespace DALBMTech
                 using (var conexion = dbConnection.GetConnection())
                 using (var command = new SqlCommand(query, conexion))
                 {
-                    command.Parameters.Add("@idProducto", SqlDbType.Int).Value = idProducto;
-                    command.Parameters.Add("@activo", SqlDbType.Bit).Value = activo;
+                    command.Parameters.Add("@idProducto", SqlDbType.Int).Value = producto.idProducto;
+                    command.Parameters.Add("@activo", SqlDbType.Bit).Value = producto.activo;
+                    command.Parameters.Add("@digitoVerificador", SqlDbType.Int).Value = producto.digitoVerificador;
 
                     conexion.Open();
-
                     return command.ExecuteNonQuery() > 0;
                 }
             }
@@ -198,6 +212,36 @@ namespace DALBMTech
             {
                 throw new Exception("Error en la base de datos al cambiar el estado del producto.", ex);
             }
+        }
+
+
+        public bool ActualizarDigitoVerificador(int idProducto, int digitoVerificador)
+        {
+            string query = @"
+                UPDATE Producto
+                SET digitoVerificador = @digitoVerificador
+                WHERE idProducto = @idProducto";
+
+            using (var conexion = dbConnection.GetConnection())
+            using (var command = new SqlCommand(query, conexion))
+            {
+                command.Parameters.Add("@idProducto", SqlDbType.Int).Value = idProducto;
+                command.Parameters.Add("@digitoVerificador", SqlDbType.Int).Value = digitoVerificador;
+
+                conexion.Open();
+                return command.ExecuteNonQuery() > 0;
+            }
+        }
+        private void CargarParametrosProducto(SqlCommand command, Producto producto)
+        {
+            command.Parameters.Add("@codigo", SqlDbType.VarChar).Value = producto.codigo;
+            command.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = producto.descripcion;
+            command.Parameters.Add("@marca", SqlDbType.VarChar).Value = producto.marca;
+            command.Parameters.Add("@modelo", SqlDbType.VarChar).Value = producto.modelo;
+            command.Parameters.Add("@precio", SqlDbType.Decimal).Value = producto.precio;
+            command.Parameters.Add("@stock", SqlDbType.Int).Value = producto.stock;
+            command.Parameters.Add("@activo", SqlDbType.Bit).Value = producto.activo;
+            command.Parameters.Add("@digitoVerificador", SqlDbType.Int).Value = producto.digitoVerificador;
         }
 
         private Producto MapProducto(SqlDataReader reader)
@@ -211,8 +255,10 @@ namespace DALBMTech
                 modelo = reader.GetString(4),
                 precio = reader.GetDecimal(5),
                 stock = reader.GetInt32(6),
-                activo = reader.GetBoolean(7)
+                activo = reader.GetBoolean(7),
+                digitoVerificador = reader.GetInt32(8)
             };
         }
     }
 }
+

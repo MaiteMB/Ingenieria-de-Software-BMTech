@@ -1,9 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace BEBMTech.Producto
 {
     public class Producto
@@ -16,6 +10,7 @@ namespace BEBMTech.Producto
         public decimal precio { get; set; }
         public int stock { get; set; }
         public bool activo { get; set; } = true;
+        public int digitoVerificador { get; set; }
 
         public Producto() { }
 
@@ -28,7 +23,7 @@ namespace BEBMTech.Producto
             this.modelo = modelo;
             this.precio = precio;
             this.stock = stock;
-            this.activo = activo;
+            this.activo = true;
         }
     }
 }

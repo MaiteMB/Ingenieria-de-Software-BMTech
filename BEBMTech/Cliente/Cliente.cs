@@ -13,6 +13,7 @@ namespace BEBMTech.Cliente
         public string apellido { get; set; }
         public string telefono { get; set; }
         public string correoElectronico { get; set; }
+        public int digitoVerificador { get; set; }
 
         public Cliente() { }
 
