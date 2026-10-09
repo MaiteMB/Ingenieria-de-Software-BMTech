@@ -42,8 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="DALCambios.cs" />
     <Compile Include="DALCliente.cs" />
+    <Compile Include="DALIntegridad.cs" />
     <Compile Include="DALProducto.cs" />
+    <Compile Include="DALRol.cs" />
+    <Compile Include="DALVenta.cs" />
+    <Compile Include="DALUsuario.cs" />
+    <Compile Include="DALLog.cs" />
     <Compile Include="DAL_AccesoSQL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -52,6 +58,15 @@
       <Project>{2177e226-bac3-4cf7-b429-08735abdf037}</Project>
       <Name>BEBMTech</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ServiciosBMTech\ServiciosBMTech.csproj">
+      <Project>{4aab94ad-30a2-4930-bce2-2fd3b1ed1316}</Project>
+      <Name>ServiciosBMTech</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
+
+
+
+
+

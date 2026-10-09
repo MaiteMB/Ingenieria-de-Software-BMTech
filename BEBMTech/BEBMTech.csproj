@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Producto\Producto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Roles\Perfil.cs" />
@@ -49,9 +48,15 @@
     <Compile Include="Roles\Familia.cs" />
     <Compile Include="Roles\RolRelacion.cs" />
     <Compile Include="Roles\Patente.cs" />
+    <Compile Include="Cambios\Cambio.cs" />
+    <Compile Include="Cambios\VersionCambio.cs" />
     <Compile Include="Cliente\Cliente.cs" />
+    <Compile Include="Log\Evento.cs" />
     <Compile Include="Usuario\Usuario.cs" />
+    <Compile Include="Venta\DetalleVenta.cs" />
+    <Compile Include="Venta\Venta.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
+

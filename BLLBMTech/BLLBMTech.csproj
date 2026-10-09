@@ -41,8 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLLCambios.cs" />
     <Compile Include="BLLCliente.cs" />
+    <Compile Include="BLLIntegridad.cs" />
     <Compile Include="BLLProducto.cs" />
+    <Compile Include="BLLRol.cs" />
+    <Compile Include="BLLVenta.cs" />
+    <Compile Include="BLLUsuario.cs" />
+    <Compile Include="BLLLog.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -55,6 +61,16 @@
       <Project>{baee4737-f509-40d6-a453-05066daed918}</Project>
       <Name>DALBMTech</Name>
     </ProjectReference>
+    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ServiciosBMTech\ServiciosBMTech.csproj">
+      <Project>{4aab94ad-30a2-4930-bce2-2fd3b1ed1316}</Project>
+      <Name>ServiciosBMTech</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
+
+
+
+

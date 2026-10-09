@@ -1,6 +1,8 @@
-﻿using System;
+using ServiciosBMTech.Seguridad;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,7 +18,11 @@ namespace BMTech
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmProducto());
+          //  HashPassword hash = new HashPassword();
+          //  Clipboard.SetText(hash.GenerarHash("1234"));
+           // MessageBox.Show("Hash copiado al portapapeles");
+            Application.Run(new FrmLogin());
         }
     }
 }
+
