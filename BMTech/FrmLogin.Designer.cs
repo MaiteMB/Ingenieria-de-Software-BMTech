@@ -1,6 +1,6 @@
-namespace BMTech
+namespace mb506.BMTech
 {
-    partial class FrmLogin
+    partial class mb506FrmLogin
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -94,7 +94,7 @@ namespace BMTech
             this.chkMostrarPassword.TabIndex = 8;
             this.chkMostrarPassword.Text = "Mostrar contraseña";
             this.chkMostrarPassword.UseVisualStyleBackColor = true;
-            this.chkMostrarPassword.CheckedChanged += new System.EventHandler(this.chkMostrarPassword_CheckedChanged);
+            this.chkMostrarPassword.CheckedChanged += new System.EventHandler(this.mb506chkMostrarPassword_CheckedChanged);
             // 
             // lblMensaje
             // 
@@ -119,7 +119,7 @@ namespace BMTech
             this.btnSalir.TabIndex = 6;
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = false;
-            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
+            this.btnSalir.Click += new System.EventHandler(this.mb506btnSalir_Click);
             // 
             // btnIngresar
             // 
@@ -134,7 +134,7 @@ namespace BMTech
             this.btnIngresar.TabIndex = 5;
             this.btnIngresar.Text = "Ingresar";
             this.btnIngresar.UseVisualStyleBackColor = false;
-            this.btnIngresar.Click += new System.EventHandler(this.btnIngresar_Click);
+            this.btnIngresar.Click += new System.EventHandler(this.mb506btnIngresar_Click);
             // 
             // txtPassword
             // 

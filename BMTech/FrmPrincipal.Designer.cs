@@ -1,6 +1,6 @@
-namespace BMTech
+namespace mb506.BMTech
 {
-    partial class FrmPrincipal
+    partial class mb506FrmPrincipal
     {
         /// <summary>
         /// Required designer variable.
@@ -69,7 +69,7 @@ namespace BMTech
             this.menuClientes.Name = "menuClientes";
             this.menuClientes.Size = new System.Drawing.Size(73, 23);
             this.menuClientes.Text = "Clientes";
-            this.menuClientes.Click += new System.EventHandler(this.menuClientes_Click);
+            this.menuClientes.Click += new System.EventHandler(this.mb506menuClientes_Click);
             // 
             // menuProductos
             // 
@@ -77,7 +77,7 @@ namespace BMTech
             this.menuProductos.Name = "menuProductos";
             this.menuProductos.Size = new System.Drawing.Size(89, 23);
             this.menuProductos.Text = "Productos";
-            this.menuProductos.Click += new System.EventHandler(this.menuProductos_Click);
+            this.menuProductos.Click += new System.EventHandler(this.mb506menuProductos_Click);
             // 
             // menuVentas
             // 
@@ -85,7 +85,7 @@ namespace BMTech
             this.menuVentas.Name = "menuVentas";
             this.menuVentas.Size = new System.Drawing.Size(64, 23);
             this.menuVentas.Text = "Ventas";
-            this.menuVentas.Click += new System.EventHandler(this.menuVentas_Click);
+            this.menuVentas.Click += new System.EventHandler(this.mb506menuVentas_Click);
             // 
             // menuSeguridad
             // 
@@ -103,21 +103,21 @@ namespace BMTech
             this.menuControlCambiosProducto.Name = "menuControlCambiosProducto";
             this.menuControlCambiosProducto.Size = new System.Drawing.Size(236, 24);
             this.menuControlCambiosProducto.Text = "Control cambios producto";
-            this.menuControlCambiosProducto.Click += new System.EventHandler(this.menuControlCambiosProducto_Click);
+            this.menuControlCambiosProducto.Click += new System.EventHandler(this.mb506menuControlCambiosProducto_Click);
             // 
             // menuVerificarIntegridad
             // 
             this.menuVerificarIntegridad.Name = "menuVerificarIntegridad";
             this.menuVerificarIntegridad.Size = new System.Drawing.Size(236, 24);
             this.menuVerificarIntegridad.Text = "Verificar integridad";
-            this.menuVerificarIntegridad.Click += new System.EventHandler(this.menuVerificarIntegridad_Click);
+            this.menuVerificarIntegridad.Click += new System.EventHandler(this.mb506menuVerificarIntegridad_Click);
             // 
             // menuRegenerarIntegridad
             // 
             this.menuRegenerarIntegridad.Name = "menuRegenerarIntegridad";
             this.menuRegenerarIntegridad.Size = new System.Drawing.Size(236, 24);
             this.menuRegenerarIntegridad.Text = "Regenerar integridad";
-            this.menuRegenerarIntegridad.Click += new System.EventHandler(this.menuRegenerarIntegridad_Click);
+            this.menuRegenerarIntegridad.Click += new System.EventHandler(this.mb506menuRegenerarIntegridad_Click);
             // 
             // menuSalir
             // 
@@ -125,7 +125,7 @@ namespace BMTech
             this.menuSalir.Name = "menuSalir";
             this.menuSalir.Size = new System.Drawing.Size(51, 23);
             this.menuSalir.Text = "Salir";
-            this.menuSalir.Click += new System.EventHandler(this.menuSalir_Click);
+            this.menuSalir.Click += new System.EventHandler(this.mb506menuSalir_Click);
             //             // pnlHeader
             // 
             this.pnlHeader.BackColor = System.Drawing.Color.DarkCyan;
@@ -194,7 +194,7 @@ namespace BMTech
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BMTech";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.FrmPrincipal_Load);
+            this.Load += new System.EventHandler(this.mb506FrmPrincipal_Load);
             this.menuPrincipal.ResumeLayout(false);
             this.menuPrincipal.PerformLayout();
             this.pnlHeader.ResumeLayout(false);

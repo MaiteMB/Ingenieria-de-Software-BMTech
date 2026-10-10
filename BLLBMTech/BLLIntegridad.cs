@@ -1,91 +1,44 @@
-using BEBMTech.Producto;
-using DALBMTech;
-using ServiciosBMTech.Seguridad;
+using System;
 using System.Collections.Generic;
+using mb506.DALBMTech;
+using mb506.ServiciosBMTech.Seguridad;
 
-namespace BLLBMTech
+namespace mb506.BLLBMTech
 {
     public class BLLIntegridad
     {
-        public bool VerificarIntegridadCliente()
+        private DALIntegridad dalIntegridad = new DALIntegridad();
+
+        public List<string> mb506VerificarSistema()
         {
-            DALCliente dalCliente = new DALCliente();
-            int suma = 0;
-            foreach (BEBMTech.Cliente.Cliente cliente in dalCliente.BuscarClientes(""))
-            {
-                int digito = digitoVerificador.CalcularCliente(cliente);
-                if (digito != cliente.digitoVerificador)
-                {
-                    return false;
-                }
-                suma += digito;
-            }
-            return suma == dalIntegridad.ObtenerDigitoVerticalGuardado("Cliente");
+            return dalIntegridad.mb506VerificarSistema();
         }
 
-        public void RegenerarIntegridadCliente()
+        public void mb506RegenerarSistema()
         {
-            DALCliente dalCliente = new DALCliente();
-            int suma = 0;
-            foreach (BEBMTech.Cliente.Cliente cliente in dalCliente.BuscarClientes(""))
-            {
-                int digito = digitoVerificador.CalcularCliente(cliente);
-                dalCliente.ActualizarDigitoVerificador(cliente.dni, digito);
-                suma += digito;
-            }
-            dalIntegridad.GuardarDigitoVertical("Cliente", suma);
+            if (!SessionManager.IsSessionActive ||
+                !new BLLRol().mb506ObtenerPatentesPorPerfil(SessionManager.getSession.Usuario.perfil).Contains("SEGURIDAD"))
+                throw new Exception("Solo un administrador puede regenerar integridad.");
+            dalIntegridad.mb506RegenerarSistema();
+            new BLLLog().mb506RegistrarEvento("Integridad regenerada", "Seguridad", 3);
         }
 
-        private readonly DALIntegridad dalIntegridad;
-        private readonly DALProducto dalProducto;
-        private readonly DigitoVerificador digitoVerificador;
-
-        public BLLIntegridad()
+        public bool mb506VerificarIntegridadProducto()
         {
-            dalIntegridad = new DALIntegridad();
-            dalProducto = new DALProducto();
-            digitoVerificador = new DigitoVerificador();
+            return !mb506VerificarSistema().Contains("Producto");
         }
 
-        public void ActualizarDigitoVerticalProducto()
+        public bool mb506VerificarIntegridadCliente()
         {
-            int digitoVertical = dalIntegridad.CalcularDigitoVerticalProducto();
-            dalIntegridad.GuardarDigitoVertical("Producto", digitoVertical);
+            return !mb506VerificarSistema().Contains("Cliente");
         }
 
-
-        public void RegenerarIntegridadProducto()
+        public void mb506ActualizarDigitoVerticalProducto()
         {
-            List<Producto> productos = dalProducto.BuscarProducto("", true);
-
-            foreach (Producto producto in productos)
-            {
-                producto.digitoVerificador = digitoVerificador.CalcularProducto(producto);
-                dalProducto.ActualizarDigitoVerificador(producto.idProducto, producto.digitoVerificador);
-            }
-
-            ActualizarDigitoVerticalProducto();
+            dalIntegridad.mb506GuardarDigitoVertical("Producto", dalIntegridad.mb506CalcularDigitoVerticalProducto());
         }
-        public bool VerificarIntegridadProducto()
-        {
-            List<Producto> productos = dalProducto.BuscarProducto("", true);
-            int sumaCalculada = 0;
 
-            foreach (Producto producto in productos)
-            {
-                int digitoCalculado = digitoVerificador.CalcularProducto(producto);
-
-                if (digitoCalculado != producto.digitoVerificador)
-                {
-                    return false;
-                }
-
-                sumaCalculada += digitoCalculado;
-            }
-
-            int sumaGuardada = dalIntegridad.ObtenerDigitoVerticalGuardado("Producto");
-            return sumaCalculada == sumaGuardada;
-        }
+        public void mb506RegenerarIntegridadProducto() { mb506RegenerarSistema(); }
+        public void mb506RegenerarIntegridadCliente() { mb506RegenerarSistema(); }
     }
 }
-

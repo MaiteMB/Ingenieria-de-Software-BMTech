@@ -1,6 +1,6 @@
-namespace BMTech
+namespace mb506.BMTech
 {
-    partial class FrmVenta
+    partial class mb506FrmVenta
     {
         /// <summary>
         /// Required designer variable.
@@ -124,7 +124,7 @@ namespace BMTech
             this.dgvClientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvClientes.Size = new System.Drawing.Size(450, 110);
             this.dgvClientes.TabIndex = 5;
-            this.dgvClientes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvClientes_CellClick);            // 
+            this.dgvClientes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mb506dgvClientes_CellClick);
             // lblCliente
             // 
             this.lblCliente.AutoSize = true;
@@ -148,7 +148,7 @@ namespace BMTech
             this.btnBuscarCliente.TabIndex = 3;
             this.btnBuscarCliente.Text = "Buscar";
             this.btnBuscarCliente.UseVisualStyleBackColor = false;
-            this.btnBuscarCliente.Click += new System.EventHandler(this.btnBuscarCliente_Click);
+            this.btnBuscarCliente.Click += new System.EventHandler(this.mb506btnBuscarCliente_Click);
             // 
             // txtDniCliente
             // 
@@ -207,7 +207,7 @@ namespace BMTech
             this.btnAgregarProducto.TabIndex = 7;
             this.btnAgregarProducto.Text = "Agregar";
             this.btnAgregarProducto.UseVisualStyleBackColor = false;
-            this.btnAgregarProducto.Click += new System.EventHandler(this.btnAgregarProducto_Click);
+            this.btnAgregarProducto.Click += new System.EventHandler(this.mb506btnAgregarProducto_Click);
             // 
             // txtCantidad
             // 
@@ -240,7 +240,7 @@ namespace BMTech
             this.dgvProductos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvProductos.Size = new System.Drawing.Size(495, 165);
             this.dgvProductos.TabIndex = 4;
-            this.dgvProductos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProductos_CellContentClick);
+            this.dgvProductos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mb506dgvProductos_CellContentClick);
             // 
             // btnBuscarProducto
             // 
@@ -255,7 +255,7 @@ namespace BMTech
             this.btnBuscarProducto.TabIndex = 3;
             this.btnBuscarProducto.Text = "Buscar";
             this.btnBuscarProducto.UseVisualStyleBackColor = false;
-            this.btnBuscarProducto.Click += new System.EventHandler(this.btnBuscarProducto_Click);
+            this.btnBuscarProducto.Click += new System.EventHandler(this.mb506btnBuscarProducto_Click);
             // 
             // txtBuscarProducto
             // 
@@ -346,7 +346,7 @@ namespace BMTech
             this.btnRegistrarVenta.TabIndex = 5;
             this.btnRegistrarVenta.Text = "Registrar venta";
             this.btnRegistrarVenta.UseVisualStyleBackColor = false;
-            this.btnRegistrarVenta.Click += new System.EventHandler(this.btnRegistrarVenta_Click);
+            this.btnRegistrarVenta.Click += new System.EventHandler(this.mb506btnRegistrarVenta_Click);
             // 
             // btnLimpiar
             // 
@@ -361,7 +361,7 @@ namespace BMTech
             this.btnLimpiar.TabIndex = 6;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = false;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            this.btnLimpiar.Click += new System.EventHandler(this.mb506btnLimpiar_Click);
             // 
             // lblMensaje
             // 
@@ -378,7 +378,7 @@ namespace BMTech
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(245, 247, 250);
-            this.ClientSize = new System.Drawing.Size(1180, 640);
+            this.ClientSize = new System.Drawing.Size(1180, 710);
             this.Controls.Add(this.lblMensaje);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnRegistrarVenta);
@@ -390,7 +390,7 @@ namespace BMTech
             this.Name = "FrmVenta";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Registro de ventas";
-            this.Load += new System.EventHandler(this.FrmVenta_Load);
+            this.Load += new System.EventHandler(this.mb506FrmVenta_Load);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.pnlCliente.ResumeLayout(false);

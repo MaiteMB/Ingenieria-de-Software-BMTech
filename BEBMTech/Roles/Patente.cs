@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BEBMTech.Roles
+namespace mb506.BEBMTech.Roles
 {
     public class Patente : Rol
     {
@@ -12,7 +12,7 @@ namespace BEBMTech.Roles
 
         public override string Tipo => "Patente";
 
-        public override List<Rol> ObtenerTodos()
+        public override List<Rol> mb506ObtenerTodos()
         {
             return new List<Rol>()
             {

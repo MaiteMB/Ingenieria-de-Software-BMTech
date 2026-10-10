@@ -7,8 +7,8 @@
     <ProjectGuid>{BAEE4737-F509-40D6-A453-05066DAED918}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DALBMTech</RootNamespace>
-    <AssemblyName>DALBMTech</AssemblyName>
+    <RootNamespace>mb506.DALBMTech</RootNamespace>
+    <AssemblyName>mb506.DALBMTech</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -45,6 +45,8 @@
     <Compile Include="DALCambios.cs" />
     <Compile Include="DALCliente.cs" />
     <Compile Include="DALIntegridad.cs" />
+    <Compile Include="DALIdioma.cs" />
+    <Compile Include="DALBackup.cs" />
     <Compile Include="DALProducto.cs" />
     <Compile Include="DALRol.cs" />
     <Compile Include="DALVenta.cs" />

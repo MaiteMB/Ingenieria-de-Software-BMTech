@@ -1,60 +1,61 @@
-using BEBMTech.Cambios;
+using mb506.BEBMTech.Cambios;
 using System;
 using System.Collections.Generic;
 
-namespace BLLBMTech
+namespace mb506.BLLBMTech
 {
     public class BLLCambios
     {
-        private readonly DALBMTech.DALCambios dalCambios;
+        private readonly mb506.DALBMTech.DALCambios dalCambios;
         private readonly BLLLog bllLog;
-        private readonly BLLIntegridad bllIntegridad;
 
         public BLLCambios()
         {
-            dalCambios = new DALBMTech.DALCambios();
+            dalCambios = new mb506.DALBMTech.DALCambios();
             bllLog = new BLLLog();
-            bllIntegridad = new BLLIntegridad();
         }
 
-        public List<VersionCambio> ObtenerTodasLasVersionesProducto()
+        public List<VersionCambio> mb506ObtenerTodasLasVersionesProducto()
         {
-            return dalCambios.ObtenerTodasLasVersionesProducto();
+            new BLLPermiso().mb506Validar("SEGURIDAD");
+            return dalCambios.mb506ObtenerTodasLasVersionesProducto();
         }
 
-        public List<VersionCambio> ObtenerVersionesProducto(int idProducto)
+        public List<VersionCambio> mb506ObtenerVersionesProducto(int idProducto)
         {
+            new BLLPermiso().mb506Validar("SEGURIDAD");
             if (idProducto <= 0)
             {
                 throw new Exception("Debe seleccionar un producto.");
             }
 
-            return dalCambios.ObtenerVersionesProducto(idProducto);
+            return dalCambios.mb506ObtenerVersionesProducto(idProducto);
         }
 
-        public VersionCambio ObtenerVersion(int idHistorial)
+        public VersionCambio mb506ObtenerVersion(int idHistorial)
         {
+            new BLLPermiso().mb506Validar("SEGURIDAD");
             if (idHistorial <= 0)
             {
                 throw new Exception("Debe seleccionar una versión.");
             }
 
-            return dalCambios.ObtenerVersion(idHistorial);
+            return dalCambios.mb506ObtenerVersion(idHistorial);
         }
 
-        public bool RestaurarProducto(int idHistorial)
+        public bool mb506RestaurarProducto(int idHistorial)
         {
+            new BLLPermiso().mb506Validar("SEGURIDAD");
             if (idHistorial <= 0)
             {
                 throw new Exception("Debe seleccionar una versión.");
             }
 
-            bool restaurado = dalCambios.RestaurarProducto(idHistorial);
+            bool restaurado = dalCambios.mb506RestaurarProducto(idHistorial);
 
             if (restaurado)
             {
-                bllIntegridad.ActualizarDigitoVerticalProducto();
-                bllLog.RegistrarEvento("Restauración de producto a versión anterior", "Control de cambios", 2);
+                bllLog.mb506RegistrarEvento("Restauración de producto a versión anterior", "Control de cambios", 2);
             }
 
             return restaurado;

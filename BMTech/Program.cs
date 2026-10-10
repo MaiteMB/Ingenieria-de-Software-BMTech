@@ -1,4 +1,4 @@
-using ServiciosBMTech.Seguridad;
+using mb506.ServiciosBMTech.Seguridad;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Security.Policy;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BMTech
+namespace mb506.BMTech
 {
     internal static class Program
     {
@@ -18,10 +18,8 @@ namespace BMTech
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-          //  HashPassword hash = new HashPassword();
-          //  Clipboard.SetText(hash.GenerarHash("1234"));
-           // MessageBox.Show("Hash copiado al portapapeles");
-            Application.Run(new FrmLogin());
+            mb506.BLLBMTech.BLLLog.errorRegistro += mensaje => Mensajes.mb506Mostrar(mensaje, "Bitacora", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            Application.Run(new mb506FrmLogin());
         }
     }
 }

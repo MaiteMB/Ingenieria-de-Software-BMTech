@@ -1,6 +1,6 @@
 using System;
 
-namespace BEBMTech.Cambios
+namespace mb506.BEBMTech.Cambios
 {
     public class VersionCambio
     {

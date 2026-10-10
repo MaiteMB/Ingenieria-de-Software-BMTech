@@ -1,7 +1,7 @@
-using BEBMTech.Usuario;
+using mb506.BEBMTech.Usuario;
 using System;
 
-namespace ServiciosBMTech.Seguridad
+namespace mb506.ServiciosBMTech.Seguridad
 {
     public class SessionManager
     {
@@ -22,8 +22,10 @@ namespace ServiciosBMTech.Seguridad
             get { return getSession.Usuario != null; }
         }
 
-        public static void Login(Usuario usuario)
+        public static void mb506Login(Usuario usuario)
         {
+            if (usuario == null || !usuario.activo || string.IsNullOrWhiteSpace(usuario.email))
+                throw new Exception("Debe indicar un usuario activo para iniciar sesion.");
             lock (lockObject)
             {
                 if (getSession.Usuario != null)
@@ -35,7 +37,7 @@ namespace ServiciosBMTech.Seguridad
             }
         }
 
-        public static void Logout()
+        public static void mb506Logout()
         {
             lock (lockObject)
             {

@@ -1,39 +1,38 @@
-using BEBMTech.Producto;
-using DALBMTech;
-using ServiciosBMTech.Seguridad;
+using mb506.BEBMTech.Producto;
+using mb506.DALBMTech;
+using mb506.ServiciosBMTech.Seguridad;
 using System;
 using System.Collections.Generic;
 
-namespace BLLBMTech
+namespace mb506.BLLBMTech
 {
     public class BLLProducto
     {
         private readonly DALProducto dalProducto;
         private readonly DigitoVerificador digitoVerificador;
-        private readonly BLLIntegridad bllIntegridad;
 
         public BLLProducto()
         {
             dalProducto = new DALProducto();
             digitoVerificador = new DigitoVerificador();
-            bllIntegridad = new BLLIntegridad();
         }
 
-        public List<Producto> BuscarProducto(string criterio, bool incluirInactivos = false)
+        public List<Producto> mb506BuscarProducto(string criterio, bool incluirInactivos = false)
         {
             if (criterio == null)
             {
                 criterio = "";
             }
 
-            return dalProducto.BuscarProducto(criterio.Trim(), incluirInactivos);
+            return dalProducto.mb506BuscarProducto(criterio.Trim(), incluirInactivos);
         }
 
-        public bool RegistrarProducto(Producto producto)
+        public bool mb506RegistrarProducto(Producto producto)
         {
-            ValidarProducto(producto);
+            new BLLPermiso().mb506Validar("PRODUCTOS");
+            mb506ValidarProducto(producto);
 
-            Producto productoExistente = dalProducto.ObtenerProductoPorCodigo(producto.codigo);
+            Producto productoExistente = dalProducto.mb506ObtenerProductoPorCodigo(producto.codigo);
 
             if (productoExistente != null)
             {
@@ -41,47 +40,49 @@ namespace BLLBMTech
             }
 
             producto.activo = true;
-            producto.digitoVerificador = digitoVerificador.CalcularProducto(producto);
+            producto.digitoVerificador = digitoVerificador.mb506CalcularProducto(producto);
 
-            bool registrado = dalProducto.InsertarProducto(producto);
+            bool registrado = dalProducto.mb506InsertarProducto(producto);
 
             if (registrado)
             {
-                bllIntegridad.ActualizarDigitoVerticalProducto();
+                new BLLLog().mb506RegistrarEvento("Producto registrado: " + producto.codigo, "Productos", 1);
             }
 
             return registrado;
         }
 
-        public bool ModificarProducto(Producto producto)
+        public bool mb506ModificarProducto(Producto producto)
         {
-            ValidarProducto(producto);
+            new BLLPermiso().mb506Validar("PRODUCTOS");
+            mb506ValidarProducto(producto);
 
             if (producto.idProducto <= 0)
             {
                 throw new Exception("Debe seleccionar un producto para modificar.");
             }
 
-            producto.digitoVerificador = digitoVerificador.CalcularProducto(producto);
+            producto.digitoVerificador = digitoVerificador.mb506CalcularProducto(producto);
 
-            bool modificado = dalProducto.ModificarProducto(producto);
+            bool modificado = dalProducto.mb506ModificarProducto(producto);
 
             if (modificado)
             {
-                bllIntegridad.ActualizarDigitoVerticalProducto();
+                new BLLLog().mb506RegistrarEvento("Producto modificado: " + producto.codigo, "Productos", 1);
             }
 
             return modificado;
         }
 
-        public bool CambiarEstadoProducto(int idProducto, bool activo)
+        public bool mb506CambiarEstadoProducto(int idProducto, bool activo)
         {
+            new BLLPermiso().mb506Validar("PRODUCTOS");
             if (idProducto <= 0)
             {
                 throw new Exception("Debe seleccionar un producto.");
             }
 
-            Producto producto = dalProducto.ObtenerProductoPorId(idProducto);
+            Producto producto = dalProducto.mb506ObtenerProductoPorId(idProducto);
 
             if (producto == null)
             {
@@ -89,19 +90,19 @@ namespace BLLBMTech
             }
 
             producto.activo = activo;
-            producto.digitoVerificador = digitoVerificador.CalcularProducto(producto);
+            producto.digitoVerificador = digitoVerificador.mb506CalcularProducto(producto);
 
-            bool cambiado = dalProducto.CambiarEstadoProducto(producto);
+            bool cambiado = dalProducto.mb506CambiarEstadoProducto(producto);
 
             if (cambiado)
             {
-                bllIntegridad.ActualizarDigitoVerticalProducto();
+                new BLLLog().mb506RegistrarEvento((activo ? "Producto activado: " : "Producto desactivado: ") + producto.codigo, "Productos", 1);
             }
 
             return cambiado;
         }
 
-        private void ValidarProducto(Producto producto)
+        private void mb506ValidarProducto(Producto producto)
         {
             if (producto == null)
             {
@@ -137,6 +138,10 @@ namespace BLLBMTech
             {
                 throw new Exception("El stock no puede ser negativo.");
             }
+            if (producto.codigo.Length > 50 || producto.descripcion.Length > 150 || producto.marca.Length > 100 || producto.modelo.Length > 100)
+                throw new Exception("Los datos del producto superan el largo permitido.");
+            if (producto.precio > 9999999999999999.99m || decimal.Round(producto.precio, 2) != producto.precio)
+                throw new Exception("El precio debe tener como maximo dos decimales.");
         }
     }
 }

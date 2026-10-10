@@ -1,10 +1,10 @@
-using BEBMTech.Cliente;
+using mb506.BEBMTech.Cliente;
 using System.Collections.Generic;
 using System;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace DALBMTech
+namespace mb506.DALBMTech
 {
     public class DALCliente
     {
@@ -12,10 +12,10 @@ namespace DALBMTech
 
         public DALCliente()
         {
-            dbConnection = DAL_AccesoSQL.GetInstance();
+            dbConnection = DAL_AccesoSQL.mb506GetInstance();
         }
 
-        public Cliente BuscarCliente(string dni)
+        public Cliente mb506BuscarCliente(string dni)
         {
             string query = @"
                 SELECT dni, nombre, apellido, telefono, correoElectronico, digitoVerificador
@@ -24,7 +24,7 @@ namespace DALBMTech
 
             try
             {
-                using (var conexion = dbConnection.GetConnection())
+                using (var conexion = dbConnection.mb506GetConnection())
                 using (var command = new SqlCommand(query, conexion))
                 {
                     command.Parameters.Add("@dni", SqlDbType.VarChar).Value = dni;
@@ -33,18 +33,18 @@ namespace DALBMTech
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        return reader.Read() ? MapCliente(reader) : null;
+                        return reader.Read() ? mb506MapCliente(reader) : null;
                     }
                 }
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
-                return null;
+                throw new Exception("No se pudo consultar el cliente.", ex);
             }
         }
 
 
-        public List<Cliente> BuscarClientes(string criterio)
+        public List<Cliente> mb506BuscarClientes(string criterio)
         {
             List<Cliente> clientes = new List<Cliente>();
 
@@ -57,7 +57,7 @@ namespace DALBMTech
                     apellido LIKE @criterio
                 ORDER BY apellido, nombre";
 
-            using (var conexion = dbConnection.GetConnection())
+            using (var conexion = dbConnection.mb506GetConnection())
             using (var command = new SqlCommand(query, conexion))
             {
                 command.Parameters.Add("@criterio", SqlDbType.VarChar).Value = "%" + criterio + "%";
@@ -68,14 +68,14 @@ namespace DALBMTech
                 {
                     while (reader.Read())
                     {
-                        clientes.Add(MapCliente(reader));
+                        clientes.Add(mb506MapCliente(reader));
                     }
                 }
             }
 
             return clientes;
         }
-        public bool InsertarCliente(Cliente cliente)
+        public bool mb506InsertarCliente(Cliente cliente)
         {
             string query = @"
                 INSERT INTO Cliente
@@ -99,7 +99,7 @@ namespace DALBMTech
 
             try
             {
-                using (var conexion = dbConnection.GetConnection())
+                using (var conexion = dbConnection.mb506GetConnection())
                 using (var command = new SqlCommand(query, conexion))
                 {
                     command.Parameters.Add("@dni", SqlDbType.VarChar).Value = cliente.dni;
@@ -113,18 +113,11 @@ namespace DALBMTech
 
                     using (SqlTransaction transaccion = conexion.BeginTransaction())
                     {
+                        DALIntegridad integridad = new DALIntegridad();
+                        integridad.mb506PrepararOperacion(conexion, transaccion, "Cliente");
                         command.Transaction = transaccion;
                         bool registrado = command.ExecuteNonQuery() > 0;
-                        using (SqlCommand actualizar = new SqlCommand(@"
-                            UPDATE DigitoVerificador SET digitoVertical =
-                                (SELECT ISNULL(SUM(digitoVerificador), 0) FROM Cliente)
-                            WHERE tabla = 'Cliente';
-                            IF @@ROWCOUNT = 0
-                                INSERT INTO DigitoVerificador (tabla, digitoVertical)
-                                SELECT 'Cliente', ISNULL(SUM(digitoVerificador), 0) FROM Cliente;", conexion, transaccion))
-                        {
-                            actualizar.ExecuteNonQuery();
-                        }
+                        integridad.mb506ActualizarTablas(conexion, transaccion, "Cliente");
                         transaccion.Commit();
                         return registrado;
                     }
@@ -132,13 +125,14 @@ namespace DALBMTech
             }
             catch (SqlException ex)
             {
+                if (ex.Number == 2627 || ex.Number == 2601) throw new Exception("El cliente ya se encuentra registrado.", ex);
                 throw new Exception("Error en la base de datos al insertar el cliente.", ex);
             }
         }
 
-        public void ActualizarDigitoVerificador(string dni, int digito)
+        public void mb506ActualizarDigitoVerificador(string dni, int digito)
         {
-            using (var conexion = dbConnection.GetConnection())
+            using (var conexion = dbConnection.mb506GetConnection())
             using (var command = new SqlCommand("UPDATE Cliente SET digitoVerificador = @digito WHERE dni = @dni", conexion))
             {
                 command.Parameters.Add("@dni", SqlDbType.VarChar).Value = dni;
@@ -148,7 +142,7 @@ namespace DALBMTech
             }
         }
 
-        private Cliente MapCliente(SqlDataReader reader)
+        private Cliente mb506MapCliente(SqlDataReader reader)
         {
             return new Cliente
             {
@@ -162,4 +156,3 @@ namespace DALBMTech
         }
     }
 }
-

@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BEBMTech.Venta
+namespace mb506.BEBMTech.Venta
 {
     public class Venta
     {
@@ -13,6 +13,8 @@ namespace BEBMTech.Venta
         public string emailUsuario { get; set; }
         public DateTime fecha { get; set; }
         public decimal total { get; set; }
+        public string estado { get; set; } = "PENDIENTE";
+        public Pago pago { get; set; }
         public List<DetalleVenta> detalles { get; set; }
 
         public Venta()

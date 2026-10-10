@@ -1,6 +1,6 @@
-namespace BMTech
+namespace mb506.BMTech
 {
-    partial class FrmControlCambiosProducto
+    partial class mb506FrmControlCambiosProducto
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -79,7 +79,7 @@ namespace BMTech
             this.dgvVersiones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvVersiones.Size = new System.Drawing.Size(960, 210);
             this.dgvVersiones.TabIndex = 1;
-            this.dgvVersiones.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVersiones_CellClick);
+            this.dgvVersiones.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mb506dgvVersiones_CellClick);
             // 
             // dgvDetalle
             // 
@@ -131,7 +131,7 @@ namespace BMTech
             this.btnActualizar.TabIndex = 5;
             this.btnActualizar.Text = "Actualizar";
             this.btnActualizar.UseVisualStyleBackColor = false;
-            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
+            this.btnActualizar.Click += new System.EventHandler(this.mb506btnActualizar_Click);
             // 
             // btnRestaurar
             // 
@@ -146,7 +146,7 @@ namespace BMTech
             this.btnRestaurar.TabIndex = 6;
             this.btnRestaurar.Text = "Restaurar versión";
             this.btnRestaurar.UseVisualStyleBackColor = false;
-            this.btnRestaurar.Click += new System.EventHandler(this.btnRestaurar_Click);
+            this.btnRestaurar.Click += new System.EventHandler(this.mb506btnRestaurar_Click);
             // 
             // lblMensaje
             // 
@@ -175,7 +175,7 @@ namespace BMTech
             this.Name = "FrmControlCambiosProducto";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Control de cambios de producto";
-            this.Load += new System.EventHandler(this.FrmControlCambiosProducto_Load);
+            this.Load += new System.EventHandler(this.mb506FrmControlCambiosProducto_Load);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVersiones)).EndInit();

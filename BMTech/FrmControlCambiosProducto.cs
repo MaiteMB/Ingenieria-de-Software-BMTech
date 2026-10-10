@@ -1,32 +1,34 @@
-using BEBMTech.Cambios;
-using BLLBMTech;
+using mb506.BEBMTech.Cambios;
+using mb506.BLLBMTech;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace BMTech
+namespace mb506.BMTech
 {
-    public partial class FrmControlCambiosProducto : Form
+    public partial class mb506FrmControlCambiosProducto : Form
     {
         private readonly BLLCambios bllCambios;
         private int idHistorialSeleccionado = 0;
 
-        public FrmControlCambiosProducto()
+        public mb506FrmControlCambiosProducto()
         {
+            IdiomasFormulario.mb506Vincular(this);
             InitializeComponent();
             bllCambios = new BLLCambios();
             lblMensaje.Text = "";
-            ConfigurarGrillaVersiones();
-            ConfigurarGrillaDetalle();
+            mb506ConfigurarGrillaVersiones();
+            mb506ConfigurarGrillaDetalle();
         }
 
-        private void FrmControlCambiosProducto_Load(object sender, EventArgs e)
+        private void mb506FrmControlCambiosProducto_Load(object sender, EventArgs e)
         {
-            CargarVersiones();
+            try { mb506CargarVersiones(); }
+            catch (Exception ex) { mb506MostrarMensaje(ex.Message, false); }
         }
 
-        private void ConfigurarGrillaVersiones()
+        private void mb506ConfigurarGrillaVersiones()
         {
             dgvVersiones.AutoGenerateColumns = false;
             dgvVersiones.Columns.Clear();
@@ -46,12 +48,15 @@ namespace BMTech
 
             dgvVersiones.Columns.Add("fecha", "Fecha");
             dgvVersiones.Columns["fecha"].DataPropertyName = "fecha";
+            dgvVersiones.Columns["fecha"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm:ss";
+            dgvVersiones.Columns.Add("usuario", "Usuario");
+            dgvVersiones.Columns["usuario"].DataPropertyName = "usuario";
 
             dgvVersiones.Columns.Add("accion", "Acción");
             dgvVersiones.Columns["accion"].DataPropertyName = "accion";
         }
 
-        private void ConfigurarGrillaDetalle()
+        private void mb506ConfigurarGrillaDetalle()
         {
             dgvDetalle.AutoGenerateColumns = false;
             dgvDetalle.Columns.Clear();
@@ -78,9 +83,9 @@ namespace BMTech
             dgvDetalle.Columns["activo"].DataPropertyName = "activo";
         }
 
-        private void CargarVersiones()
+        private void mb506CargarVersiones()
         {
-            List<VersionCambio> versiones = bllCambios.ObtenerTodasLasVersionesProducto();
+            List<VersionCambio> versiones = bllCambios.mb506ObtenerTodasLasVersionesProducto();
 
             dgvVersiones.DataSource = null;
             dgvVersiones.DataSource = versiones;
@@ -89,8 +94,10 @@ namespace BMTech
             idHistorialSeleccionado = 0;
         }
 
-        private void dgvVersiones_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void mb506dgvVersiones_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            try
+            {
             if (e.RowIndex < 0)
             {
                 return;
@@ -99,23 +106,25 @@ namespace BMTech
             DataGridViewRow fila = dgvVersiones.Rows[e.RowIndex];
             idHistorialSeleccionado = Convert.ToInt32(fila.Cells["idHistorial"].Value);
 
-            VersionCambio version = bllCambios.ObtenerVersion(idHistorialSeleccionado);
+            VersionCambio version = bllCambios.mb506ObtenerVersion(idHistorialSeleccionado);
             List<VersionCambio> detalle = new List<VersionCambio>();
             detalle.Add(version);
 
             dgvDetalle.DataSource = null;
             dgvDetalle.DataSource = detalle;
 
-            MostrarMensaje("Versión seleccionada.", true);
+            mb506MostrarMensaje("Versión seleccionada.", true);
+            }
+            catch (Exception ex) { mb506MostrarMensaje(ex.Message, false); }
         }
 
-        private void btnActualizar_Click(object sender, EventArgs e)
+        private void mb506btnActualizar_Click(object sender, EventArgs e)
         {
-            CargarVersiones();
-            MostrarMensaje("Historial actualizado.", true);
+            try { mb506CargarVersiones(); mb506MostrarMensaje("Historial actualizado.", true); }
+            catch (Exception ex) { mb506MostrarMensaje(ex.Message, false); }
         }
 
-        private void btnRestaurar_Click(object sender, EventArgs e)
+        private void mb506btnRestaurar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -124,7 +133,7 @@ namespace BMTech
                     throw new Exception("Debe seleccionar una versión.");
                 }
 
-                DialogResult respuesta = MessageBox.Show(
+                DialogResult respuesta = Mensajes.mb506Mostrar(
                     "¿Confirma restaurar el producto a la versión seleccionada?",
                     "Restaurar producto",
                     MessageBoxButtons.YesNo,
@@ -136,27 +145,28 @@ namespace BMTech
                     return;
                 }
 
-                bool restaurado = bllCambios.RestaurarProducto(idHistorialSeleccionado);
+                bool restaurado = bllCambios.mb506RestaurarProducto(idHistorialSeleccionado);
 
                 if (restaurado)
                 {
-                    MostrarMensaje("Producto restaurado correctamente.", true);
-                    CargarVersiones();
+                    mb506MostrarMensaje("Producto restaurado correctamente.", true);
+                    mb506CargarVersiones();
                 }
                 else
                 {
-                    MostrarMensaje("No se pudo restaurar el producto.", false);
+                    mb506MostrarMensaje("No se pudo restaurar el producto.", false);
                 }
             }
             catch (Exception ex)
             {
-                MostrarMensaje(ex.Message, false);
+                mb506MostrarMensaje(ex.Message, false);
             }
         }
 
-        private void MostrarMensaje(string mensaje, bool correcto)
+        private void mb506MostrarMensaje(string mensaje, bool correcto)
         {
-            lblMensaje.Text = mensaje;
+            lblMensaje.Tag = mensaje;
+            lblMensaje.Text = Mensajes.mb506Traducir(mensaje);
             lblMensaje.ForeColor = correcto ? Color.Teal : Color.Firebrick;
         }
     }

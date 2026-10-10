@@ -7,8 +7,8 @@
     <ProjectGuid>{C457EA75-7D64-47D9-B07F-8F36C7C43804}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BLLBMTech</RootNamespace>
-    <AssemblyName>BLLBMTech</AssemblyName>
+    <RootNamespace>mb506.BLLBMTech</RootNamespace>
+    <AssemblyName>mb506.BLLBMTech</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -44,8 +44,11 @@
     <Compile Include="BLLCambios.cs" />
     <Compile Include="BLLCliente.cs" />
     <Compile Include="BLLIntegridad.cs" />
+    <Compile Include="BLLIdioma.cs" />
+    <Compile Include="BLLBackup.cs" />
     <Compile Include="BLLProducto.cs" />
     <Compile Include="BLLRol.cs" />
+    <Compile Include="BLLPermiso.cs" />
     <Compile Include="BLLVenta.cs" />
     <Compile Include="BLLUsuario.cs" />
     <Compile Include="BLLLog.cs" />

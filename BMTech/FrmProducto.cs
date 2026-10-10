@@ -1,30 +1,31 @@
-﻿using BEBMTech.Producto;
-using BLLBMTech;
+using mb506.BEBMTech.Producto;
+using mb506.BLLBMTech;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Globalization;
 
-namespace BMTech
+namespace mb506.BMTech
 {
-    public partial class FrmProducto : Form
+    public partial class mb506FrmProducto : Form
     {
       
         private BLLProducto bllProducto;
         private int idProductoSeleccionado = 0;
         private bool productoActivoSeleccionado = true;
 
-        public FrmProducto()
+        public mb506FrmProducto()
         {
+            IdiomasFormulario.mb506Vincular(this);
             InitializeComponent();
             bllProducto = new BLLProducto();
             lblMensaje.Text = "";
 
-            ConfigurarGrilla();
+            mb506ConfigurarGrilla();
         }
 
-        private void ConfigurarGrilla()
+        private void mb506ConfigurarGrilla()
         {
             dgvProductos.AutoGenerateColumns = false;
             dgvProductos.Columns.Clear();
@@ -55,87 +56,87 @@ namespace BMTech
             dgvProductos.Columns["activo"].DataPropertyName = "activo";
         }
 
-        private void btnRegistrarProducto_Click(object sender, EventArgs e)
+        private void mb506btnRegistrarProducto_Click(object sender, EventArgs e)
         {
             try
             {
-                Producto producto = ObtenerProductoDesdeFormulario();
+                Producto producto = mb506ObtenerProductoDesdeFormulario();
 
-                bool registrado = bllProducto.RegistrarProducto(producto);
+                bool registrado = bllProducto.mb506RegistrarProducto(producto);
 
                 if (registrado)
                 {
-                    MostrarMensaje("Producto registrado correctamente.", true);
-                    LimpiarCampos();
-                    BuscarProductos();
+                    mb506MostrarMensaje("Producto registrado correctamente.", true);
+                    mb506LimpiarCampos();
+                    mb506BuscarProductos();
                 }
             }
             catch (Exception ex)
             {
-                MostrarMensaje(ex.Message, false);
+                mb506MostrarMensaje(ex.Message, false);
             }
         }
 
-        private void btnModificarProducto_Click(object sender, EventArgs e)
+        private void mb506btnModificarProducto_Click(object sender, EventArgs e)
         {
             try
             {
-                Producto producto = ObtenerProductoDesdeFormulario();
+                Producto producto = mb506ObtenerProductoDesdeFormulario();
 
-                bool modificado = bllProducto.ModificarProducto(producto);
+                bool modificado = bllProducto.mb506ModificarProducto(producto);
 
                 if (modificado)
                 {
-                    MostrarMensaje("Producto modificado correctamente.", true);
-                    LimpiarCampos();
-                    BuscarProductos();
+                    mb506MostrarMensaje("Producto modificado correctamente.", true);
+                    mb506LimpiarCampos();
+                    mb506BuscarProductos();
                 }
             }
             catch (Exception ex)
             {
-                MostrarMensaje(ex.Message, false);
+                mb506MostrarMensaje(ex.Message, false);
             }
         }
 
-        private void btnCambiarEstadoProducto_Click(object sender, EventArgs e)
+        private void mb506btnCambiarEstadoProducto_Click(object sender, EventArgs e)
         {
             try
             {
                 bool nuevoEstado = !productoActivoSeleccionado;
 
-                bool cambioEstado = bllProducto.CambiarEstadoProducto(idProductoSeleccionado, nuevoEstado);
+                bool cambioEstado = bllProducto.mb506CambiarEstadoProducto(idProductoSeleccionado, nuevoEstado);
 
                 if (cambioEstado)
                 {
-                    MostrarMensaje("Estado del producto actualizado correctamente.", true);
-                    LimpiarCampos();
-                    BuscarProductos();
+                    mb506MostrarMensaje("Estado del producto actualizado correctamente.", true);
+                    mb506LimpiarCampos();
+                    mb506BuscarProductos();
                 }
             }
             catch (Exception ex)
             {
-                MostrarMensaje(ex.Message, false);
+                mb506MostrarMensaje(ex.Message, false);
             }
         }
 
-        private void btnBuscarProducto_Click(object sender, EventArgs e)
+        private void mb506btnBuscarProducto_Click(object sender, EventArgs e)
         {
             try
             {
-                BuscarProductos();
+                mb506BuscarProductos();
             }
             catch (Exception ex)
             {
-                MostrarMensaje(ex.Message, false);
+                mb506MostrarMensaje(ex.Message, false);
             }
         }
 
-        private void btnLimpiar_Click(object sender, EventArgs e)
+        private void mb506btnLimpiar_Click(object sender, EventArgs e)
         {
-            LimpiarCampos();
+            mb506LimpiarCampos();
         }
 
-        private Producto ObtenerProductoDesdeFormulario()
+        private Producto mb506ObtenerProductoDesdeFormulario()
         {
             if (txtCodigo.Text.Trim() == "")
             {
@@ -181,24 +182,24 @@ namespace BMTech
             return producto;
         }
 
-        private void BuscarProductos()
+        private void mb506BuscarProductos()
         {
-            List<Producto> productos = bllProducto.BuscarProducto(txtBuscar.Text.Trim(), true);
+            List<Producto> productos = bllProducto.mb506BuscarProducto(txtBuscar.Text.Trim(), true);
 
             dgvProductos.DataSource = null;
             dgvProductos.DataSource = productos;
 
             if (productos.Count == 0)
             {
-                MostrarMensaje("No se encontraron productos.", false);
+                mb506MostrarMensaje("No se encontraron productos.", false);
             }
             else
             {
-                MostrarMensaje("Productos encontrados.", true);
+                mb506MostrarMensaje("Productos encontrados.", true);
             }
         }
 
-        private void LimpiarCampos()
+        private void mb506LimpiarCampos()
         {
             idProductoSeleccionado = 0;
             productoActivoSeleccionado = true;
@@ -216,7 +217,7 @@ namespace BMTech
             txtCodigo.Focus();
         }
 
-        private void dgvProductos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void mb506dgvProductos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
             {
@@ -237,21 +238,22 @@ namespace BMTech
             txtCodigo.Enabled = false;
         }
 
-        private void MostrarMensaje(string mensaje, bool correcto)
+        private void mb506MostrarMensaje(string mensaje, bool correcto)
         {
-            lblMensaje.Text = mensaje;
+            lblMensaje.Tag = mensaje;
+            lblMensaje.Text = Mensajes.mb506Traducir(mensaje);
             lblMensaje.ForeColor = correcto ? Color.Teal : Color.Firebrick;
         }
 
-        private void FrmProducto_Load(object sender, EventArgs e)
+        private void mb506FrmProducto_Load(object sender, EventArgs e)
         {
             try
             {
-                BuscarProductos();
+                mb506BuscarProductos();
             }
             catch (Exception ex)
             {
-                MostrarMensaje(ex.Message, false);
+                mb506MostrarMensaje(ex.Message, false);
             }
         }
     }

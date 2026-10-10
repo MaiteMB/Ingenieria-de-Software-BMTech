@@ -1,37 +1,38 @@
-﻿using BEBMTech.Cliente;
-using BLLBMTech;
+using mb506.BEBMTech.Cliente;
+using mb506.BLLBMTech;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace BMTech
+namespace mb506.BMTech
 {
-    public partial class FrmCliente : Form
+    public partial class mb506FrmCliente : Form
     {
         private BLLCliente bllCliente;
 
-        public FrmCliente()
+        public mb506FrmCliente()
         {
+            IdiomasFormulario.mb506Vincular(this);
             InitializeComponent();
             bllCliente = new BLLCliente();
             lblMensaje.Text = "";
         }
 
-        private void btnLimpiar_Click(object sender, EventArgs e)
+        private void mb506btnLimpiar_Click(object sender, EventArgs e)
         {
-            LimpiarCampos();
-            MostrarMensaje("", true);
+            mb506LimpiarCampos();
+            mb506MostrarMensaje("", true);
         }
 
-        private void btnBuscarCliente_Click(object sender, EventArgs e)
+        private void mb506btnBuscarCliente_Click(object sender, EventArgs e)
         {
             try
             {
-                Cliente cliente = bllCliente.BuscarCliente(txtDni.Text.Trim());
+                Cliente cliente = bllCliente.mb506BuscarCliente(txtDni.Text.Trim());
 
                 if (cliente == null)
                 {
-                    MostrarMensaje("No se encontró un cliente con ese DNI.", false);
+                    mb506MostrarMensaje("No se encontró un cliente con ese DNI.", false);
                     return;
                 }
 
@@ -40,15 +41,15 @@ namespace BMTech
                 txtTelefono.Text = cliente.telefono;
                 txtCorreoElectronico.Text = cliente.correoElectronico;
 
-                MostrarMensaje("Cliente encontrado.", true);
+                mb506MostrarMensaje("Cliente encontrado.", true);
             }
             catch (Exception ex)
             {
-                MostrarMensaje(ex.Message, false);
+                mb506MostrarMensaje(ex.Message, false);
             }
         }
 
-        private void btnRegistrarCliente_Click(object sender, EventArgs e)
+        private void mb506btnRegistrarCliente_Click(object sender, EventArgs e)
         {
             try
             {
@@ -60,25 +61,29 @@ namespace BMTech
                     txtCorreoElectronico.Text.Trim()
                 );
 
-                bool registrado = bllCliente.RegistrarCliente(cliente);
+                bllCliente.mb506ValidarCliente(cliente);
+                if (bllCliente.mb506BuscarCliente(cliente.dni) != null) throw new Exception("El cliente ya se encuentra registrado.");
+                if (Mensajes.mb506Mostrar("Confirma registrar este cliente?", "Registrar cliente", MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) != DialogResult.Yes) return;
+                bool registrado = bllCliente.mb506RegistrarCliente(cliente);
 
                 if (registrado)
                 {
-                    MostrarMensaje("Cliente registrado correctamente.", true);
-                    LimpiarCampos();
+                    mb506MostrarMensaje("Cliente registrado correctamente.", true);
+                    mb506LimpiarCampos();
                 }
                 else
                 {
-                    MostrarMensaje("No se pudo registrar el cliente.", false);
+                    mb506MostrarMensaje("No se pudo registrar el cliente.", false);
                 }
             }
             catch (Exception ex)
             {
-                MostrarMensaje(ex.Message, false);
+                mb506MostrarMensaje(ex.Message, false);
             }
         }
 
-        private void LimpiarCampos()
+        private void mb506LimpiarCampos()
         {
             txtDni.Clear();
             txtNombre.Clear();
@@ -88,13 +93,14 @@ namespace BMTech
             txtDni.Focus();
         }
 
-        private void FrmCliente_Load(object sender, EventArgs e)
+        private void mb506FrmCliente_Load(object sender, EventArgs e)
         {
 
         }
-        private void MostrarMensaje(string mensaje, bool correcto)
+        private void mb506MostrarMensaje(string mensaje, bool correcto)
         {
-            lblMensaje.Text = mensaje;
+            lblMensaje.Tag = mensaje;
+            lblMensaje.Text = Mensajes.mb506Traducir(mensaje);
             lblMensaje.ForeColor = correcto ? Color.Teal : Color.Firebrick;
         }
     }

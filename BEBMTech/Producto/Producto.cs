@@ -1,4 +1,4 @@
-namespace BEBMTech.Producto
+namespace mb506.BEBMTech.Producto
 {
     public class Producto
     {

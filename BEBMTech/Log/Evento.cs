@@ -1,6 +1,6 @@
 using System;
 
-namespace BEBMTech.Log
+namespace mb506.BEBMTech.Log
 {
     public class Evento
     {

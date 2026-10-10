@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{3B4AE596-3D16-43D0-8EF8-46E38E3DDCDA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>BMTech</RootNamespace>
-    <AssemblyName>BMTech</AssemblyName>
+    <RootNamespace>mb506.BMTech</RootNamespace>
+    <AssemblyName>mb506.BMTech</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -31,6 +31,16 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>false</SignManifests>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <BootstrapperEnabled>false</BootstrapperEnabled>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <ProductName>BMTech</ProductName>
+    <PublisherName>Maite Benitez - mb506</PublisherName>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -49,6 +59,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrmUsuarios.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="FrmPermisos.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="IdiomasFormulario.cs" />
+    <Compile Include="FrmHistorialVentas.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="FrmPago.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="FrmIdiomas.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="FrmBackup.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="Mensajes.cs" />
+    <Compile Include="ExportacionComprobante.cs" />
+    <Compile Include="FrmComprobante.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="FrmCambiarPassword.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="FrmBitacora.cs"><SubType>Form</SubType></Compile>
     <Compile Include="FrmControlCambiosProducto.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,5 +156,9 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <PackageReference Include="PDFsharp-GDI" Version="6.2.4" />
+    <PackageReference Include="System.Memory" Version="4.6.3" />
+  </ItemGroup>
 </Project>
 

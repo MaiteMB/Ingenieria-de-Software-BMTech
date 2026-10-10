@@ -1,10 +1,10 @@
-using BEBMTech.Cambios;
+using mb506.BEBMTech.Cambios;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace DALBMTech
+namespace mb506.DALBMTech
 {
     public class DALCambios
     {
@@ -12,10 +12,10 @@ namespace DALBMTech
 
         public DALCambios()
         {
-            dbConnection = DAL_AccesoSQL.GetInstance();
+            dbConnection = DAL_AccesoSQL.mb506GetInstance();
         }
 
-        public List<VersionCambio> ObtenerVersionesProducto(int idProducto)
+        public List<VersionCambio> mb506ObtenerVersionesProducto(int idProducto)
         {
             List<VersionCambio> versiones = new List<VersionCambio>();
 
@@ -25,7 +25,7 @@ namespace DALBMTech
                 WHERE idProducto = @idProducto
                 ORDER BY fecha DESC";
 
-            using (SqlConnection conexion = dbConnection.GetConnection())
+            using (SqlConnection conexion = dbConnection.mb506GetConnection())
             using (SqlCommand command = new SqlCommand(query, conexion))
             {
                 command.Parameters.Add("@idProducto", SqlDbType.Int).Value = idProducto;
@@ -35,7 +35,7 @@ namespace DALBMTech
                 {
                     while (reader.Read())
                     {
-                        versiones.Add(MapVersion(reader));
+                        versiones.Add(mb506MapVersion(reader));
                     }
                 }
             }
@@ -43,7 +43,7 @@ namespace DALBMTech
             return versiones;
         }
 
-        public List<VersionCambio> ObtenerTodasLasVersionesProducto()
+        public List<VersionCambio> mb506ObtenerTodasLasVersionesProducto()
         {
             List<VersionCambio> versiones = new List<VersionCambio>();
 
@@ -52,7 +52,7 @@ namespace DALBMTech
                 FROM HistorialCambiosProducto
                 ORDER BY fecha DESC";
 
-            using (SqlConnection conexion = dbConnection.GetConnection())
+            using (SqlConnection conexion = dbConnection.mb506GetConnection())
             using (SqlCommand command = new SqlCommand(query, conexion))
             {
                 conexion.Open();
@@ -61,7 +61,7 @@ namespace DALBMTech
                 {
                     while (reader.Read())
                     {
-                        versiones.Add(MapVersion(reader));
+                        versiones.Add(mb506MapVersion(reader));
                     }
                 }
             }
@@ -69,14 +69,14 @@ namespace DALBMTech
             return versiones;
         }
 
-        public VersionCambio ObtenerVersion(int idHistorial)
+        public VersionCambio mb506ObtenerVersion(int idHistorial)
         {
             string query = @"
                 SELECT idHistorial, idProducto, codigo, descripcion, marca, modelo, precio, stock, activo, digitoVerificador, usuario, fecha, accion
                 FROM HistorialCambiosProducto
                 WHERE idHistorial = @idHistorial";
 
-            using (SqlConnection conexion = dbConnection.GetConnection())
+            using (SqlConnection conexion = dbConnection.mb506GetConnection())
             using (SqlCommand command = new SqlCommand(query, conexion))
             {
                 command.Parameters.Add("@idHistorial", SqlDbType.Int).Value = idHistorial;
@@ -84,14 +84,14 @@ namespace DALBMTech
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    return reader.Read() ? MapVersion(reader) : null;
+                    return reader.Read() ? mb506MapVersion(reader) : null;
                 }
             }
         }
 
-        public bool RestaurarProducto(int idHistorial)
+        public bool mb506RestaurarProducto(int idHistorial)
         {
-            VersionCambio version = ObtenerVersion(idHistorial);
+            VersionCambio version = mb506ObtenerVersion(idHistorial);
 
             if (version == null)
             {
@@ -110,7 +110,7 @@ namespace DALBMTech
                     digitoVerificador = @digitoVerificador
                 WHERE idProducto = @idProducto";
 
-            using (SqlConnection conexion = dbConnection.GetConnection())
+            using (SqlConnection conexion = dbConnection.mb506GetConnection())
             using (SqlCommand command = new SqlCommand(query, conexion))
             {
                 command.Parameters.Add("@idProducto", SqlDbType.Int).Value = version.idProducto;
@@ -124,11 +124,11 @@ namespace DALBMTech
                 command.Parameters.Add("@digitoVerificador", SqlDbType.Int).Value = version.digitoVerificador;
 
                 conexion.Open();
-                return command.ExecuteNonQuery() > 0;
+                return new DALIntegridad().mb506EjecutarComando(command, "Producto", "HistorialCambiosProducto") > 0;
             }
         }
 
-        private VersionCambio MapVersion(SqlDataReader reader)
+        private VersionCambio mb506MapVersion(SqlDataReader reader)
         {
             return new VersionCambio
             {

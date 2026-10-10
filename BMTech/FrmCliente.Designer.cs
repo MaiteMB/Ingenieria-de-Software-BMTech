@@ -1,6 +1,6 @@
-﻿namespace BMTech
+namespace mb506.BMTech
 {
-    partial class FrmCliente
+    partial class mb506FrmCliente
     {
         /// <summary>
         /// Required designer variable.
@@ -217,7 +217,7 @@
             this.btnBuscarCliente.TabIndex = 5;
             this.btnBuscarCliente.Text = "Buscar cliente";
             this.btnBuscarCliente.UseVisualStyleBackColor = false;
-            this.btnBuscarCliente.Click += new System.EventHandler(this.btnBuscarCliente_Click);
+            this.btnBuscarCliente.Click += new System.EventHandler(this.mb506btnBuscarCliente_Click);
             // 
             // btnRegistrarCliente
             // 
@@ -233,7 +233,7 @@
             this.btnRegistrarCliente.TabIndex = 6;
             this.btnRegistrarCliente.Text = "Registrar cliente";
             this.btnRegistrarCliente.UseVisualStyleBackColor = false;
-            this.btnRegistrarCliente.Click += new System.EventHandler(this.btnRegistrarCliente_Click);
+            this.btnRegistrarCliente.Click += new System.EventHandler(this.mb506btnRegistrarCliente_Click);
             // 
             // btnLimpiar
             // 
@@ -249,7 +249,7 @@
             this.btnLimpiar.TabIndex = 7;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = false;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            this.btnLimpiar.Click += new System.EventHandler(this.mb506btnLimpiar_Click);
             // 
             // lblMensaje
             // 
@@ -279,7 +279,7 @@
             this.Name = "FrmCliente";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Registrar cliente";
-            this.Load += new System.EventHandler(this.FrmCliente_Load);
+            this.Load += new System.EventHandler(this.mb506FrmCliente_Load);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.pnlContenido.ResumeLayout(false);

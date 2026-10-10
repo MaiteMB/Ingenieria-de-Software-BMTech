@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BEBMTech.Usuario
+namespace mb506.BEBMTech.Usuario
 {
     public class Usuario
     {
@@ -44,8 +44,8 @@ namespace BEBMTech.Usuario
             this.perfil = rol;
         }
 
-        public string GetPassword() => password;
+        public string mb506GetPassword() => password;
 
-        public void SetPassword(string password) { this.password = password; }
+        public void mb506SetPassword(string password) { this.password = password; }
     }
 }

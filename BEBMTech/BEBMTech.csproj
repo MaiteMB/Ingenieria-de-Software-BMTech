@@ -7,8 +7,8 @@
     <ProjectGuid>{2177E226-BAC3-4CF7-B429-08735ABDF037}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BEBMTech</RootNamespace>
-    <AssemblyName>BEBMTech</AssemblyName>
+    <RootNamespace>mb506.BEBMTech</RootNamespace>
+    <AssemblyName>mb506.BEBMTech</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -55,6 +55,9 @@
     <Compile Include="Usuario\Usuario.cs" />
     <Compile Include="Venta\DetalleVenta.cs" />
     <Compile Include="Venta\Venta.cs" />
+    <Compile Include="Venta\Pago.cs" />
+    <Compile Include="Idiomas\Idioma.cs" />
+    <Compile Include="Venta\Comprobante.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

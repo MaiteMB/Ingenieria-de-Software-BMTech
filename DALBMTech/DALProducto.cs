@@ -1,10 +1,10 @@
-using BEBMTech.Producto;
+using mb506.BEBMTech.Producto;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace DALBMTech
+namespace mb506.DALBMTech
 {
     public class DALProducto
     {
@@ -12,10 +12,10 @@ namespace DALBMTech
 
         public DALProducto()
         {
-            dbConnection = DAL_AccesoSQL.GetInstance();
+            dbConnection = DAL_AccesoSQL.mb506GetInstance();
         }
 
-        public List<Producto> BuscarProducto(string criterio, bool incluirInactivos = false)
+        public List<Producto> mb506BuscarProducto(string criterio, bool incluirInactivos = false)
         {
             List<Producto> productos = new List<Producto>();
 
@@ -35,7 +35,7 @@ namespace DALBMTech
 
             try
             {
-                using (var conexion = dbConnection.GetConnection())
+                using (var conexion = dbConnection.mb506GetConnection())
                 using (var command = new SqlCommand(query, conexion))
                 {
                     command.Parameters.Add("@criterio", SqlDbType.VarChar).Value = "%" + criterio + "%";
@@ -47,7 +47,7 @@ namespace DALBMTech
                     {
                         while (reader.Read())
                         {
-                            productos.Add(MapProducto(reader));
+                            productos.Add(mb506MapProducto(reader));
                         }
                     }
                 }
@@ -60,7 +60,7 @@ namespace DALBMTech
             return productos;
         }
 
-        public Producto ObtenerProductoPorCodigo(string codigo)
+        public Producto mb506ObtenerProductoPorCodigo(string codigo)
         {
             string query = @"
                 SELECT idProducto, codigo, descripcion, marca, modelo, precio, stock, activo, digitoVerificador
@@ -69,7 +69,7 @@ namespace DALBMTech
 
             try
             {
-                using (var conexion = dbConnection.GetConnection())
+                using (var conexion = dbConnection.mb506GetConnection())
                 using (var command = new SqlCommand(query, conexion))
                 {
                     command.Parameters.Add("@codigo", SqlDbType.VarChar).Value = codigo;
@@ -78,7 +78,7 @@ namespace DALBMTech
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        return reader.Read() ? MapProducto(reader) : null;
+                        return reader.Read() ? mb506MapProducto(reader) : null;
                     }
                 }
             }
@@ -88,14 +88,14 @@ namespace DALBMTech
             }
         }
 
-        public Producto ObtenerProductoPorId(int idProducto)
+        public Producto mb506ObtenerProductoPorId(int idProducto)
         {
             string query = @"
                 SELECT idProducto, codigo, descripcion, marca, modelo, precio, stock, activo, digitoVerificador
                 FROM Producto
                 WHERE idProducto = @idProducto";
 
-            using (var conexion = dbConnection.GetConnection())
+            using (var conexion = dbConnection.mb506GetConnection())
             using (var command = new SqlCommand(query, conexion))
             {
                 command.Parameters.Add("@idProducto", SqlDbType.Int).Value = idProducto;
@@ -103,12 +103,12 @@ namespace DALBMTech
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    return reader.Read() ? MapProducto(reader) : null;
+                    return reader.Read() ? mb506MapProducto(reader) : null;
                 }
             }
         }
 
-        public bool InsertarProducto(Producto producto)
+        public bool mb506InsertarProducto(Producto producto)
         {
             string query = @"
                 INSERT INTO Producto
@@ -136,13 +136,13 @@ namespace DALBMTech
 
             try
             {
-                using (var conexion = dbConnection.GetConnection())
+                using (var conexion = dbConnection.mb506GetConnection())
                 using (var command = new SqlCommand(query, conexion))
                 {
-                    CargarParametrosProducto(command, producto);
+                    mb506CargarParametrosProducto(command, producto);
 
                     conexion.Open();
-                    return command.ExecuteNonQuery() > 0;
+                    return new DALIntegridad().mb506EjecutarComando(command, "Producto", "HistorialCambiosProducto") > 0;
                 }
             }
             catch (SqlException ex)
@@ -151,7 +151,7 @@ namespace DALBMTech
             }
         }
 
-        public bool ModificarProducto(Producto producto)
+        public bool mb506ModificarProducto(Producto producto)
         {
             string query = @"
                 UPDATE Producto
@@ -166,7 +166,7 @@ namespace DALBMTech
 
             try
             {
-                using (var conexion = dbConnection.GetConnection())
+                using (var conexion = dbConnection.mb506GetConnection())
                 using (var command = new SqlCommand(query, conexion))
                 {
                     command.Parameters.Add("@idProducto", SqlDbType.Int).Value = producto.idProducto;
@@ -178,7 +178,7 @@ namespace DALBMTech
                     command.Parameters.Add("@digitoVerificador", SqlDbType.Int).Value = producto.digitoVerificador;
 
                     conexion.Open();
-                    return command.ExecuteNonQuery() > 0;
+                    return new DALIntegridad().mb506EjecutarComando(command, "Producto", "HistorialCambiosProducto") > 0;
                 }
             }
             catch (SqlException ex)
@@ -187,7 +187,7 @@ namespace DALBMTech
             }
         }
 
-        public bool CambiarEstadoProducto(Producto producto)
+        public bool mb506CambiarEstadoProducto(Producto producto)
         {
             string query = @"
                 UPDATE Producto
@@ -197,7 +197,7 @@ namespace DALBMTech
 
             try
             {
-                using (var conexion = dbConnection.GetConnection())
+                using (var conexion = dbConnection.mb506GetConnection())
                 using (var command = new SqlCommand(query, conexion))
                 {
                     command.Parameters.Add("@idProducto", SqlDbType.Int).Value = producto.idProducto;
@@ -205,7 +205,7 @@ namespace DALBMTech
                     command.Parameters.Add("@digitoVerificador", SqlDbType.Int).Value = producto.digitoVerificador;
 
                     conexion.Open();
-                    return command.ExecuteNonQuery() > 0;
+                    return new DALIntegridad().mb506EjecutarComando(command, "Producto", "HistorialCambiosProducto") > 0;
                 }
             }
             catch (SqlException ex)
@@ -215,14 +215,14 @@ namespace DALBMTech
         }
 
 
-        public bool ActualizarDigitoVerificador(int idProducto, int digitoVerificador)
+        public bool mb506ActualizarDigitoVerificador(int idProducto, int digitoVerificador)
         {
             string query = @"
                 UPDATE Producto
                 SET digitoVerificador = @digitoVerificador
                 WHERE idProducto = @idProducto";
 
-            using (var conexion = dbConnection.GetConnection())
+            using (var conexion = dbConnection.mb506GetConnection())
             using (var command = new SqlCommand(query, conexion))
             {
                 command.Parameters.Add("@idProducto", SqlDbType.Int).Value = idProducto;
@@ -232,7 +232,7 @@ namespace DALBMTech
                 return command.ExecuteNonQuery() > 0;
             }
         }
-        private void CargarParametrosProducto(SqlCommand command, Producto producto)
+        private void mb506CargarParametrosProducto(SqlCommand command, Producto producto)
         {
             command.Parameters.Add("@codigo", SqlDbType.VarChar).Value = producto.codigo;
             command.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = producto.descripcion;
@@ -244,7 +244,7 @@ namespace DALBMTech
             command.Parameters.Add("@digitoVerificador", SqlDbType.Int).Value = producto.digitoVerificador;
         }
 
-        private Producto MapProducto(SqlDataReader reader)
+        private Producto mb506MapProducto(SqlDataReader reader)
         {
             return new Producto
             {
@@ -261,4 +261,3 @@ namespace DALBMTech
         }
     }
 }
-

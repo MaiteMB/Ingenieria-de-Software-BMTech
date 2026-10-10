@@ -1,10 +1,10 @@
-using BEBMTech.Usuario;
+using mb506.BEBMTech.Usuario;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace DALBMTech
+namespace mb506.DALBMTech
 {
     public class DALUsuario
     {
@@ -12,10 +12,10 @@ namespace DALBMTech
 
         public DALUsuario()
         {
-            dbConnection = DAL_AccesoSQL.GetInstance();
+            dbConnection = DAL_AccesoSQL.mb506GetInstance();
         }
 
-        public Usuario BuscarUsuario(string email)
+        public Usuario mb506BuscarUsuario(string email)
         {
             string query = @"
                 SELECT email, nombre, apellido, password, activo, intentos, idperfil
@@ -24,7 +24,7 @@ namespace DALBMTech
 
             try
             {
-                using (SqlConnection conexion = dbConnection.GetConnection())
+                using (SqlConnection conexion = dbConnection.mb506GetConnection())
                 using (SqlCommand command = new SqlCommand(query, conexion))
                 {
                     command.Parameters.Add("@email", SqlDbType.VarChar).Value = email;
@@ -33,7 +33,7 @@ namespace DALBMTech
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        return reader.Read() ? MapUsuario(reader) : null;
+                        return reader.Read() ? mb506MapUsuario(reader) : null;
                     }
                 }
             }
@@ -43,7 +43,7 @@ namespace DALBMTech
             }
         }
 
-        public bool ActualizarIntentosYEstado(Usuario usuario)
+        public bool mb506ActualizarIntentosYEstado(Usuario usuario)
         {
             string query = @"
                 UPDATE Usuario
@@ -53,7 +53,7 @@ namespace DALBMTech
 
             try
             {
-                using (SqlConnection conexion = dbConnection.GetConnection())
+                using (SqlConnection conexion = dbConnection.mb506GetConnection())
                 using (SqlCommand command = new SqlCommand(query, conexion))
                 {
                     command.Parameters.Add("@email", SqlDbType.VarChar).Value = usuario.email;
@@ -62,7 +62,7 @@ namespace DALBMTech
 
                     conexion.Open();
 
-                    return command.ExecuteNonQuery() > 0;
+                    return new DALIntegridad().mb506EjecutarComando(command, "Usuario") > 0;
                 }
             }
             catch (SqlException ex)
@@ -71,7 +71,7 @@ namespace DALBMTech
             }
         }
 
-        public bool InsertarUsuario(Usuario usuario)
+        public bool mb506InsertarUsuario(Usuario usuario)
         {
             string query = @"
                 INSERT INTO Usuario
@@ -97,20 +97,20 @@ namespace DALBMTech
 
             try
             {
-                using (SqlConnection conexion = dbConnection.GetConnection())
+                using (SqlConnection conexion = dbConnection.mb506GetConnection())
                 using (SqlCommand command = new SqlCommand(query, conexion))
                 {
                     command.Parameters.Add("@email", SqlDbType.VarChar).Value = usuario.email;
                     command.Parameters.Add("@nombre", SqlDbType.VarChar).Value = usuario.nombre;
                     command.Parameters.Add("@apellido", SqlDbType.VarChar).Value = usuario.apellido;
-                    command.Parameters.Add("@password", SqlDbType.VarChar).Value = usuario.GetPassword();
+                    command.Parameters.Add("@password", SqlDbType.VarChar).Value = usuario.mb506GetPassword();
                     command.Parameters.Add("@activo", SqlDbType.Bit).Value = usuario.activo;
                     command.Parameters.Add("@intentos", SqlDbType.Int).Value = usuario.intentos;
                     command.Parameters.Add("@idperfil", SqlDbType.VarChar).Value = usuario.perfil;
 
                     conexion.Open();
 
-                    return command.ExecuteNonQuery() > 0;
+                    return new DALIntegridad().mb506EjecutarComando(command, "Usuario") > 0;
                 }
             }
             catch (SqlException ex)
@@ -119,7 +119,7 @@ namespace DALBMTech
             }
         }
 
-        public List<Usuario> ObtenerUsuarios()
+        public List<Usuario> mb506ObtenerUsuarios()
         {
             List<Usuario> usuarios = new List<Usuario>();
 
@@ -130,7 +130,7 @@ namespace DALBMTech
 
             try
             {
-                using (SqlConnection conexion = dbConnection.GetConnection())
+                using (SqlConnection conexion = dbConnection.mb506GetConnection())
                 using (SqlCommand command = new SqlCommand(query, conexion))
                 {
                     conexion.Open();
@@ -139,7 +139,7 @@ namespace DALBMTech
                     {
                         while (reader.Read())
                         {
-                            usuarios.Add(MapUsuario(reader));
+                            usuarios.Add(mb506MapUsuario(reader));
                         }
                     }
                 }
@@ -152,14 +152,54 @@ namespace DALBMTech
             return usuarios;
         }
 
-        private Usuario MapUsuario(SqlDataReader reader)
+        public bool mb506ModificarUsuario(Usuario usuario)
+        {
+            using (SqlConnection conexion = dbConnection.mb506GetConnection())
+            using (SqlCommand command = new SqlCommand(
+                "UPDATE Usuario SET nombre=@nombre, apellido=@apellido, idperfil=@perfil WHERE email=@email", conexion))
+            {
+                command.Parameters.Add("@nombre", SqlDbType.VarChar, 100).Value = usuario.nombre;
+                command.Parameters.Add("@apellido", SqlDbType.VarChar, 100).Value = usuario.apellido;
+                command.Parameters.Add("@perfil", SqlDbType.VarChar, 50).Value = usuario.perfil;
+                command.Parameters.Add("@email", SqlDbType.VarChar, 150).Value = usuario.email;
+                conexion.Open();
+                return new DALIntegridad().mb506EjecutarComando(command, "Usuario") == 1;
+            }
+        }
+
+        public bool mb506CambiarPassword(string email, string password)
+        {
+            using (SqlConnection conexion = dbConnection.mb506GetConnection())
+            using (SqlCommand command = new SqlCommand("UPDATE Usuario SET password=@password WHERE email=@email", conexion))
+            {
+                command.Parameters.Add("@password", SqlDbType.VarChar, 100).Value = password;
+                command.Parameters.Add("@email", SqlDbType.VarChar, 150).Value = email;
+                conexion.Open();
+                return new DALIntegridad().mb506EjecutarComando(command, "Usuario") == 1;
+            }
+        }
+
+        public List<string> mb506ObtenerPerfiles()
+        {
+            List<string> perfiles = new List<string>();
+            using (SqlConnection conexion = dbConnection.mb506GetConnection())
+            using (SqlCommand command = new SqlCommand("SELECT idperfil FROM Perfil ORDER BY idperfil", conexion))
+            {
+                conexion.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
+                    while (reader.Read()) perfiles.Add(reader.GetString(0));
+            }
+            return perfiles;
+        }
+
+        private Usuario mb506MapUsuario(SqlDataReader reader)
         {
             Usuario usuario = new Usuario();
 
             usuario.email = reader.GetString(0);
             usuario.nombre = reader.GetString(1);
             usuario.apellido = reader.GetString(2);
-            usuario.SetPassword(reader.GetString(3));
+            usuario.mb506SetPassword(reader.GetString(3));
             usuario.activo = reader.GetBoolean(4);
             usuario.intentos = reader.GetInt32(5);
             usuario.perfil = reader.GetString(6);

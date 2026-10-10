@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BEBMTech.Roles
+namespace mb506.BEBMTech.Roles
 {
     public abstract class Rol
     {
@@ -17,7 +17,7 @@ namespace BEBMTech.Roles
         public string Vista { get; set; }
         public abstract string Tipo { get; }
 
-        public abstract List<Rol> ObtenerTodos();
+        public abstract List<Rol> mb506ObtenerTodos();
 
         public override string ToString()
         {

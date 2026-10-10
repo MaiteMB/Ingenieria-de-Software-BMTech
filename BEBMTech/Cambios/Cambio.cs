@@ -1,4 +1,4 @@
-namespace BEBMTech.Cambios
+namespace mb506.BEBMTech.Cambios
 {
     public class Cambio
     {

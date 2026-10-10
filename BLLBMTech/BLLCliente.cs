@@ -1,9 +1,9 @@
-using BEBMTech.Cliente;
-using DALBMTech;
+using mb506.BEBMTech.Cliente;
+using mb506.DALBMTech;
 using System;
 using System.Collections.Generic;
 
-namespace BLLBMTech
+namespace mb506.BLLBMTech
 {
     public class BLLCliente
     {
@@ -14,42 +14,45 @@ namespace BLLBMTech
             dalCliente = new DALCliente();
         }
 
-        public Cliente BuscarCliente(string dni)
+        public Cliente mb506BuscarCliente(string dni)
         {
             if (string.IsNullOrWhiteSpace(dni))
             {
                 throw new Exception("Debe ingresar el DNI del cliente.");
             }
 
-            return dalCliente.BuscarCliente(dni.Trim());
+            return dalCliente.mb506BuscarCliente(dni.Trim());
         }
 
 
-        public List<Cliente> BuscarClientes(string criterio)
+        public List<Cliente> mb506BuscarClientes(string criterio)
         {
             if (criterio == null)
             {
                 criterio = "";
             }
 
-            return dalCliente.BuscarClientes(criterio.Trim());
+            return dalCliente.mb506BuscarClientes(criterio.Trim());
         }
-        public bool RegistrarCliente(Cliente cliente)
+        public bool mb506RegistrarCliente(Cliente cliente)
         {
-            ValidarCliente(cliente);
+            new BLLPermiso().mb506Validar("CLIENTES");
+            mb506ValidarCliente(cliente);
 
-            Cliente clienteExistente = dalCliente.BuscarCliente(cliente.dni);
+            Cliente clienteExistente = dalCliente.mb506BuscarCliente(cliente.dni);
 
             if (clienteExistente != null)
             {
                 throw new Exception("El cliente ya se encuentra registrado.");
             }
 
-            cliente.digitoVerificador = new ServiciosBMTech.Seguridad.DigitoVerificador().CalcularCliente(cliente);
-            return dalCliente.InsertarCliente(cliente);
+            cliente.digitoVerificador = new mb506.ServiciosBMTech.Seguridad.DigitoVerificador().mb506CalcularCliente(cliente);
+            bool registrado = dalCliente.mb506InsertarCliente(cliente);
+            if (registrado) new BLLLog().mb506RegistrarEvento("Cliente registrado: " + cliente.dni, "Clientes", 1);
+            return registrado;
         }
 
-        private void ValidarCliente(Cliente cliente)
+        public void mb506ValidarCliente(Cliente cliente)
         {
             if (cliente == null)
             {
@@ -80,6 +83,17 @@ namespace BLLBMTech
             {
                 throw new Exception("Debe ingresar el correo electrónico del cliente.");
             }
+            if (cliente.dni.Length > 20 || cliente.nombre.Length > 100 || cliente.apellido.Length > 100 ||
+                cliente.telefono.Length > 50 || cliente.correoElectronico.Length > 150)
+                throw new Exception("Los datos del cliente superan el largo permitido.");
+            if (!System.Text.RegularExpressions.Regex.IsMatch(cliente.dni, "^[0-9]+$"))
+                throw new Exception("El DNI debe contener solo numeros.");
+            try
+            {
+                var correo = new System.Net.Mail.MailAddress(cliente.correoElectronico);
+                if (correo.Address != cliente.correoElectronico) throw new FormatException();
+            }
+            catch (FormatException) { throw new Exception("El correo electronico no es valido."); }
         }
     }
 }

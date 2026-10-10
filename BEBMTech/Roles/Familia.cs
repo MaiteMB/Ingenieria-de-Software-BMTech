@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BEBMTech.Roles
+namespace mb506.BEBMTech.Roles
 {
     public class Familia : Rol
     {
@@ -17,18 +17,22 @@ namespace BEBMTech.Roles
 
         public override string Tipo => "Familia";
 
-        public void Agregar(Rol rol)
+        public void mb506Agregar(Rol rol)
         {
+            if (rol == null) throw new ArgumentNullException("rol");
+            Familia familia = rol as Familia;
+            if (ReferenceEquals(rol, this) || (familia != null && familia.mb506Contiene(idRol)))
+                throw new Exception("Una familia no puede contenerse a si misma.");
             if (!Hijos.Any(x => x.idRol == rol.idRol))
                 Hijos.Add(rol);
         }
 
-        public void Quitar(Rol rol)
+        public void mb506Quitar(Rol rol)
         {
             Hijos.RemoveAll(x => x.idRol == rol.idRol);
         }
 
-        public bool Contiene(string id)
+        public bool mb506Contiene(string id)
         {
             foreach (Rol r in Hijos)
             {
@@ -37,7 +41,7 @@ namespace BEBMTech.Roles
 
                 if (r is Familia rc)
                 {
-                    if (rc.Contiene(id))
+                    if (rc.mb506Contiene(id))
                         return true;
                 }
             }
@@ -45,7 +49,7 @@ namespace BEBMTech.Roles
             return false;
         }
 
-        public override List<Rol> ObtenerTodos()
+        public override List<Rol> mb506ObtenerTodos()
         {
             List<Rol> lista = new List<Rol>();
 
@@ -54,7 +58,7 @@ namespace BEBMTech.Roles
                 lista.Add(r);
 
                 if (r is Familia rc)
-                    lista.AddRange(rc.ObtenerTodos());
+                    lista.AddRange(rc.mb506ObtenerTodos());
             }
 
             return lista;

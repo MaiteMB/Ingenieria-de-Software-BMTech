@@ -1,6 +1,6 @@
-﻿namespace BMTech
+namespace mb506.BMTech
 {
-    partial class FrmProducto
+    partial class mb506FrmProducto
     {
         /// <summary>
         /// Required designer variable.
@@ -264,7 +264,7 @@
             this.btnBuscarProducto.TabIndex = 7;
             this.btnBuscarProducto.Text = "Buscar";
             this.btnBuscarProducto.UseVisualStyleBackColor = false;
-            this.btnBuscarProducto.Click += new System.EventHandler(this.btnBuscarProducto_Click);
+            this.btnBuscarProducto.Click += new System.EventHandler(this.mb506btnBuscarProducto_Click);
             // 
             // dgvProductos
             // 
@@ -282,7 +282,7 @@
             this.dgvProductos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvProductos.Size = new System.Drawing.Size(465, 260);
             this.dgvProductos.TabIndex = 8;
-            this.dgvProductos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProductos_CellContentClick);
+            this.dgvProductos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mb506dgvProductos_CellContentClick);
             // 
             // btnRegistrarProducto
             // 
@@ -298,7 +298,7 @@
             this.btnRegistrarProducto.TabIndex = 9;
             this.btnRegistrarProducto.Text = "Registrar";
             this.btnRegistrarProducto.UseVisualStyleBackColor = false;
-            this.btnRegistrarProducto.Click += new System.EventHandler(this.btnRegistrarProducto_Click);
+            this.btnRegistrarProducto.Click += new System.EventHandler(this.mb506btnRegistrarProducto_Click);
             // 
             // btnModificarProducto
             // 
@@ -314,7 +314,7 @@
             this.btnModificarProducto.TabIndex = 10;
             this.btnModificarProducto.Text = "Modificar";
             this.btnModificarProducto.UseVisualStyleBackColor = false;
-            this.btnModificarProducto.Click += new System.EventHandler(this.btnModificarProducto_Click);
+            this.btnModificarProducto.Click += new System.EventHandler(this.mb506btnModificarProducto_Click);
             // 
             // btnCambiarEstadoProducto
             // 
@@ -330,7 +330,7 @@
             this.btnCambiarEstadoProducto.TabIndex = 11;
             this.btnCambiarEstadoProducto.Text = "Activar/Desactivar";
             this.btnCambiarEstadoProducto.UseVisualStyleBackColor = false;
-            this.btnCambiarEstadoProducto.Click += new System.EventHandler(this.btnCambiarEstadoProducto_Click);
+            this.btnCambiarEstadoProducto.Click += new System.EventHandler(this.mb506btnCambiarEstadoProducto_Click);
             // 
             // btnLimpiar
             // 
@@ -346,7 +346,7 @@
             this.btnLimpiar.TabIndex = 12;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = false;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            this.btnLimpiar.Click += new System.EventHandler(this.mb506btnLimpiar_Click);
             // 
             // lblMensaje
             // 
@@ -382,7 +382,7 @@
             this.Name = "FrmProducto";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Gestión de productos";
-            this.Load += new System.EventHandler(this.FrmProducto_Load);
+            this.Load += new System.EventHandler(this.mb506FrmProducto_Load);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.pnlContenido.ResumeLayout(false);
