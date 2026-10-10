@@ -5,3 +5,7 @@ packages/
 *.user
 *.suo
 TestResults/
+*.ldb
+*.bak
+*.key
+[Pp]ublish/
