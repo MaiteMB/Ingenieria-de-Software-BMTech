@@ -1,7 +1,6 @@
 USE BMTech;
 GO
 
--- Ejecutar sobre la base existente, sin borrar sus datos.
 IF COL_LENGTH('Cliente', 'digitoVerificador') IS NULL
     ALTER TABLE Cliente ADD digitoVerificador INT NOT NULL DEFAULT 0;
 GO

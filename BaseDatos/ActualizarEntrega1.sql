@@ -1,14 +1,6 @@
--- Solo para una instalacion desde cero. Para la base existente usar ActualizarEntrega1.sql.
--- Usuarios de demostracion: admin@bmtech.com y vendedor@bmtech.com. Clave: 1234.
--- Cambiar estas claves antes de usar datos reales.
-use master;
-
-CREATE DATABASE BMTech;
-GO
 
 USE BMTech;
 GO
-
 IF OBJECT_ID('Idioma', 'U') IS NULL
     CREATE TABLE Idioma
     (
@@ -141,260 +133,6 @@ INSERT INTO Traduccion (codigoIdioma, etiqueta, textoTraducido)
 SELECT 'en', etiqueta, ingles FROM @textos t
 WHERE NOT EXISTS (SELECT 1 FROM Traduccion r WHERE r.codigoIdioma='en' AND r.etiqueta=t.etiqueta);
 GO
-
-CREATE TABLE Perfil
-(
-    idperfil VARCHAR(50) NOT NULL,
-    CONSTRAINT PK_Perfil PRIMARY KEY (idperfil)
-);
-GO
-CREATE TABLE Patente
-(
-    idPatente VARCHAR(50) NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-
-    CONSTRAINT PK_Patente PRIMARY KEY (idPatente)
-);
-GO
-
-CREATE TABLE Familia
-(
-    idFamilia VARCHAR(50) NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-
-    CONSTRAINT PK_Familia PRIMARY KEY (idFamilia)
-);
-GO
-
-CREATE TABLE FamiliaPatente
-(
-    idFamilia VARCHAR(50) NOT NULL,
-    idPatente VARCHAR(50) NOT NULL,
-
-    CONSTRAINT PK_FamiliaPatente PRIMARY KEY (idFamilia, idPatente),
-    CONSTRAINT FK_FamiliaPatente_Familia
-        FOREIGN KEY (idFamilia)
-        REFERENCES Familia(idFamilia),
-    CONSTRAINT FK_FamiliaPatente_Patente
-        FOREIGN KEY (idPatente)
-        REFERENCES Patente(idPatente)
-);
-GO
-
-CREATE TABLE PerfilFamilia
-(
-    idperfil VARCHAR(50) NOT NULL,
-    idFamilia VARCHAR(50) NOT NULL,
-
-    CONSTRAINT PK_PerfilFamilia PRIMARY KEY (idperfil, idFamilia),
-    CONSTRAINT FK_PerfilFamilia_Perfil
-        FOREIGN KEY (idperfil)
-        REFERENCES Perfil(idperfil),
-    CONSTRAINT FK_PerfilFamilia_Familia
-        FOREIGN KEY (idFamilia)
-        REFERENCES Familia(idFamilia)
-);
-GO
-
-INSERT INTO Perfil (idperfil) VALUES ('Administrador');
-INSERT INTO Perfil (idperfil) VALUES ('Vendedor');
-GO
-
-INSERT INTO Patente (idPatente, nombre) VALUES ('CLIENTES', 'Gestión de clientes');
-INSERT INTO Patente (idPatente, nombre) VALUES ('PRODUCTOS', 'Gestión de productos');
-INSERT INTO Patente (idPatente, nombre) VALUES ('VENTAS', 'Registro de ventas');
-INSERT INTO Patente (idPatente, nombre) VALUES ('SEGURIDAD', 'Seguridad');
-GO
-
-INSERT INTO Familia (idFamilia, nombre) VALUES ('ADMINISTRACION', 'Administración del sistema');
-INSERT INTO Familia (idFamilia, nombre) VALUES ('VENTA', 'Operaciones de venta');
-GO
-
-INSERT INTO FamiliaPatente (idFamilia, idPatente) VALUES ('ADMINISTRACION', 'CLIENTES');
-INSERT INTO FamiliaPatente (idFamilia, idPatente) VALUES ('ADMINISTRACION', 'PRODUCTOS');
-INSERT INTO FamiliaPatente (idFamilia, idPatente) VALUES ('ADMINISTRACION', 'VENTAS');
-INSERT INTO FamiliaPatente (idFamilia, idPatente) VALUES ('ADMINISTRACION', 'SEGURIDAD');
-INSERT INTO FamiliaPatente (idFamilia, idPatente) VALUES ('VENTA', 'CLIENTES');
-INSERT INTO FamiliaPatente (idFamilia, idPatente) VALUES ('VENTA', 'PRODUCTOS');
-INSERT INTO FamiliaPatente (idFamilia, idPatente) VALUES ('VENTA', 'VENTAS');
-GO
-
-INSERT INTO PerfilFamilia (idperfil, idFamilia) VALUES ('Administrador', 'ADMINISTRACION');
-INSERT INTO PerfilFamilia (idperfil, idFamilia) VALUES ('Vendedor', 'VENTA');
-GO
-CREATE TABLE Usuario
-(
-    email VARCHAR(150) NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL,
-    password VARCHAR(100) NOT NULL,
-    activo BIT NOT NULL DEFAULT 1,
-    intentos INT NOT NULL DEFAULT 3,
-    idperfil VARCHAR(50) NOT NULL,
-
-    CONSTRAINT PK_Usuario PRIMARY KEY (email),
-    CONSTRAINT FK_Usuario_Perfil
-        FOREIGN KEY (idperfil)
-        REFERENCES Perfil(idperfil)
-);
-GO
-
-CREATE TABLE LogEventos
-(
-    idLog INT IDENTITY(1,1) NOT NULL,
-    email VARCHAR(150) NOT NULL,
-    fecha DATETIME NOT NULL DEFAULT GETDATE(),
-    accion VARCHAR(255) NOT NULL,
-    modulo VARCHAR(100) NOT NULL,
-    criticidad INT NOT NULL,
-
-    CONSTRAINT PK_LogEventos PRIMARY KEY (idLog)
-);
-GO
-
-
-CREATE TABLE DigitoVerificador
-(
-    tabla VARCHAR(50) NOT NULL,
-    digitoVertical INT NOT NULL,
-
-    CONSTRAINT PK_DigitoVerificador PRIMARY KEY (tabla)
-);
-GO
-CREATE TABLE Cliente
-(
-    dni VARCHAR(20) NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL,
-    telefono VARCHAR(50) NOT NULL,
-    correoElectronico VARCHAR(150) NOT NULL,
-    digitoVerificador INT NOT NULL DEFAULT 0,
-
-    CONSTRAINT PK_Cliente PRIMARY KEY (dni)
-);
-GO
-
-CREATE TABLE Producto
-(
-    idProducto INT IDENTITY(1,1) NOT NULL,
-    codigo VARCHAR(50) NOT NULL,
-    descripcion VARCHAR(150) NOT NULL,
-    marca VARCHAR(100) NOT NULL,
-    modelo VARCHAR(100) NOT NULL,
-    precio DECIMAL(18,2) NOT NULL,
-    stock INT NOT NULL,
-    activo BIT NOT NULL DEFAULT 1,
-    digitoVerificador INT NOT NULL DEFAULT 0,
-
-    CONSTRAINT PK_Producto PRIMARY KEY (idProducto),
-    CONSTRAINT UQ_Producto_Codigo UNIQUE (codigo)
-);
-GO
-
-CREATE TABLE Venta
-(
-    idVenta INT IDENTITY(1,1) NOT NULL,
-    dniCliente VARCHAR(20) NOT NULL,
-    emailUsuario VARCHAR(150) NULL,
-    fecha DATETIME NOT NULL DEFAULT GETDATE(),
-    total DECIMAL(18,2) NOT NULL,
-
-    CONSTRAINT PK_Venta PRIMARY KEY (idVenta),
-    CONSTRAINT FK_Venta_Cliente
-        FOREIGN KEY (dniCliente)
-        REFERENCES Cliente(dni),
-    CONSTRAINT FK_Venta_Usuario
-        FOREIGN KEY (emailUsuario)
-        REFERENCES Usuario(email)
-);
-GO
-
-CREATE TABLE DetalleVenta
-(
-    idDetalleVenta INT IDENTITY(1,1) NOT NULL,
-    idVenta INT NOT NULL,
-    idProducto INT NOT NULL,
-    cantidad INT NOT NULL,
-    precioUnitario DECIMAL(18,2) NOT NULL,
-    subtotal DECIMAL(18,2) NOT NULL,
-
-    CONSTRAINT PK_DetalleVenta PRIMARY KEY (idDetalleVenta),
-    CONSTRAINT FK_DetalleVenta_Venta
-        FOREIGN KEY (idVenta)
-        REFERENCES Venta(idVenta),
-    CONSTRAINT FK_DetalleVenta_Producto
-        FOREIGN KEY (idProducto)
-        REFERENCES Producto(idProducto)
-);
-GO
-
-CREATE TABLE HistorialCambiosProducto
-(
-    idHistorial INT IDENTITY(1,1) NOT NULL,
-    idProducto INT NOT NULL,
-    codigo VARCHAR(50) NOT NULL,
-    descripcion VARCHAR(150) NOT NULL,
-    marca VARCHAR(100) NOT NULL,
-    modelo VARCHAR(100) NOT NULL,
-    precio DECIMAL(18,2) NOT NULL,
-    stock INT NOT NULL,
-    activo BIT NOT NULL,
-    digitoVerificador INT NOT NULL,
-    usuario VARCHAR(150) NOT NULL DEFAULT SYSTEM_USER,
-    fecha DATETIME NOT NULL DEFAULT GETDATE(),
-    accion VARCHAR(20) NOT NULL,
-
-    CONSTRAINT PK_HistorialCambiosProducto PRIMARY KEY (idHistorial)
-);
-GO
-
--- El trigger se crea al final, con la estructura definitiva de integridad.
-
-INSERT INTO Usuario
-(
-    email,
-    nombre,
-    apellido,
-    password,
-    activo,
-    intentos,
-    idperfil
-)
-VALUES
-(
-    'admin@bmtech.com',
-    'Usuario',
-    'Administrador',
-    '$2a$12$J2MsQcFQ66m5S2Gq4tE65OrkTpWQ5MUb2yzvYrBqR42npqmoWmZUW',
-    1,
-    3,
-    'Administrador'
-);
-SELECT * FROM Perfil;
-
-INSERT INTO Usuario
-(
-    email,
-    nombre,
-    apellido,
-    password,
-    activo,
-    intentos,
-    idperfil
-)
-VALUES
-(
-    'vendedor@bmtech.com',
-    'Usuario',
-    'Vendedor',
-    '$2a$12$J2MsQcFQ66m5S2Gq4tE65OrkTpWQ5MUb2yzvYrBqR42npqmoWmZUW',
-    1,
-    3,
-    'Vendedor'
-);
-
-SELECT email, nombre, apellido, activo, intentos, idperfil
-FROM Usuario;
 
 IF COL_LENGTH('Cliente', 'digitoVerificador') IS NULL
     ALTER TABLE [Cliente] ADD digitoVerificador INT NOT NULL DEFAULT 0;
@@ -539,7 +277,7 @@ IF OBJECT_ID('Pago','U') IS NULL
         CONSTRAINT CK_Pago_Importe CHECK(importe>=0)
     );
 GO
--- Los registros previos al circuito de pago conservan su importe ya descontado.
+
 INSERT INTO Pago(idVenta,medioPago,importe,numeroOperacion,fecha,verificado)
 SELECT v.idVenta,'Efectivo',v.total,N'',v.fecha,1 FROM Venta v
 WHERE v.estado IN ('PAGADA','FINALIZADA') AND NOT EXISTS(SELECT 1 FROM Pago p WHERE p.idVenta=v.idVenta);
@@ -590,9 +328,7 @@ IF NOT EXISTS (SELECT 1 FROM DigitoVerificador WHERE tabla='Comprobante')
 IF NOT EXISTS (SELECT 1 FROM DigitoVerificador WHERE tabla='Backup')
     INSERT INTO DigitoVerificador(tabla,digitoVertical) VALUES('Backup',-1);
 GO
--- Al terminar: abrir BMTech, credenciales de administrador y Preparar integridad.
 
--- Leyendas, mensajes y columnas de Entrega 1.
 DECLARE @nuevosTextos TABLE(etiqueta NVARCHAR(200), ingles NVARCHAR(250));
 INSERT INTO @nuevosTextos VALUES
 (N'Desde',N'From'),
@@ -848,7 +584,6 @@ SELECT 'es',e.etiqueta,e.etiqueta FROM @exportacion e WHERE NOT EXISTS(SELECT 1 
 INSERT INTO Traduccion(codigoIdioma,etiqueta,textoTraducido)
 SELECT 'en',e.etiqueta,e.ingles FROM @exportacion e WHERE NOT EXISTS(SELECT 1 FROM Traduccion t WHERE t.codigoIdioma='en' AND t.etiqueta=e.etiqueta);
 GO
--- La migracion cambia la estructura. La preparacion se confirma desde BMTech.
+
 UPDATE DigitoVerificador SET digitoVertical=-1;
 GO
-
