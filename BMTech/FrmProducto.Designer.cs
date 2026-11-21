@@ -2,15 +2,8 @@ namespace mb506.BMTech
 {
     partial class mb506FrmProducto
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,12 +13,13 @@ namespace mb506.BMTech
             base.Dispose(disposing);
         }
 
+        private void mb506ColorMensaje(bool correcto)
+        {
+            this.lblMensaje.ForeColor = correcto ? System.Drawing.Color.Teal : System.Drawing.Color.Firebrick;
+        }
+
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             this.pnlHeader = new System.Windows.Forms.Panel();
@@ -58,9 +52,7 @@ namespace mb506.BMTech
             this.pnlContenido.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).BeginInit();
             this.SuspendLayout();
-            // 
             // pnlHeader
-            // 
             this.pnlHeader.BackColor = System.Drawing.Color.Teal;
             this.pnlHeader.Controls.Add(this.lblTitulo);
             this.pnlHeader.Controls.Add(this.lblSubtitulo);
@@ -68,9 +60,7 @@ namespace mb506.BMTech
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Size = new System.Drawing.Size(1000, 80);
             this.pnlHeader.TabIndex = 0;
-            // 
             // lblTitulo
-            // 
             this.lblTitulo.AutoSize = true;
             this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
             this.lblTitulo.ForeColor = System.Drawing.Color.White;
@@ -79,9 +69,7 @@ namespace mb506.BMTech
             this.lblTitulo.Size = new System.Drawing.Size(319, 41);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "Gestión de productos";
-            // 
             // lblSubtitulo
-            // 
             this.lblSubtitulo.AutoSize = true;
             this.lblSubtitulo.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblSubtitulo.ForeColor = System.Drawing.Color.White;
@@ -90,9 +78,7 @@ namespace mb506.BMTech
             this.lblSubtitulo.Size = new System.Drawing.Size(292, 20);
             this.lblSubtitulo.TabIndex = 1;
             this.lblSubtitulo.Text = "Alta, modificación y consulta de productos";
-            // 
             // pnlContenido
-            // 
             this.pnlContenido.BackColor = System.Drawing.Color.White;
             this.pnlContenido.Controls.Add(this.lblDatosProducto);
             this.pnlContenido.Controls.Add(this.lblCodigo);
@@ -111,9 +97,7 @@ namespace mb506.BMTech
             this.pnlContenido.Name = "pnlContenido";
             this.pnlContenido.Size = new System.Drawing.Size(420, 345);
             this.pnlContenido.TabIndex = 1;
-            // 
             // lblDatosProducto
-            // 
             this.lblDatosProducto.AutoSize = true;
             this.lblDatosProducto.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblDatosProducto.ForeColor = System.Drawing.Color.Teal;
@@ -122,9 +106,7 @@ namespace mb506.BMTech
             this.lblDatosProducto.Size = new System.Drawing.Size(235, 32);
             this.lblDatosProducto.TabIndex = 0;
             this.lblDatosProducto.Text = "Datos del producto";
-            // 
             // lblCodigo
-            // 
             this.lblCodigo.AutoSize = true;
             this.lblCodigo.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblCodigo.Location = new System.Drawing.Point(30, 75);
@@ -132,9 +114,7 @@ namespace mb506.BMTech
             this.lblCodigo.Size = new System.Drawing.Size(65, 23);
             this.lblCodigo.TabIndex = 1;
             this.lblCodigo.Text = "Código";
-            // 
             // lblDescripcion
-            // 
             this.lblDescripcion.AutoSize = true;
             this.lblDescripcion.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblDescripcion.Location = new System.Drawing.Point(30, 115);
@@ -142,9 +122,7 @@ namespace mb506.BMTech
             this.lblDescripcion.Size = new System.Drawing.Size(98, 23);
             this.lblDescripcion.TabIndex = 2;
             this.lblDescripcion.Text = "Descripción";
-            // 
             // lblMarca
-            // 
             this.lblMarca.AutoSize = true;
             this.lblMarca.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblMarca.Location = new System.Drawing.Point(30, 155);
@@ -152,9 +130,7 @@ namespace mb506.BMTech
             this.lblMarca.Size = new System.Drawing.Size(57, 23);
             this.lblMarca.TabIndex = 3;
             this.lblMarca.Text = "Marca";
-            // 
             // lblModelo
-            // 
             this.lblModelo.AutoSize = true;
             this.lblModelo.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblModelo.Location = new System.Drawing.Point(30, 195);
@@ -162,9 +138,7 @@ namespace mb506.BMTech
             this.lblModelo.Size = new System.Drawing.Size(68, 23);
             this.lblModelo.TabIndex = 4;
             this.lblModelo.Text = "Modelo";
-            // 
             // lblPrecio
-            // 
             this.lblPrecio.AutoSize = true;
             this.lblPrecio.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblPrecio.Location = new System.Drawing.Point(30, 235);
@@ -172,9 +146,7 @@ namespace mb506.BMTech
             this.lblPrecio.Size = new System.Drawing.Size(57, 23);
             this.lblPrecio.TabIndex = 5;
             this.lblPrecio.Text = "Precio";
-            // 
             // lblStock
-            // 
             this.lblStock.AutoSize = true;
             this.lblStock.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblStock.Location = new System.Drawing.Point(30, 275);
@@ -182,57 +154,43 @@ namespace mb506.BMTech
             this.lblStock.Size = new System.Drawing.Size(50, 23);
             this.lblStock.TabIndex = 6;
             this.lblStock.Text = "Stock";
-            // 
             // txtCodigo
-            // 
             this.txtCodigo.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtCodigo.Location = new System.Drawing.Point(155, 72);
             this.txtCodigo.Name = "txtCodigo";
             this.txtCodigo.Size = new System.Drawing.Size(230, 30);
             this.txtCodigo.TabIndex = 0;
-            // 
             // txtDescripcion
-            // 
             this.txtDescripcion.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtDescripcion.Location = new System.Drawing.Point(155, 112);
             this.txtDescripcion.Name = "txtDescripcion";
             this.txtDescripcion.Size = new System.Drawing.Size(230, 30);
             this.txtDescripcion.TabIndex = 1;
-            // 
             // txtMarca
-            // 
             this.txtMarca.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtMarca.Location = new System.Drawing.Point(155, 152);
             this.txtMarca.Name = "txtMarca";
             this.txtMarca.Size = new System.Drawing.Size(230, 30);
             this.txtMarca.TabIndex = 2;
-            // 
             // txtModelo
-            // 
             this.txtModelo.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtModelo.Location = new System.Drawing.Point(155, 192);
             this.txtModelo.Name = "txtModelo";
             this.txtModelo.Size = new System.Drawing.Size(230, 30);
             this.txtModelo.TabIndex = 3;
-            // 
             // txtPrecio
-            // 
             this.txtPrecio.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtPrecio.Location = new System.Drawing.Point(155, 232);
             this.txtPrecio.Name = "txtPrecio";
             this.txtPrecio.Size = new System.Drawing.Size(230, 30);
             this.txtPrecio.TabIndex = 4;
-            // 
             // txtStock
-            // 
             this.txtStock.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtStock.Location = new System.Drawing.Point(155, 272);
             this.txtStock.Name = "txtStock";
             this.txtStock.Size = new System.Drawing.Size(230, 30);
             this.txtStock.TabIndex = 5;
-            // 
             // lblBuscar
-            // 
             this.lblBuscar.AutoSize = true;
             this.lblBuscar.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblBuscar.ForeColor = System.Drawing.Color.Teal;
@@ -241,17 +199,13 @@ namespace mb506.BMTech
             this.lblBuscar.Size = new System.Drawing.Size(141, 23);
             this.lblBuscar.TabIndex = 2;
             this.lblBuscar.Text = "Buscar producto";
-            // 
             // txtBuscar
-            // 
             this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtBuscar.Location = new System.Drawing.Point(480, 140);
             this.txtBuscar.Name = "txtBuscar";
             this.txtBuscar.Size = new System.Drawing.Size(330, 30);
             this.txtBuscar.TabIndex = 6;
-            // 
             // btnBuscarProducto
-            // 
             this.btnBuscarProducto.BackColor = System.Drawing.Color.DarkCyan;
             this.btnBuscarProducto.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnBuscarProducto.FlatAppearance.BorderSize = 0;
@@ -265,9 +219,7 @@ namespace mb506.BMTech
             this.btnBuscarProducto.Text = "Buscar";
             this.btnBuscarProducto.UseVisualStyleBackColor = false;
             this.btnBuscarProducto.Click += new System.EventHandler(this.mb506btnBuscarProducto_Click);
-            // 
             // dgvProductos
-            // 
             this.dgvProductos.AllowUserToAddRows = false;
             this.dgvProductos.AllowUserToDeleteRows = false;
             this.dgvProductos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -283,9 +235,7 @@ namespace mb506.BMTech
             this.dgvProductos.Size = new System.Drawing.Size(465, 260);
             this.dgvProductos.TabIndex = 8;
             this.dgvProductos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mb506dgvProductos_CellContentClick);
-            // 
             // btnRegistrarProducto
-            // 
             this.btnRegistrarProducto.BackColor = System.Drawing.Color.Teal;
             this.btnRegistrarProducto.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRegistrarProducto.FlatAppearance.BorderSize = 0;
@@ -299,9 +249,7 @@ namespace mb506.BMTech
             this.btnRegistrarProducto.Text = "Registrar";
             this.btnRegistrarProducto.UseVisualStyleBackColor = false;
             this.btnRegistrarProducto.Click += new System.EventHandler(this.mb506btnRegistrarProducto_Click);
-            // 
             // btnModificarProducto
-            // 
             this.btnModificarProducto.BackColor = System.Drawing.Color.DarkCyan;
             this.btnModificarProducto.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnModificarProducto.FlatAppearance.BorderSize = 0;
@@ -315,9 +263,7 @@ namespace mb506.BMTech
             this.btnModificarProducto.Text = "Modificar";
             this.btnModificarProducto.UseVisualStyleBackColor = false;
             this.btnModificarProducto.Click += new System.EventHandler(this.mb506btnModificarProducto_Click);
-            // 
             // btnCambiarEstadoProducto
-            // 
             this.btnCambiarEstadoProducto.BackColor = System.Drawing.Color.LightSeaGreen;
             this.btnCambiarEstadoProducto.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCambiarEstadoProducto.FlatAppearance.BorderSize = 0;
@@ -331,9 +277,7 @@ namespace mb506.BMTech
             this.btnCambiarEstadoProducto.Text = "Activar/Desactivar";
             this.btnCambiarEstadoProducto.UseVisualStyleBackColor = false;
             this.btnCambiarEstadoProducto.Click += new System.EventHandler(this.mb506btnCambiarEstadoProducto_Click);
-            // 
             // btnLimpiar
-            // 
             this.btnLimpiar.BackColor = System.Drawing.Color.Gray;
             this.btnLimpiar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLimpiar.FlatAppearance.BorderSize = 0;
@@ -347,9 +291,7 @@ namespace mb506.BMTech
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = false;
             this.btnLimpiar.Click += new System.EventHandler(this.mb506btnLimpiar_Click);
-            // 
             // lblMensaje
-            // 
             this.lblMensaje.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.lblMensaje.ForeColor = System.Drawing.Color.Teal;
             this.lblMensaje.Location = new System.Drawing.Point(30, 525);
@@ -358,13 +300,12 @@ namespace mb506.BMTech
             this.lblMensaje.TabIndex = 13;
             this.lblMensaje.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             
-            // 
             // FrmProducto
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ClientSize = new System.Drawing.Size(1000, 570);
+            this.MinimumSize = new System.Drawing.Size(1016, 609);
             this.Controls.Add(this.pnlHeader);
             this.Controls.Add(this.pnlContenido);
             this.Controls.Add(this.lblBuscar);
@@ -388,6 +329,42 @@ namespace mb506.BMTech
             this.pnlContenido.ResumeLayout(false);
             this.pnlContenido.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).EndInit();
+            this.colProductosIdProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colProductosCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colProductosDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colProductosMarca = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colProductosModelo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colProductosPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colProductosStock = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colProductosActivo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colProductosIdProducto.DataPropertyName = "idProducto";
+            this.colProductosIdProducto.HeaderText = "ID";
+            this.colProductosIdProducto.Name = "idProducto";
+            this.colProductosIdProducto.Visible = false;
+            this.colProductosCodigo.DataPropertyName = "codigo";
+            this.colProductosCodigo.HeaderText = "Código";
+            this.colProductosCodigo.Name = "codigo";
+            this.colProductosDescripcion.DataPropertyName = "descripcion";
+            this.colProductosDescripcion.HeaderText = "Descripción";
+            this.colProductosDescripcion.Name = "descripcion";
+            this.colProductosMarca.DataPropertyName = "marca";
+            this.colProductosMarca.HeaderText = "Marca";
+            this.colProductosMarca.Name = "marca";
+            this.colProductosModelo.DataPropertyName = "modelo";
+            this.colProductosModelo.HeaderText = "Modelo";
+            this.colProductosModelo.Name = "modelo";
+            this.colProductosPrecio.DataPropertyName = "precio";
+            this.colProductosPrecio.HeaderText = "Precio";
+            this.colProductosPrecio.Name = "precio";
+            this.colProductosStock.DataPropertyName = "stock";
+            this.colProductosStock.HeaderText = "Stock";
+            this.colProductosStock.Name = "stock";
+            this.colProductosActivo.DataPropertyName = "activo";
+            this.colProductosActivo.HeaderText = "Activo";
+            this.colProductosActivo.Name = "activo";
+            this.dgvProductos.AutoGenerateColumns = false;
+            this.dgvProductos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.colProductosIdProducto, this.colProductosCodigo, this.colProductosDescripcion, this.colProductosMarca, this.colProductosModelo, this.colProductosPrecio, this.colProductosStock, this.colProductosActivo });
+
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -422,7 +399,15 @@ namespace mb506.BMTech
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Label lblMensaje;
 
-        
+        private System.Windows.Forms.DataGridViewTextBoxColumn colProductosIdProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colProductosCodigo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colProductosDescripcion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colProductosMarca;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colProductosModelo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colProductosPrecio;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colProductosStock;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colProductosActivo;
+
     }
     
 }

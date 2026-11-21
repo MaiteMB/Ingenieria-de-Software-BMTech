@@ -1,7 +1,6 @@
 using mb506.BEBMTech.Cliente;
 using mb506.BLLBMTech;
 using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace mb506.BMTech
@@ -12,8 +11,10 @@ namespace mb506.BMTech
 
         public mb506FrmCliente()
         {
-            IdiomasFormulario.mb506Vincular(this);
             InitializeComponent();
+            if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime) return;
+            IdiomasFormulario.mb506Vincular(this);
+            AyudaSistema.mb506Vincular(this);
             bllCliente = new BLLCliente();
             lblMensaje.Text = "";
         }
@@ -95,13 +96,13 @@ namespace mb506.BMTech
 
         private void mb506FrmCliente_Load(object sender, EventArgs e)
         {
-
         }
+
         private void mb506MostrarMensaje(string mensaje, bool correcto)
         {
             lblMensaje.Tag = mensaje;
             lblMensaje.Text = Mensajes.mb506Traducir(mensaje);
-            lblMensaje.ForeColor = correcto ? Color.Teal : Color.Firebrick;
+            mb506ColorMensaje(correcto);
         }
     }
 }

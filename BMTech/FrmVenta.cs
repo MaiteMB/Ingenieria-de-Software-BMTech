@@ -4,7 +4,6 @@ using mb506.BEBMTech.Venta;
 using mb506.BLLBMTech;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace mb506.BMTech
@@ -21,8 +20,10 @@ namespace mb506.BMTech
 
         public mb506FrmVenta()
         {
-            IdiomasFormulario.mb506Vincular(this);
             InitializeComponent();
+            if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime) return;
+            IdiomasFormulario.mb506Vincular(this);
+            AyudaSistema.mb506Vincular(this);
 
             bllCliente = new BLLCliente();
             bllProducto = new BLLProducto();
@@ -33,89 +34,13 @@ namespace mb506.BMTech
             lblMensaje.Text = "";
             lblCliente.Text = "";
             lblTotal.Text = "Total: 0,00";
-
-            mb506ConfigurarGrillaClientes();
-            mb506ConfigurarGrillaProductos();
-            mb506ConfigurarGrillaDetalle();
-            Button quitar = new Button { Text = "Quitar producto", BackColor = Color.Teal, ForeColor = Color.White };
-            quitar.SetBounds(320, 15, 165, 34);
-            quitar.Click += delegate
-            {
-                DetalleVenta detalle = dgvDetalleVenta.CurrentRow == null ? null : dgvDetalleVenta.CurrentRow.DataBoundItem as DetalleVenta;
-                if (detalle == null) return;
-                detallesVenta.Remove(detalle);
-                mb506ActualizarDetalle();
-            };
-            pnlDetalle.Controls.Add(quitar);
-            lblMensaje.MaximumSize = new Size(540, 80);
         }
 
         private void mb506FrmVenta_Load(object sender, EventArgs e)
         {
+            if (DesignMode) return;
             try { mb506CargarClientes(); mb506CargarProductos(); }
             catch (Exception ex) { mb506MostrarMensaje(ex.Message, false); }
-        }
-
-        private void mb506ConfigurarGrillaClientes()
-        {
-            dgvClientes.AutoGenerateColumns = false;
-            dgvClientes.Columns.Clear();
-
-            dgvClientes.Columns.Add("dni", "DNI");
-            dgvClientes.Columns["dni"].DataPropertyName = "dni";
-
-            dgvClientes.Columns.Add("nombre", "Nombre");
-            dgvClientes.Columns["nombre"].DataPropertyName = "nombre";
-
-            dgvClientes.Columns.Add("apellido", "Apellido");
-            dgvClientes.Columns["apellido"].DataPropertyName = "apellido";
-        }
-
-        private void mb506ConfigurarGrillaProductos()
-        {
-            dgvProductos.AutoGenerateColumns = false;
-            dgvProductos.Columns.Clear();
-
-            dgvProductos.Columns.Add("idProducto", "ID");
-            dgvProductos.Columns["idProducto"].DataPropertyName = "idProducto";
-            dgvProductos.Columns["idProducto"].Visible = false;
-
-            dgvProductos.Columns.Add("codigo", "Código");
-            dgvProductos.Columns["codigo"].DataPropertyName = "codigo";
-
-            dgvProductos.Columns.Add("descripcion", "Descripción");
-            dgvProductos.Columns["descripcion"].DataPropertyName = "descripcion";
-
-            dgvProductos.Columns.Add("precio", "Precio");
-            dgvProductos.Columns["precio"].DataPropertyName = "precio";
-
-            dgvProductos.Columns.Add("stock", "Stock");
-            dgvProductos.Columns["stock"].DataPropertyName = "stock";
-        }
-
-        private void mb506ConfigurarGrillaDetalle()
-        {
-            dgvDetalleVenta.AutoGenerateColumns = false;
-            dgvDetalleVenta.Columns.Clear();
-
-            dgvDetalleVenta.Columns.Add("idProducto", "ID");
-            dgvDetalleVenta.Columns["idProducto"].DataPropertyName = "idProducto";
-            dgvDetalleVenta.Columns["idProducto"].Visible = false;
-
-            dgvDetalleVenta.Columns.Add("codigoProducto", "Código");
-            dgvDetalleVenta.Columns["codigoProducto"].DataPropertyName = "codigoProducto";
-
-            dgvDetalleVenta.Columns.Add("descripcionProducto", "Descripción");
-            dgvDetalleVenta.Columns["descripcionProducto"].DataPropertyName = "descripcionProducto";
-
-            dgvDetalleVenta.Columns.Add("cantidad", "Cantidad");
-            dgvDetalleVenta.Columns["cantidad"].DataPropertyName = "cantidad";
-
-            dgvDetalleVenta.Columns.Add("precioUnitario", "Precio");
-            dgvDetalleVenta.Columns["precioUnitario"].DataPropertyName = "precioUnitario";
-
-            dgvDetalleVenta.Columns.Add("subtotal", "Subtotal");
-            dgvDetalleVenta.Columns["subtotal"].DataPropertyName = "subtotal";
         }
 
         private void mb506CargarClientes()
@@ -366,7 +291,15 @@ namespace mb506.BMTech
         {
             lblMensaje.Tag = mensaje;
             lblMensaje.Text = Mensajes.mb506Traducir(mensaje);
-            lblMensaje.ForeColor = correcto ? Color.Teal : Color.Firebrick;
+            mb506ColorMensaje(correcto);
+        }
+
+        private void mb506QuitarProducto(object sender, EventArgs e)
+        {
+            DetalleVenta detalle = dgvDetalleVenta.CurrentRow == null ? null : dgvDetalleVenta.CurrentRow.DataBoundItem as DetalleVenta;
+            if (detalle == null) return;
+            detallesVenta.Remove(detalle);
+            mb506ActualizarDetalle();
         }
     }
 }

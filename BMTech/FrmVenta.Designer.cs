@@ -2,15 +2,8 @@ namespace mb506.BMTech
 {
     partial class mb506FrmVenta
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,12 +13,13 @@ namespace mb506.BMTech
             base.Dispose(disposing);
         }
 
+        private void mb506ColorMensaje(bool correcto)
+        {
+            this.lblMensaje.ForeColor = correcto ? System.Drawing.Color.Teal : System.Drawing.Color.Firebrick;
+        }
+
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             this.pnlHeader = new System.Windows.Forms.Panel();
@@ -62,9 +56,7 @@ namespace mb506.BMTech
             this.pnlDetalle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetalleVenta)).BeginInit();
             this.SuspendLayout();
-            // 
             // pnlHeader
-            // 
             this.pnlHeader.BackColor = System.Drawing.Color.Teal;
             this.pnlHeader.Controls.Add(this.lblSubtitulo);
             this.pnlHeader.Controls.Add(this.lblTitulo);
@@ -73,9 +65,7 @@ namespace mb506.BMTech
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Size = new System.Drawing.Size(1180, 95);
             this.pnlHeader.TabIndex = 0;
-            // 
             // lblSubtitulo
-            // 
             this.lblSubtitulo.AutoSize = true;
             this.lblSubtitulo.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblSubtitulo.ForeColor = System.Drawing.Color.White;
@@ -84,9 +74,7 @@ namespace mb506.BMTech
             this.lblSubtitulo.Size = new System.Drawing.Size(280, 19);
             this.lblSubtitulo.TabIndex = 1;
             this.lblSubtitulo.Text = "Registro de ventas, productos y cantidades";
-            // 
             // lblTitulo
-            // 
             this.lblTitulo.AutoSize = true;
             this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
             this.lblTitulo.ForeColor = System.Drawing.Color.White;
@@ -95,9 +83,7 @@ namespace mb506.BMTech
             this.lblTitulo.Size = new System.Drawing.Size(252, 37);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "Registro de ventas";
-            // 
             // pnlCliente
-            // 
             this.pnlCliente.BackColor = System.Drawing.Color.White;
             this.pnlCliente.Controls.Add(this.dgvClientes);
             this.pnlCliente.Controls.Add(this.lblCliente);
@@ -109,9 +95,7 @@ namespace mb506.BMTech
             this.pnlCliente.Name = "pnlCliente";
             this.pnlCliente.Size = new System.Drawing.Size(520, 255);
             this.pnlCliente.TabIndex = 1;
-            // 
             // dgvClientes
-            // 
             this.dgvClientes.AllowUserToAddRows = false;
             this.dgvClientes.AllowUserToDeleteRows = false;
             this.dgvClientes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -126,7 +110,6 @@ namespace mb506.BMTech
             this.dgvClientes.TabIndex = 5;
             this.dgvClientes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mb506dgvClientes_CellClick);
             // lblCliente
-            // 
             this.lblCliente.AutoSize = true;
             this.lblCliente.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblCliente.ForeColor = System.Drawing.Color.Teal;
@@ -134,9 +117,7 @@ namespace mb506.BMTech
             this.lblCliente.Name = "lblCliente";
             this.lblCliente.Size = new System.Drawing.Size(0, 19);
             this.lblCliente.TabIndex = 4;
-            // 
             // btnBuscarCliente
-            // 
             this.btnBuscarCliente.BackColor = System.Drawing.Color.Teal;
             this.btnBuscarCliente.FlatAppearance.BorderSize = 0;
             this.btnBuscarCliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -149,16 +130,12 @@ namespace mb506.BMTech
             this.btnBuscarCliente.Text = "Buscar";
             this.btnBuscarCliente.UseVisualStyleBackColor = false;
             this.btnBuscarCliente.Click += new System.EventHandler(this.mb506btnBuscarCliente_Click);
-            // 
             // txtDniCliente
-            // 
             this.txtDniCliente.Location = new System.Drawing.Point(145, 58);
             this.txtDniCliente.Name = "txtDniCliente";
             this.txtDniCliente.Size = new System.Drawing.Size(210, 20);
             this.txtDniCliente.TabIndex = 2;
-            // 
             // lblDniCliente
-            // 
             this.lblDniCliente.AutoSize = true;
             this.lblDniCliente.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblDniCliente.Location = new System.Drawing.Point(35, 58);
@@ -166,9 +143,7 @@ namespace mb506.BMTech
             this.lblDniCliente.Size = new System.Drawing.Size(78, 19);
             this.lblDniCliente.TabIndex = 1;
             this.lblDniCliente.Text = "DNI cliente";
-            // 
             // lblDatosCliente
-            // 
             this.lblDatosCliente.AutoSize = true;
             this.lblDatosCliente.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblDatosCliente.ForeColor = System.Drawing.Color.Teal;
@@ -177,9 +152,7 @@ namespace mb506.BMTech
             this.lblDatosCliente.Size = new System.Drawing.Size(164, 25);
             this.lblDatosCliente.TabIndex = 0;
             this.lblDatosCliente.Text = "Datos del cliente";
-            // 
             // pnlProducto
-            // 
             this.pnlProducto.BackColor = System.Drawing.Color.White;
             this.pnlProducto.Controls.Add(this.btnAgregarProducto);
             this.pnlProducto.Controls.Add(this.txtCantidad);
@@ -193,9 +166,7 @@ namespace mb506.BMTech
             this.pnlProducto.Name = "pnlProducto";
             this.pnlProducto.Size = new System.Drawing.Size(555, 330);
             this.pnlProducto.TabIndex = 2;
-            // 
             // btnAgregarProducto
-            // 
             this.btnAgregarProducto.BackColor = System.Drawing.Color.LightSeaGreen;
             this.btnAgregarProducto.FlatAppearance.BorderSize = 0;
             this.btnAgregarProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -208,16 +179,12 @@ namespace mb506.BMTech
             this.btnAgregarProducto.Text = "Agregar";
             this.btnAgregarProducto.UseVisualStyleBackColor = false;
             this.btnAgregarProducto.Click += new System.EventHandler(this.mb506btnAgregarProducto_Click);
-            // 
             // txtCantidad
-            // 
             this.txtCantidad.Location = new System.Drawing.Point(105, 288);
             this.txtCantidad.Name = "txtCantidad";
             this.txtCantidad.Size = new System.Drawing.Size(90, 20);
             this.txtCantidad.TabIndex = 6;
-            // 
             // lblCantidad
-            // 
             this.lblCantidad.AutoSize = true;
             this.lblCantidad.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblCantidad.Location = new System.Drawing.Point(25, 287);
@@ -225,9 +192,7 @@ namespace mb506.BMTech
             this.lblCantidad.Size = new System.Drawing.Size(64, 19);
             this.lblCantidad.TabIndex = 5;
             this.lblCantidad.Text = "Cantidad";
-            // 
             // dgvProductos
-            // 
             this.dgvProductos.AllowUserToAddRows = false;
             this.dgvProductos.AllowUserToDeleteRows = false;
             this.dgvProductos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -241,9 +206,7 @@ namespace mb506.BMTech
             this.dgvProductos.Size = new System.Drawing.Size(495, 165);
             this.dgvProductos.TabIndex = 4;
             this.dgvProductos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mb506dgvProductos_CellContentClick);
-            // 
             // btnBuscarProducto
-            // 
             this.btnBuscarProducto.BackColor = System.Drawing.Color.Teal;
             this.btnBuscarProducto.FlatAppearance.BorderSize = 0;
             this.btnBuscarProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -256,16 +219,12 @@ namespace mb506.BMTech
             this.btnBuscarProducto.Text = "Buscar";
             this.btnBuscarProducto.UseVisualStyleBackColor = false;
             this.btnBuscarProducto.Click += new System.EventHandler(this.mb506btnBuscarProducto_Click);
-            // 
             // txtBuscarProducto
-            // 
             this.txtBuscarProducto.Location = new System.Drawing.Point(25, 62);
             this.txtBuscarProducto.Name = "txtBuscarProducto";
             this.txtBuscarProducto.Size = new System.Drawing.Size(365, 20);
             this.txtBuscarProducto.TabIndex = 2;
-            // 
             // lblBuscarProducto
-            // 
             this.lblBuscarProducto.AutoSize = true;
             this.lblBuscarProducto.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.lblBuscarProducto.ForeColor = System.Drawing.Color.Teal;
@@ -274,9 +233,7 @@ namespace mb506.BMTech
             this.lblBuscarProducto.Size = new System.Drawing.Size(98, 15);
             this.lblBuscarProducto.TabIndex = 1;
             this.lblBuscarProducto.Text = "Buscar producto";
-            // 
             // lblProductos
-            // 
             this.lblProductos.AutoSize = true;
             this.lblProductos.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblProductos.ForeColor = System.Drawing.Color.Teal;
@@ -285,9 +242,7 @@ namespace mb506.BMTech
             this.lblProductos.Size = new System.Drawing.Size(103, 25);
             this.lblProductos.TabIndex = 0;
             this.lblProductos.Text = "Productos";
-            // 
             // pnlDetalle
-            // 
             this.pnlDetalle.BackColor = System.Drawing.Color.White;
             this.pnlDetalle.Controls.Add(this.dgvDetalleVenta);
             this.pnlDetalle.Controls.Add(this.lblDetalle);
@@ -295,9 +250,7 @@ namespace mb506.BMTech
             this.pnlDetalle.Name = "pnlDetalle";
             this.pnlDetalle.Size = new System.Drawing.Size(520, 265);
             this.pnlDetalle.TabIndex = 3;
-            // 
             // dgvDetalleVenta
-            // 
             this.dgvDetalleVenta.AllowUserToAddRows = false;
             this.dgvDetalleVenta.AllowUserToDeleteRows = false;
             this.dgvDetalleVenta.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -310,9 +263,7 @@ namespace mb506.BMTech
             this.dgvDetalleVenta.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvDetalleVenta.Size = new System.Drawing.Size(450, 180);
             this.dgvDetalleVenta.TabIndex = 1;
-            // 
             // lblDetalle
-            // 
             this.lblDetalle.AutoSize = true;
             this.lblDetalle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblDetalle.ForeColor = System.Drawing.Color.Teal;
@@ -321,9 +272,7 @@ namespace mb506.BMTech
             this.lblDetalle.Size = new System.Drawing.Size(153, 25);
             this.lblDetalle.TabIndex = 0;
             this.lblDetalle.Text = "Detalle de venta";
-            // 
             // lblTotal
-            // 
             this.lblTotal.AutoSize = true;
             this.lblTotal.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
             this.lblTotal.ForeColor = System.Drawing.Color.Teal;
@@ -332,9 +281,7 @@ namespace mb506.BMTech
             this.lblTotal.Size = new System.Drawing.Size(116, 30);
             this.lblTotal.TabIndex = 4;
             this.lblTotal.Text = "Total: 0,00";
-            // 
             // btnRegistrarVenta
-            // 
             this.btnRegistrarVenta.BackColor = System.Drawing.Color.Teal;
             this.btnRegistrarVenta.FlatAppearance.BorderSize = 0;
             this.btnRegistrarVenta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -347,9 +294,7 @@ namespace mb506.BMTech
             this.btnRegistrarVenta.Text = "Registrar venta";
             this.btnRegistrarVenta.UseVisualStyleBackColor = false;
             this.btnRegistrarVenta.Click += new System.EventHandler(this.mb506btnRegistrarVenta_Click);
-            // 
             // btnLimpiar
-            // 
             this.btnLimpiar.BackColor = System.Drawing.Color.Gray;
             this.btnLimpiar.FlatAppearance.BorderSize = 0;
             this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -362,9 +307,7 @@ namespace mb506.BMTech
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = false;
             this.btnLimpiar.Click += new System.EventHandler(this.mb506btnLimpiar_Click);
-            // 
             // lblMensaje
-            // 
             this.lblMensaje.AutoSize = true;
             this.lblMensaje.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblMensaje.ForeColor = System.Drawing.Color.Teal;
@@ -372,13 +315,12 @@ namespace mb506.BMTech
             this.lblMensaje.Name = "lblMensaje";
             this.lblMensaje.Size = new System.Drawing.Size(0, 19);
             this.lblMensaje.TabIndex = 7;
-            // 
             // FrmVenta
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(245, 247, 250);
             this.ClientSize = new System.Drawing.Size(1180, 710);
+            this.MinimumSize = new System.Drawing.Size(1196, 749);
             this.Controls.Add(this.lblMensaje);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnRegistrarVenta);
@@ -402,6 +344,81 @@ namespace mb506.BMTech
             this.pnlDetalle.ResumeLayout(false);
             this.pnlDetalle.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetalleVenta)).EndInit();
+            this.colClientesDni = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colClientesNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colClientesApellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colProductosIdProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colProductosCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colProductosDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colProductosPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colProductosStock = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDetalleVentaIdProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDetalleVentaCodigoProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDetalleVentaDescripcionProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDetalleVentaCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDetalleVentaPrecioUnitario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDetalleVentaSubtotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnQuitarProducto = new System.Windows.Forms.Button();
+            this.btnQuitarProducto.Location = new System.Drawing.Point(320, 15);
+            this.btnQuitarProducto.Size = new System.Drawing.Size(165, 34);
+            this.btnQuitarProducto.BackColor = System.Drawing.Color.Teal;
+            this.btnQuitarProducto.ForeColor = System.Drawing.Color.White;
+            this.btnQuitarProducto.UseVisualStyleBackColor = false;
+            this.btnQuitarProducto.Text = "Quitar producto";
+            this.btnQuitarProducto.Name = "btnQuitarProducto";
+            this.colClientesDni.DataPropertyName = "dni";
+            this.colClientesDni.HeaderText = "DNI";
+            this.colClientesDni.Name = "dni";
+            this.colClientesNombre.DataPropertyName = "nombre";
+            this.colClientesNombre.HeaderText = "Nombre";
+            this.colClientesNombre.Name = "nombre";
+            this.colClientesApellido.DataPropertyName = "apellido";
+            this.colClientesApellido.HeaderText = "Apellido";
+            this.colClientesApellido.Name = "apellido";
+            this.colProductosIdProducto.DataPropertyName = "idProducto";
+            this.colProductosIdProducto.HeaderText = "ID";
+            this.colProductosIdProducto.Name = "idProducto";
+            this.colProductosIdProducto.Visible = false;
+            this.colProductosCodigo.DataPropertyName = "codigo";
+            this.colProductosCodigo.HeaderText = "Código";
+            this.colProductosCodigo.Name = "codigo";
+            this.colProductosDescripcion.DataPropertyName = "descripcion";
+            this.colProductosDescripcion.HeaderText = "Descripción";
+            this.colProductosDescripcion.Name = "descripcion";
+            this.colProductosPrecio.DataPropertyName = "precio";
+            this.colProductosPrecio.HeaderText = "Precio";
+            this.colProductosPrecio.Name = "precio";
+            this.colProductosStock.DataPropertyName = "stock";
+            this.colProductosStock.HeaderText = "Stock";
+            this.colProductosStock.Name = "stock";
+            this.colDetalleVentaIdProducto.DataPropertyName = "idProducto";
+            this.colDetalleVentaIdProducto.HeaderText = "ID";
+            this.colDetalleVentaIdProducto.Name = "colDetalleVentaIdProducto";
+            this.colDetalleVentaIdProducto.Visible = false;
+            this.colDetalleVentaCodigoProducto.DataPropertyName = "codigoProducto";
+            this.colDetalleVentaCodigoProducto.HeaderText = "Código";
+            this.colDetalleVentaCodigoProducto.Name = "codigoProducto";
+            this.colDetalleVentaDescripcionProducto.DataPropertyName = "descripcionProducto";
+            this.colDetalleVentaDescripcionProducto.HeaderText = "Descripción";
+            this.colDetalleVentaDescripcionProducto.Name = "descripcionProducto";
+            this.colDetalleVentaCantidad.DataPropertyName = "cantidad";
+            this.colDetalleVentaCantidad.HeaderText = "Cantidad";
+            this.colDetalleVentaCantidad.Name = "cantidad";
+            this.colDetalleVentaPrecioUnitario.DataPropertyName = "precioUnitario";
+            this.colDetalleVentaPrecioUnitario.HeaderText = "Precio";
+            this.colDetalleVentaPrecioUnitario.Name = "precioUnitario";
+            this.colDetalleVentaSubtotal.DataPropertyName = "subtotal";
+            this.colDetalleVentaSubtotal.HeaderText = "Subtotal";
+            this.colDetalleVentaSubtotal.Name = "subtotal";
+            this.dgvClientes.AutoGenerateColumns = false;
+            this.dgvClientes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.colClientesDni, this.colClientesNombre, this.colClientesApellido });
+            this.dgvProductos.AutoGenerateColumns = false;
+            this.dgvProductos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.colProductosIdProducto, this.colProductosCodigo, this.colProductosDescripcion, this.colProductosPrecio, this.colProductosStock });
+            this.dgvDetalleVenta.AutoGenerateColumns = false;
+            this.dgvDetalleVenta.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.colDetalleVentaIdProducto, this.colDetalleVentaCodigoProducto, this.colDetalleVentaDescripcionProducto, this.colDetalleVentaCantidad, this.colDetalleVentaPrecioUnitario, this.colDetalleVentaSubtotal });
+            this.lblMensaje.MaximumSize = new System.Drawing.Size(540, 80);
+            this.pnlDetalle.Controls.Add(this.btnQuitarProducto);
+            this.btnQuitarProducto.Click += new System.EventHandler(this.mb506QuitarProducto);
             this.ResumeLayout(false);
             this.PerformLayout();
         }
@@ -434,8 +451,22 @@ namespace mb506.BMTech
         private System.Windows.Forms.Button btnRegistrarVenta;
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Label lblMensaje;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colClientesDni;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colClientesNombre;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colClientesApellido;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colProductosIdProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colProductosCodigo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colProductosDescripcion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colProductosPrecio;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colProductosStock;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDetalleVentaIdProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDetalleVentaCodigoProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDetalleVentaDescripcionProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDetalleVentaCantidad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDetalleVentaPrecioUnitario;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDetalleVentaSubtotal;
+        private System.Windows.Forms.Button btnQuitarProducto;
+
     }
 
-
 }
-

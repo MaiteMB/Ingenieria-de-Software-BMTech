@@ -2,7 +2,6 @@ using mb506.BEBMTech.Producto;
 using mb506.BLLBMTech;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
 using System.Globalization;
 
@@ -10,50 +9,18 @@ namespace mb506.BMTech
 {
     public partial class mb506FrmProducto : Form
     {
-      
         private BLLProducto bllProducto;
         private int idProductoSeleccionado = 0;
         private bool productoActivoSeleccionado = true;
 
         public mb506FrmProducto()
         {
-            IdiomasFormulario.mb506Vincular(this);
             InitializeComponent();
+            if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime) return;
+            IdiomasFormulario.mb506Vincular(this);
+            AyudaSistema.mb506Vincular(this);
             bllProducto = new BLLProducto();
             lblMensaje.Text = "";
-
-            mb506ConfigurarGrilla();
-        }
-
-        private void mb506ConfigurarGrilla()
-        {
-            dgvProductos.AutoGenerateColumns = false;
-            dgvProductos.Columns.Clear();
-
-            dgvProductos.Columns.Add("idProducto", "ID");
-            dgvProductos.Columns["idProducto"].DataPropertyName = "idProducto";
-            dgvProductos.Columns["idProducto"].Visible = false;
-
-            dgvProductos.Columns.Add("codigo", "Código");
-            dgvProductos.Columns["codigo"].DataPropertyName = "codigo";
-
-            dgvProductos.Columns.Add("descripcion", "Descripción");
-            dgvProductos.Columns["descripcion"].DataPropertyName = "descripcion";
-
-            dgvProductos.Columns.Add("marca", "Marca");
-            dgvProductos.Columns["marca"].DataPropertyName = "marca";
-
-            dgvProductos.Columns.Add("modelo", "Modelo");
-            dgvProductos.Columns["modelo"].DataPropertyName = "modelo";
-
-            dgvProductos.Columns.Add("precio", "Precio");
-            dgvProductos.Columns["precio"].DataPropertyName = "precio";
-
-            dgvProductos.Columns.Add("stock", "Stock");
-            dgvProductos.Columns["stock"].DataPropertyName = "stock";
-
-            dgvProductos.Columns.Add("activo", "Activo");
-            dgvProductos.Columns["activo"].DataPropertyName = "activo";
         }
 
         private void mb506btnRegistrarProducto_Click(object sender, EventArgs e)
@@ -242,11 +209,12 @@ namespace mb506.BMTech
         {
             lblMensaje.Tag = mensaje;
             lblMensaje.Text = Mensajes.mb506Traducir(mensaje);
-            lblMensaje.ForeColor = correcto ? Color.Teal : Color.Firebrick;
+            mb506ColorMensaje(correcto);
         }
 
         private void mb506FrmProducto_Load(object sender, EventArgs e)
         {
+            if (DesignMode) return;
             try
             {
                 mb506BuscarProductos();

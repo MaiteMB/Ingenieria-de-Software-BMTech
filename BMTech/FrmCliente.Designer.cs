@@ -2,15 +2,8 @@ namespace mb506.BMTech
 {
     partial class mb506FrmCliente
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,12 +13,13 @@ namespace mb506.BMTech
             base.Dispose(disposing);
         }
 
+        private void mb506ColorMensaje(bool correcto)
+        {
+            this.lblMensaje.ForeColor = correcto ? System.Drawing.Color.Teal : System.Drawing.Color.Firebrick;
+        }
+
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             this.pnlHeader = new System.Windows.Forms.Panel();
@@ -50,9 +44,7 @@ namespace mb506.BMTech
             this.pnlHeader.SuspendLayout();
             this.pnlContenido.SuspendLayout();
             this.SuspendLayout();
-            // 
             // pnlHeader
-            // 
             this.pnlHeader.BackColor = System.Drawing.Color.Teal;
             this.pnlHeader.Controls.Add(this.lblTitulo);
             this.pnlHeader.Controls.Add(this.lblSubtitulo);
@@ -60,9 +52,7 @@ namespace mb506.BMTech
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Size = new System.Drawing.Size(800, 80);
             this.pnlHeader.TabIndex = 0;
-            // 
             // lblTitulo
-            // 
             this.lblTitulo.AutoSize = true;
             this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
             this.lblTitulo.ForeColor = System.Drawing.Color.White;
@@ -71,9 +61,7 @@ namespace mb506.BMTech
             this.lblTitulo.Size = new System.Drawing.Size(248, 41);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "Registrar cliente";
-            // 
             // lblSubtitulo
-            // 
             this.lblSubtitulo.AutoSize = true;
             this.lblSubtitulo.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblSubtitulo.ForeColor = System.Drawing.Color.White;
@@ -82,9 +70,7 @@ namespace mb506.BMTech
             this.lblSubtitulo.Size = new System.Drawing.Size(211, 20);
             this.lblSubtitulo.TabIndex = 1;
             this.lblSubtitulo.Text = "Gestión de clientes de BMTech";
-            // 
             // pnlContenido
-            // 
             this.pnlContenido.BackColor = System.Drawing.Color.White;
             this.pnlContenido.Controls.Add(this.lblDatosCliente);
             this.pnlContenido.Controls.Add(this.lblDni);
@@ -101,9 +87,7 @@ namespace mb506.BMTech
             this.pnlContenido.Name = "pnlContenido";
             this.pnlContenido.Size = new System.Drawing.Size(700, 285);
             this.pnlContenido.TabIndex = 1;
-            // 
             // lblDatosCliente
-            // 
             this.lblDatosCliente.AutoSize = true;
             this.lblDatosCliente.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblDatosCliente.ForeColor = System.Drawing.Color.Teal;
@@ -112,9 +96,7 @@ namespace mb506.BMTech
             this.lblDatosCliente.Size = new System.Drawing.Size(205, 32);
             this.lblDatosCliente.TabIndex = 0;
             this.lblDatosCliente.Text = "Datos del cliente";
-            // 
             // lblDni
-            // 
             this.lblDni.AutoSize = true;
             this.lblDni.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblDni.Location = new System.Drawing.Point(40, 80);
@@ -122,9 +104,7 @@ namespace mb506.BMTech
             this.lblDni.Size = new System.Drawing.Size(40, 23);
             this.lblDni.TabIndex = 1;
             this.lblDni.Text = "DNI";
-            // 
             // lblNombre
-            // 
             this.lblNombre.AutoSize = true;
             this.lblNombre.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblNombre.Location = new System.Drawing.Point(40, 118);
@@ -132,9 +112,7 @@ namespace mb506.BMTech
             this.lblNombre.Size = new System.Drawing.Size(73, 23);
             this.lblNombre.TabIndex = 2;
             this.lblNombre.Text = "Nombre";
-            // 
             // lblApellido
-            // 
             this.lblApellido.AutoSize = true;
             this.lblApellido.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblApellido.Location = new System.Drawing.Point(40, 156);
@@ -142,9 +120,7 @@ namespace mb506.BMTech
             this.lblApellido.Size = new System.Drawing.Size(72, 23);
             this.lblApellido.TabIndex = 3;
             this.lblApellido.Text = "Apellido";
-            // 
             // lblTelefono
-            // 
             this.lblTelefono.AutoSize = true;
             this.lblTelefono.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblTelefono.Location = new System.Drawing.Point(40, 194);
@@ -152,9 +128,7 @@ namespace mb506.BMTech
             this.lblTelefono.Size = new System.Drawing.Size(74, 23);
             this.lblTelefono.TabIndex = 4;
             this.lblTelefono.Text = "Teléfono";
-            // 
             // lblCorreoElectronico
-            // 
             this.lblCorreoElectronico.AutoSize = true;
             this.lblCorreoElectronico.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblCorreoElectronico.Location = new System.Drawing.Point(40, 232);
@@ -162,49 +136,37 @@ namespace mb506.BMTech
             this.lblCorreoElectronico.Size = new System.Drawing.Size(151, 23);
             this.lblCorreoElectronico.TabIndex = 5;
             this.lblCorreoElectronico.Text = "Correo electrónico";
-            // 
             // txtDni
-            // 
             this.txtDni.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtDni.Location = new System.Drawing.Point(210, 76);
             this.txtDni.Name = "txtDni";
             this.txtDni.Size = new System.Drawing.Size(420, 30);
             this.txtDni.TabIndex = 0;
-            // 
             // txtNombre
-            // 
             this.txtNombre.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtNombre.Location = new System.Drawing.Point(210, 114);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(420, 30);
             this.txtNombre.TabIndex = 1;
-            // 
             // txtApellido
-            // 
             this.txtApellido.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtApellido.Location = new System.Drawing.Point(210, 152);
             this.txtApellido.Name = "txtApellido";
             this.txtApellido.Size = new System.Drawing.Size(420, 30);
             this.txtApellido.TabIndex = 2;
-            // 
             // txtTelefono
-            // 
             this.txtTelefono.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtTelefono.Location = new System.Drawing.Point(210, 190);
             this.txtTelefono.Name = "txtTelefono";
             this.txtTelefono.Size = new System.Drawing.Size(420, 30);
             this.txtTelefono.TabIndex = 3;
-            // 
             // txtCorreoElectronico
-            // 
             this.txtCorreoElectronico.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtCorreoElectronico.Location = new System.Drawing.Point(210, 228);
             this.txtCorreoElectronico.Name = "txtCorreoElectronico";
             this.txtCorreoElectronico.Size = new System.Drawing.Size(420, 30);
             this.txtCorreoElectronico.TabIndex = 4;
-            // 
             // btnBuscarCliente
-            // 
             this.btnBuscarCliente.BackColor = System.Drawing.Color.DarkSlateGray;
             this.btnBuscarCliente.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnBuscarCliente.FlatAppearance.BorderSize = 0;
@@ -218,9 +180,7 @@ namespace mb506.BMTech
             this.btnBuscarCliente.Text = "Buscar cliente";
             this.btnBuscarCliente.UseVisualStyleBackColor = false;
             this.btnBuscarCliente.Click += new System.EventHandler(this.mb506btnBuscarCliente_Click);
-            // 
             // btnRegistrarCliente
-            // 
             this.btnRegistrarCliente.BackColor = System.Drawing.Color.Teal;
             this.btnRegistrarCliente.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRegistrarCliente.FlatAppearance.BorderSize = 0;
@@ -234,9 +194,7 @@ namespace mb506.BMTech
             this.btnRegistrarCliente.Text = "Registrar cliente";
             this.btnRegistrarCliente.UseVisualStyleBackColor = false;
             this.btnRegistrarCliente.Click += new System.EventHandler(this.mb506btnRegistrarCliente_Click);
-            // 
             // btnLimpiar
-            // 
             this.btnLimpiar.BackColor = System.Drawing.Color.LightSeaGreen;
             this.btnLimpiar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLimpiar.FlatAppearance.BorderSize = 0;
@@ -250,9 +208,7 @@ namespace mb506.BMTech
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = false;
             this.btnLimpiar.Click += new System.EventHandler(this.mb506btnLimpiar_Click);
-            // 
             // lblMensaje
-            // 
             this.lblMensaje.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.lblMensaje.ForeColor = System.Drawing.Color.Teal;
             this.lblMensaje.Location = new System.Drawing.Point(50, 475);
@@ -260,13 +216,12 @@ namespace mb506.BMTech
             this.lblMensaje.Size = new System.Drawing.Size(700, 25);
             this.lblMensaje.TabIndex = 8;
             this.lblMensaje.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // FrmCliente
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ClientSize = new System.Drawing.Size(800, 520);
+            this.MinimumSize = new System.Drawing.Size(816, 559);
             this.Controls.Add(this.pnlHeader);
             this.Controls.Add(this.pnlContenido);
             this.Controls.Add(this.btnBuscarCliente);
