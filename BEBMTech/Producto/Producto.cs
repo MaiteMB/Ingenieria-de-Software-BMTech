@@ -14,6 +14,24 @@ namespace mb506.BEBMTech.Producto
 
         public Producto() { }
 
+        public mb506.BEBMTech.Cambios.VersionCambio mb506CrearVersion()
+        {
+            return new mb506.BEBMTech.Cambios.VersionCambio(this);
+        }
+
+        public void mb506RestaurarVersion(mb506.BEBMTech.Cambios.VersionCambio version)
+        {
+            if (version == null || version.idProducto != idProducto)
+                throw new System.Exception("La version no corresponde al producto.");
+            codigo = version.codigo;
+            descripcion = version.descripcion;
+            marca = version.marca;
+            modelo = version.modelo;
+            precio = version.precio;
+            stock = version.stock;
+            activo = version.activo;
+        }
+
         public Producto(int idProducto, string codigo, string descripcion, string marca, string modelo, decimal precio, int stock)
         {
             this.idProducto = idProducto;

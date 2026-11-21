@@ -15,15 +15,22 @@ namespace mb506.BLLBMTech
             bllLog = new BLLLog();
         }
 
-        public List<VersionCambio> mb506ObtenerTodasLasVersionesProducto()
+        private void mb506ValidarAcceso()
         {
             new BLLPermiso().mb506Validar("SEGURIDAD");
+            if (!new mb506.DALBMTech.DALIntegridad().mb506VerificarTablas("Producto", "HistorialCambiosProducto"))
+                throw new Exception("Revise la integridad de los productos y sus versiones.");
+        }
+
+        public List<VersionCambio> mb506ObtenerTodasLasVersionesProducto()
+        {
+            mb506ValidarAcceso();
             return dalCambios.mb506ObtenerTodasLasVersionesProducto();
         }
 
         public List<VersionCambio> mb506ObtenerVersionesProducto(int idProducto)
         {
-            new BLLPermiso().mb506Validar("SEGURIDAD");
+            mb506ValidarAcceso();
             if (idProducto <= 0)
             {
                 throw new Exception("Debe seleccionar un producto.");
@@ -34,7 +41,7 @@ namespace mb506.BLLBMTech
 
         public VersionCambio mb506ObtenerVersion(int idHistorial)
         {
-            new BLLPermiso().mb506Validar("SEGURIDAD");
+            mb506ValidarAcceso();
             if (idHistorial <= 0)
             {
                 throw new Exception("Debe seleccionar una versión.");
@@ -45,7 +52,7 @@ namespace mb506.BLLBMTech
 
         public bool mb506RestaurarProducto(int idHistorial)
         {
-            new BLLPermiso().mb506Validar("SEGURIDAD");
+            mb506ValidarAcceso();
             if (idHistorial <= 0)
             {
                 throw new Exception("Debe seleccionar una versión.");

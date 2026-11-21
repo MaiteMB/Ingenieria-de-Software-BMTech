@@ -2,7 +2,6 @@ using mb506.BEBMTech.Cambios;
 using mb506.BLLBMTech;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace mb506.BMTech
@@ -14,73 +13,19 @@ namespace mb506.BMTech
 
         public mb506FrmControlCambiosProducto()
         {
-            IdiomasFormulario.mb506Vincular(this);
             InitializeComponent();
+            if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime) return;
+            IdiomasFormulario.mb506Vincular(this);
+            AyudaSistema.mb506Vincular(this);
             bllCambios = new BLLCambios();
             lblMensaje.Text = "";
-            mb506ConfigurarGrillaVersiones();
-            mb506ConfigurarGrillaDetalle();
         }
 
         private void mb506FrmControlCambiosProducto_Load(object sender, EventArgs e)
         {
+            if (DesignMode) return;
             try { mb506CargarVersiones(); }
             catch (Exception ex) { mb506MostrarMensaje(ex.Message, false); }
-        }
-
-        private void mb506ConfigurarGrillaVersiones()
-        {
-            dgvVersiones.AutoGenerateColumns = false;
-            dgvVersiones.Columns.Clear();
-
-            dgvVersiones.Columns.Add("idHistorial", "Historial");
-            dgvVersiones.Columns["idHistorial"].DataPropertyName = "idHistorial";
-            dgvVersiones.Columns["idHistorial"].Visible = false;
-
-            dgvVersiones.Columns.Add("idProducto", "Producto");
-            dgvVersiones.Columns["idProducto"].DataPropertyName = "idProducto";
-
-            dgvVersiones.Columns.Add("codigo", "Código");
-            dgvVersiones.Columns["codigo"].DataPropertyName = "codigo";
-
-            dgvVersiones.Columns.Add("descripcion", "Descripción");
-            dgvVersiones.Columns["descripcion"].DataPropertyName = "descripcion";
-
-            dgvVersiones.Columns.Add("fecha", "Fecha");
-            dgvVersiones.Columns["fecha"].DataPropertyName = "fecha";
-            dgvVersiones.Columns["fecha"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm:ss";
-            dgvVersiones.Columns.Add("usuario", "Usuario");
-            dgvVersiones.Columns["usuario"].DataPropertyName = "usuario";
-
-            dgvVersiones.Columns.Add("accion", "Acción");
-            dgvVersiones.Columns["accion"].DataPropertyName = "accion";
-        }
-
-        private void mb506ConfigurarGrillaDetalle()
-        {
-            dgvDetalle.AutoGenerateColumns = false;
-            dgvDetalle.Columns.Clear();
-
-            dgvDetalle.Columns.Add("codigo", "Código");
-            dgvDetalle.Columns["codigo"].DataPropertyName = "codigo";
-
-            dgvDetalle.Columns.Add("descripcion", "Descripción");
-            dgvDetalle.Columns["descripcion"].DataPropertyName = "descripcion";
-
-            dgvDetalle.Columns.Add("marca", "Marca");
-            dgvDetalle.Columns["marca"].DataPropertyName = "marca";
-
-            dgvDetalle.Columns.Add("modelo", "Modelo");
-            dgvDetalle.Columns["modelo"].DataPropertyName = "modelo";
-
-            dgvDetalle.Columns.Add("precio", "Precio");
-            dgvDetalle.Columns["precio"].DataPropertyName = "precio";
-
-            dgvDetalle.Columns.Add("stock", "Stock");
-            dgvDetalle.Columns["stock"].DataPropertyName = "stock";
-
-            dgvDetalle.Columns.Add("activo", "Activo");
-            dgvDetalle.Columns["activo"].DataPropertyName = "activo";
         }
 
         private void mb506CargarVersiones()
@@ -167,7 +112,7 @@ namespace mb506.BMTech
         {
             lblMensaje.Tag = mensaje;
             lblMensaje.Text = Mensajes.mb506Traducir(mensaje);
-            lblMensaje.ForeColor = correcto ? Color.Teal : Color.Firebrick;
+            mb506ColorMensaje(correcto);
         }
     }
 }
