@@ -1,6 +1,5 @@
 using System;
 using System.Data;
-using System.Drawing;
 using System.Drawing.Printing;
 using System.Text;
 using System.Windows.Forms;
@@ -8,44 +7,22 @@ using mb506.BLLBMTech;
 
 namespace mb506.BMTech
 {
-    public class mb506FrmComprobante : Form
+    public partial class mb506FrmComprobante : Form
     {
-        private TextBox txtComprobante = new TextBox();
         private int idVenta;
         private string texto;
 
-        public mb506FrmComprobante() : this(0) { }
-
-        public mb506FrmComprobante(int venta)
+        public mb506FrmComprobante()
         {
+            InitializeComponent();
+            if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime) return;
             IdiomasFormulario.mb506Vincular(this);
+            AyudaSistema.mb506Vincular(this);
+        }
+
+        public mb506FrmComprobante(int venta) : this()
+        {
             idVenta = venta;
-            Text = "Comprobante de venta";
-            ClientSize = new Size(740, 640);
-            StartPosition = FormStartPosition.CenterParent;
-            txtComprobante.Multiline = true;
-            txtComprobante.ReadOnly = true;
-            txtComprobante.ScrollBars = ScrollBars.Both;
-            txtComprobante.WordWrap = false;
-            txtComprobante.Font = new Font("Consolas", 10);
-            txtComprobante.SetBounds(20, 20, 700, 540);
-            txtComprobante.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
-            Button imprimir = new Button { Text = "Imprimir", BackColor = Color.Teal, ForeColor = Color.White };
-            imprimir.SetBounds(20, 580, 130, 36);
-            imprimir.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
-            imprimir.Click += mb506Imprimir;
-            Controls.AddRange(new Control[] { txtComprobante, imprimir });
-            string[] nombres = { "Guardar PDF", "Exportar XML" };
-            for (int i = 0; i < nombres.Length; i++)
-            {
-                Button boton = new Button { Text = nombres[i], BackColor = Color.Teal, ForeColor = Color.White };
-                boton.SetBounds(170 + i * 170, 580, 150, 36);
-                boton.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
-                bool pdf = i == 0;
-                boton.Click += delegate { mb506Exportar(pdf); };
-                Controls.Add(boton);
-            }
-            Load += mb506Cargar;
         }
 
         private void mb506Exportar(bool pdf)
@@ -68,6 +45,7 @@ namespace mb506.BMTech
 
         private void mb506Cargar(object sender, EventArgs e)
         {
+            if (DesignMode) return;
             try
             {
                 BLLVenta bll = new BLLVenta();
@@ -96,17 +74,13 @@ namespace mb506.BMTech
             {
                 using (PrintDocument documento = new PrintDocument())
                 using (PrintDialog dialogo = new PrintDialog())
-                using (Font fuente = new Font("Consolas", 10))
                 {
                     string pendiente = texto;
                     documento.DocumentName = "BMTech - Venta " + idVenta;
                     documento.PrintPage += delegate(object origen, PrintPageEventArgs pagina)
                     {
-                        int caracteres, lineas;
-                        pagina.Graphics.MeasureString(pendiente, fuente, pagina.MarginBounds.Size, StringFormat.GenericTypographic,
-                            out caracteres, out lineas);
-                        pagina.Graphics.DrawString(pendiente.Substring(0, caracteres), fuente, Brushes.Black,
-                            pagina.MarginBounds, StringFormat.GenericTypographic);
+                        int caracteres;
+                        mb506DibujarPagina(pagina, pendiente, out caracteres);
                         pendiente = pendiente.Substring(caracteres);
                         pagina.HasMorePages = pendiente.Length > 0;
                     };
@@ -114,6 +88,53 @@ namespace mb506.BMTech
                     if (dialogo.ShowDialog(this) == DialogResult.OK) documento.Print();
                 }
             }
+            catch (Exception ex) { Mensajes.mb506Mostrar(ex.Message); }
+        }
+
+        private void mb506GuardarPdf(object sender, EventArgs e)
+        {
+            mb506Exportar(true);
+        }
+
+        private void mb506GuardarXml(object sender, EventArgs e)
+        {
+            mb506Exportar(false);
+        }
+
+        private void mb506ImportarXml(object sender, EventArgs e)
+        {
+            try
+            {
+                using (OpenFileDialog dialogo = new OpenFileDialog { Filter = "XML (*.xml)|*.xml" })
+                {
+                    if (dialogo.ShowDialog(this) != DialogResult.OK) return;
+
+                    // Se lee el archivo y se compara con el comprobante guardado
+                    var leido = ExportacionComprobante.mb506LeerXml(dialogo.FileName);
+                    var guardado = new BLLVenta().mb506ObtenerComprobante(leido.idVenta);
+
+                    StringBuilder resultado = new StringBuilder();
+                    resultado.AppendLine(Mensajes.mb506Traducir("Datos recuperados del archivo XML"));
+                    resultado.AppendLine(Mensajes.mb506Traducir("Comprobante: ") + leido.idComprobante + Mensajes.mb506Traducir("   Venta: ") + leido.idVenta);
+                    resultado.AppendLine(Mensajes.mb506Traducir("Fecha: ") + leido.fecha.ToString("dd/MM/yyyy HH:mm"));
+                    resultado.AppendLine(Mensajes.mb506Traducir("Cliente: ") + leido.cliente + "   DNI: " + leido.dniCliente);
+                    resultado.AppendLine(Mensajes.mb506Traducir("Vendedor: ") + leido.vendedor);
+                    resultado.AppendLine(new string('-', 65));
+                    foreach (var detalle in leido.detalles)
+                        resultado.AppendLine(detalle.codigoProducto + " - " + detalle.descripcionProducto + " | " + detalle.cantidad +
+                            " x " + detalle.precioUnitario.ToString("N2") + " = " + detalle.subtotal.ToString("N2"));
+                    resultado.AppendLine(new string('-', 65));
+                    resultado.AppendLine(Mensajes.mb506Traducir("TOTAL: ") + leido.total.ToString("N2"));
+                    txtComprobante.Text = resultado.ToString();
+
+                    bool coincide = leido.idComprobante == guardado.idComprobante && leido.total == guardado.total &&
+                        leido.dniCliente == guardado.dniCliente && leido.detalles.Count == guardado.detalles.Count;
+                    new BLLLog().mb506RegistrarEvento("Comprobante importado de venta: " + leido.idVenta, "Ventas", 1);
+                    if (coincide) Mensajes.mb506Mostrar("Los datos del archivo coinciden con el comprobante registrado.");
+                    else Mensajes.mb506Mostrar("Los datos del archivo no coinciden con el comprobante registrado.");
+                }
+            }
+            catch (InvalidOperationException) { Mensajes.mb506Mostrar("El archivo no es un comprobante de venta valido."); }
             catch (Exception ex) { Mensajes.mb506Mostrar(ex.Message); }
         }
     }

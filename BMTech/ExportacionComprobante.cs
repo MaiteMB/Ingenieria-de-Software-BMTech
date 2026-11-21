@@ -15,11 +15,24 @@ namespace mb506.BMTech
             using (FileStream archivo = File.Create(ruta)) serializador.Serialize(archivo, comprobante);
         }
 
-        public static void mb506GuardarPdf(string texto, string ruta)
+        public static Comprobante mb506LeerXml(string ruta)
+        {
+            XmlSerializer serializador = new XmlSerializer(typeof(Comprobante));
+            using (FileStream archivo = File.OpenRead(ruta)) return (Comprobante)serializador.Deserialize(archivo);
+        }
+
+        public static void mb506GuardarXmlServicio(mb506.BEBMTech.ServicioTecnico.ComprobanteServicio comprobante, string ruta)
+        {
+            if (comprobante == null) throw new ArgumentNullException("comprobante");
+            XmlSerializer serializador = new XmlSerializer(typeof(mb506.BEBMTech.ServicioTecnico.ComprobanteServicio));
+            using (FileStream archivo = File.Create(ruta)) serializador.Serialize(archivo, comprobante);
+        }
+
+        public static void mb506GuardarPdf(string texto, string ruta, string titulo = "BMTech - Comprobante interno")
         {
             using (PdfDocument documento = new PdfDocument())
             {
-                documento.Info.Title = "BMTech - Comprobante interno";
+                documento.Info.Title = titulo;
                 XFont fuente = new XFont("Consolas", 10, XFontStyleEx.Regular);
                 PdfPage pagina = documento.AddPage();
                 XGraphics dibujo = XGraphics.FromPdfPage(pagina);
