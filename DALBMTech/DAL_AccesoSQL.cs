@@ -11,9 +11,11 @@ namespace mb506.DALBMTech
         private DAL_AccesoSQL()
         {
             string servidor = System.Environment.GetEnvironmentVariable("BMTECH_SQL_SERVER");
+            if (string.IsNullOrWhiteSpace(servidor)) servidor = System.Configuration.ConfigurationManager.AppSettings["ServidorSql"];
             SqlConnectionStringBuilder configuracion = new SqlConnectionStringBuilder();
             configuracion.DataSource = string.IsNullOrWhiteSpace(servidor) ? "Maite15\\MSSQLSERVER01" : servidor;
-            configuracion.InitialCatalog = "BMTech";
+            string baseDatos = System.Environment.GetEnvironmentVariable("BMTECH_SQL_DATABASE");
+            configuracion.InitialCatalog = string.IsNullOrWhiteSpace(baseDatos) ? "BMTech" : baseDatos;
             configuracion.IntegratedSecurity = true;
             configuracion.ConnectTimeout = 10;
             connectionString = configuracion.ConnectionString;

@@ -13,6 +13,11 @@ namespace mb506.BMTech
             base.Dispose(disposing);
         }
 
+        private void mb506ColorMensaje(bool correcto)
+        {
+            this.lblMensaje.ForeColor = correcto ? System.Drawing.Color.Teal : System.Drawing.Color.Firebrick;
+        }
+
         #region Windows Form Designer generated code
 
         private void InitializeComponent()
@@ -33,9 +38,7 @@ namespace mb506.BMTech
             this.pnlHeader.SuspendLayout();
             this.pnlLogin.SuspendLayout();
             this.SuspendLayout();
-            // 
             // pnlHeader
-            // 
             this.pnlHeader.BackColor = System.Drawing.Color.Teal;
             this.pnlHeader.Controls.Add(this.lblSubtitulo);
             this.pnlHeader.Controls.Add(this.lblTitulo);
@@ -44,9 +47,7 @@ namespace mb506.BMTech
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Size = new System.Drawing.Size(620, 115);
             this.pnlHeader.TabIndex = 0;
-            // 
             // lblSubtitulo
-            // 
             this.lblSubtitulo.AutoSize = true;
             this.lblSubtitulo.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblSubtitulo.ForeColor = System.Drawing.Color.White;
@@ -55,9 +56,7 @@ namespace mb506.BMTech
             this.lblSubtitulo.Size = new System.Drawing.Size(280, 19);
             this.lblSubtitulo.TabIndex = 1;
             this.lblSubtitulo.Text = "Sistema de gestión comercial para BMTech";
-            // 
             // lblTitulo
-            // 
             this.lblTitulo.AutoSize = true;
             this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.lblTitulo.ForeColor = System.Drawing.Color.White;
@@ -66,9 +65,7 @@ namespace mb506.BMTech
             this.lblTitulo.Size = new System.Drawing.Size(143, 45);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "BMTech";
-            // 
             // pnlLogin
-            // 
             this.pnlLogin.BackColor = System.Drawing.Color.White;
             this.pnlLogin.Controls.Add(this.chkMostrarPassword);
             this.pnlLogin.Controls.Add(this.lblMensaje);
@@ -83,9 +80,7 @@ namespace mb506.BMTech
             this.pnlLogin.Name = "pnlLogin";
             this.pnlLogin.Size = new System.Drawing.Size(460, 310);
             this.pnlLogin.TabIndex = 1;
-            // 
             // chkMostrarPassword
-            // 
             this.chkMostrarPassword.AutoSize = true;
             this.chkMostrarPassword.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.chkMostrarPassword.Location = new System.Drawing.Point(145, 162);
@@ -95,9 +90,7 @@ namespace mb506.BMTech
             this.chkMostrarPassword.Text = "Mostrar contraseña";
             this.chkMostrarPassword.UseVisualStyleBackColor = true;
             this.chkMostrarPassword.CheckedChanged += new System.EventHandler(this.mb506chkMostrarPassword_CheckedChanged);
-            // 
             // lblMensaje
-            // 
             this.lblMensaje.AutoSize = true;
             this.lblMensaje.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.lblMensaje.ForeColor = System.Drawing.Color.Firebrick;
@@ -105,9 +98,7 @@ namespace mb506.BMTech
             this.lblMensaje.Name = "lblMensaje";
             this.lblMensaje.Size = new System.Drawing.Size(0, 15);
             this.lblMensaje.TabIndex = 7;
-            // 
             // btnSalir
-            // 
             this.btnSalir.BackColor = System.Drawing.Color.Gray;
             this.btnSalir.FlatAppearance.BorderSize = 0;
             this.btnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -120,9 +111,7 @@ namespace mb506.BMTech
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = false;
             this.btnSalir.Click += new System.EventHandler(this.mb506btnSalir_Click);
-            // 
             // btnIngresar
-            // 
             this.btnIngresar.BackColor = System.Drawing.Color.Teal;
             this.btnIngresar.FlatAppearance.BorderSize = 0;
             this.btnIngresar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -135,17 +124,13 @@ namespace mb506.BMTech
             this.btnIngresar.Text = "Ingresar";
             this.btnIngresar.UseVisualStyleBackColor = false;
             this.btnIngresar.Click += new System.EventHandler(this.mb506btnIngresar_Click);
-            // 
             // txtPassword
-            // 
             this.txtPassword.Location = new System.Drawing.Point(145, 125);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(235, 20);
             this.txtPassword.TabIndex = 4;
-            // 
             // lblPassword
-            // 
             this.lblPassword.AutoSize = true;
             this.lblPassword.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblPassword.Location = new System.Drawing.Point(55, 125);
@@ -153,16 +138,12 @@ namespace mb506.BMTech
             this.lblPassword.Size = new System.Drawing.Size(78, 19);
             this.lblPassword.TabIndex = 3;
             this.lblPassword.Text = "Contraseña";
-            // 
             // txtEmail
-            // 
             this.txtEmail.Location = new System.Drawing.Point(145, 82);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(235, 20);
             this.txtEmail.TabIndex = 2;
-            // 
             // lblEmail
-            // 
             this.lblEmail.AutoSize = true;
             this.lblEmail.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblEmail.Location = new System.Drawing.Point(55, 82);
@@ -170,9 +151,7 @@ namespace mb506.BMTech
             this.lblEmail.Size = new System.Drawing.Size(41, 19);
             this.lblEmail.TabIndex = 1;
             this.lblEmail.Text = "Email";
-            // 
             // lblAcceso
-            // 
             this.lblAcceso.AutoSize = true;
             this.lblAcceso.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Bold);
             this.lblAcceso.ForeColor = System.Drawing.Color.Teal;
@@ -181,13 +160,12 @@ namespace mb506.BMTech
             this.lblAcceso.Size = new System.Drawing.Size(179, 28);
             this.lblAcceso.TabIndex = 0;
             this.lblAcceso.Text = "Inicio de sesión";
-            // 
             // FrmLogin
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(245, 247, 250);
             this.ClientSize = new System.Drawing.Size(620, 500);
+            this.MinimumSize = new System.Drawing.Size(636, 539);
             this.Controls.Add(this.pnlLogin);
             this.Controls.Add(this.pnlHeader);
             this.Name = "FrmLogin";
@@ -197,6 +175,22 @@ namespace mb506.BMTech
             this.pnlHeader.PerformLayout();
             this.pnlLogin.ResumeLayout(false);
             this.pnlLogin.PerformLayout();
+            this.cmbIdioma = new System.Windows.Forms.ComboBox();
+            this.btnPreparar = new System.Windows.Forms.Button();
+            this.cmbIdioma.Location = new System.Drawing.Point(470, 25);
+            this.cmbIdioma.Size = new System.Drawing.Size(125, 28);
+            this.cmbIdioma.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbIdioma.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.cmbIdioma.Name = "cmbIdioma";
+            this.btnPreparar.Location = new System.Drawing.Point(390, 445);
+            this.btnPreparar.Size = new System.Drawing.Size(185, 32);
+            this.btnPreparar.Text = "Preparar integridad";
+            this.btnPreparar.Name = "btnPreparar";
+            this.pnlHeader.Controls.Add(this.cmbIdioma);
+            this.Controls.Add(this.btnPreparar);
+            this.Load += new System.EventHandler(this.mb506FrmLogin_Load);
+            this.cmbIdioma.SelectedIndexChanged += new System.EventHandler(this.mb506IdiomaCambiado);
+            this.btnPreparar.Click += new System.EventHandler(this.mb506PrepararIntegridad);
             this.ResumeLayout(false);
         }
 
@@ -215,5 +209,8 @@ namespace mb506.BMTech
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Label lblEmail;
         private System.Windows.Forms.Label lblAcceso;
+        private System.Windows.Forms.ComboBox cmbIdioma;
+        private System.Windows.Forms.Button btnPreparar;
+
     }
 }

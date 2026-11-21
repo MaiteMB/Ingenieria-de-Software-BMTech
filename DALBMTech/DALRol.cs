@@ -54,7 +54,9 @@ namespace mb506.DALBMTech
         public List<string> mb506ObtenerAsignaciones(string tipo, string id)
         {
             string query;
-            if (tipo == "Perfil") query = "SELECT idFamilia FROM PerfilFamilia WHERE idperfil=@id";
+            if (tipo == "Perfil") query = @"SELECT 'F:'+idFamilia FROM PerfilFamilia WHERE idperfil=@id
+                UNION ALL SELECT 'P:'+idPerfilHijo FROM PerfilPerfil WHERE idPerfilPadre=@id
+                UNION ALL SELECT 'T:'+idPatente FROM PerfilPatente WHERE idperfil=@id";
             else if (tipo == "Familia") query = "SELECT idPatente FROM FamiliaPatente WHERE idFamilia=@id";
             else throw new Exception("Las patentes no tienen asignaciones.");
             List<string> ids = new List<string>();
@@ -89,9 +91,10 @@ namespace mb506.DALBMTech
                 conexion.Open();
                 using (SqlTransaction transaccion = conexion.BeginTransaction())
                 {
-                    string tabla = tipo == "Perfil" ? "PerfilFamilia" : "FamiliaPatente";
+                    string[] tablas = { "PerfilFamilia", "FamiliaPatente", "PerfilPerfil", "PerfilPatente" };
                     DALIntegridad integridad = new DALIntegridad();
-                    integridad.mb506PrepararOperacion(conexion, transaccion, tabla);
+                    integridad.mb506PrepararOperacion(conexion, transaccion, tablas);
+                    if (tipo == "Perfil") borrar += "; DELETE FROM PerfilPerfil WHERE idPerfilPadre=@id; DELETE FROM PerfilPatente WHERE idperfil=@id";
                     using (SqlCommand command = new SqlCommand(borrar, conexion, transaccion))
                     {
                         command.Parameters.Add("@id", SqlDbType.VarChar, 50).Value = id;
@@ -99,23 +102,27 @@ namespace mb506.DALBMTech
                     }
                     foreach (string hijo in asignaciones)
                     {
-                        using (SqlCommand command = new SqlCommand(insertar, conexion, transaccion))
+                        string consulta = insertar;
+                        string valor = hijo;
+                        if (tipo == "Perfil" && hijo.Length > 2 && hijo[1] == ':')
+                        {
+                            valor = hijo.Substring(2);
+                            if (hijo.StartsWith("P:", StringComparison.Ordinal)) consulta = "INSERT INTO PerfilPerfil(idPerfilPadre,idPerfilHijo) VALUES(@id,@hijo)";
+                            else if (hijo.StartsWith("T:", StringComparison.Ordinal)) consulta = "INSERT INTO PerfilPatente(idperfil,idPatente) VALUES(@id,@hijo)";
+                            else if (!hijo.StartsWith("F:", StringComparison.Ordinal)) throw new Exception("Asignacion incorrecta.");
+                        }
+                        using (SqlCommand command = new SqlCommand(consulta, conexion, transaccion))
                         {
                             command.Parameters.Add("@id", SqlDbType.VarChar, 50).Value = id;
-                            command.Parameters.Add("@hijo", SqlDbType.VarChar, 50).Value = hijo;
+                            command.Parameters.Add("@hijo", SqlDbType.VarChar, 50).Value = valor;
                             command.ExecuteNonQuery();
                         }
                     }
-                    // Evita que el administrador se quite su acceso a Seguridad.
-                    using (SqlCommand command = new SqlCommand(@"SELECT COUNT(*)
-                        FROM PerfilFamilia pf JOIN FamiliaPatente fp ON pf.idFamilia=fp.idFamilia
-                        WHERE pf.idperfil=@perfil AND fp.idPatente='SEGURIDAD'", conexion, transaccion))
-                    {
-                        command.Parameters.Add("@perfil", SqlDbType.VarChar, 50).Value = perfilActual;
-                        if (Convert.ToInt32(command.ExecuteScalar()) == 0)
-                            throw new Exception("No puede quitar su propio acceso a Seguridad.");
-                    }
-                    integridad.mb506ActualizarTablas(conexion, transaccion, tabla);
+                    if (tipo == "Perfil") mb506LeerPerfil(id, conexion, transaccion, new HashSet<string>(StringComparer.OrdinalIgnoreCase));
+                    var actual = mb506LeerPerfil(perfilActual, conexion, transaccion, new HashSet<string>(StringComparer.OrdinalIgnoreCase));
+                    if (!actual.mb506ObtenerTodos().Exists(r => r is mb506.BEBMTech.Roles.Patente && r.idRol == "SEGURIDAD"))
+                        throw new Exception("No puede quitar su propio acceso a Seguridad.");
+                    integridad.mb506ActualizarTablas(conexion, transaccion, tablas);
                     transaccion.Commit();
                 }
             }
@@ -124,46 +131,33 @@ namespace mb506.DALBMTech
         public List<string> mb506ObtenerPatentesPorPerfil(string idPerfil)
         {
             List<string> patentes = new List<string>();
-
-            string query = @"
-                SELECT DISTINCT p.idPatente
-                FROM PerfilFamilia pf
-                INNER JOIN FamiliaPatente fp ON pf.idFamilia = fp.idFamilia
-                INNER JOIN Patente p ON fp.idPatente = p.idPatente
-                WHERE pf.idperfil = @idperfil";
-
-            using (SqlConnection conexion = dbConnection.mb506GetConnection())
-            using (SqlCommand command = new SqlCommand(query, conexion))
-            {
-                command.Parameters.Add("@idperfil", SqlDbType.VarChar).Value = idPerfil;
-                conexion.Open();
-
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        patentes.Add(reader.GetString(0));
-                    }
-                }
-            }
-
+            foreach (var rol in mb506ObtenerPerfil(idPerfil).mb506ObtenerTodos())
+                if (rol is mb506.BEBMTech.Roles.Patente && !patentes.Contains(rol.idRol)) patentes.Add(rol.idRol);
             return patentes;
         }
 
         public mb506.BEBMTech.Roles.Perfil mb506ObtenerPerfil(string idPerfil)
         {
+            using (SqlConnection conexion = dbConnection.mb506GetConnection())
+            {
+                conexion.Open();
+                return mb506LeerPerfil(idPerfil, conexion, null, new HashSet<string>(StringComparer.OrdinalIgnoreCase));
+            }
+        }
+
+        internal mb506.BEBMTech.Roles.Perfil mb506LeerPerfil(string idPerfil, SqlConnection conexion, SqlTransaction transaccion, HashSet<string> camino)
+        {
+            if (!camino.Add(idPerfil)) throw new Exception("Los perfiles no pueden formar ciclos.");
             mb506.BEBMTech.Roles.Perfil perfil = new mb506.BEBMTech.Roles.Perfil { id_perfil = idPerfil };
             Dictionary<string, mb506.BEBMTech.Roles.Familia> familias = new Dictionary<string, mb506.BEBMTech.Roles.Familia>();
-            using (SqlConnection conexion = dbConnection.mb506GetConnection())
             using (SqlCommand command = new SqlCommand(@"
                 SELECT f.idFamilia,f.nombre,p.idPatente,p.nombre
                 FROM PerfilFamilia pf JOIN Familia f ON pf.idFamilia=f.idFamilia
                 LEFT JOIN FamiliaPatente fp ON f.idFamilia=fp.idFamilia
                 LEFT JOIN Patente p ON fp.idPatente=p.idPatente
-                WHERE pf.idperfil=@perfil", conexion))
+                WHERE pf.idperfil=@perfil", conexion, transaccion))
             {
                 command.Parameters.Add("@perfil", SqlDbType.VarChar, 50).Value = idPerfil;
-                conexion.Open();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -181,6 +175,22 @@ namespace mb506.DALBMTech
                     }
                 }
             }
+            using (SqlCommand command = new SqlCommand(@"SELECT p.idPatente,p.nombre FROM PerfilPatente pp
+                JOIN Patente p ON pp.idPatente=p.idPatente WHERE pp.idperfil=@perfil", conexion, transaccion))
+            {
+                command.Parameters.Add("@perfil", SqlDbType.VarChar, 50).Value = idPerfil;
+                using (SqlDataReader reader = command.ExecuteReader())
+                    while (reader.Read()) perfil.Roles.Add(new mb506.BEBMTech.Roles.Patente(reader.GetString(0)) { Vista = reader.GetString(1) });
+            }
+            List<string> hijos = new List<string>();
+            using (SqlCommand command = new SqlCommand("SELECT idPerfilHijo FROM PerfilPerfil WHERE idPerfilPadre=@perfil", conexion, transaccion))
+            {
+                command.Parameters.Add("@perfil", SqlDbType.VarChar, 50).Value = idPerfil;
+                using (SqlDataReader reader = command.ExecuteReader())
+                    while (reader.Read()) hijos.Add(reader.GetString(0));
+            }
+            foreach (string hijo in hijos) perfil.Roles.Add(mb506LeerPerfil(hijo, conexion, transaccion, camino));
+            camino.Remove(idPerfil);
             return perfil;
         }
 
@@ -189,7 +199,9 @@ namespace mb506.DALBMTech
             string query;
             if (tipo == "Perfil") query = @"DELETE FROM Perfil WHERE idperfil=@id
                 AND NOT EXISTS(SELECT 1 FROM Usuario WHERE idperfil=@id)
-                AND NOT EXISTS(SELECT 1 FROM PerfilFamilia WHERE idperfil=@id)";
+                AND NOT EXISTS(SELECT 1 FROM PerfilFamilia WHERE idperfil=@id)
+                AND NOT EXISTS(SELECT 1 FROM PerfilPerfil WHERE idPerfilPadre=@id OR idPerfilHijo=@id)
+                AND NOT EXISTS(SELECT 1 FROM PerfilPatente WHERE idperfil=@id)";
             else if (tipo == "Familia") query = @"DELETE FROM Familia WHERE idFamilia=@id
                 AND NOT EXISTS(SELECT 1 FROM FamiliaPatente WHERE idFamilia=@id)
                 AND NOT EXISTS(SELECT 1 FROM PerfilFamilia WHERE idFamilia=@id)";

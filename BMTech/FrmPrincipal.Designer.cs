@@ -2,15 +2,8 @@ namespace mb506.BMTech
 {
     partial class mb506FrmPrincipal
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,16 +15,16 @@ namespace mb506.BMTech
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             this.menuPrincipal = new System.Windows.Forms.MenuStrip();
+            this.menuMaestros = new System.Windows.Forms.ToolStripMenuItem();
             this.menuClientes = new System.Windows.Forms.ToolStripMenuItem();
             this.menuProductos = new System.Windows.Forms.ToolStripMenuItem();
             this.menuVentas = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuServicios = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuInformes = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuAyuda = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSeguridad = new System.Windows.Forms.ToolStripMenuItem();
             this.menuControlCambiosProducto = new System.Windows.Forms.ToolStripMenuItem();
             this.menuVerificarIntegridad = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,15 +39,14 @@ namespace mb506.BMTech
             this.pnlHeader.SuspendLayout();
             this.pnlContenido.SuspendLayout();
             this.SuspendLayout();
-            // 
             // menuPrincipal
-            // 
             this.menuPrincipal.BackColor = System.Drawing.Color.Teal;
             this.menuPrincipal.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.menuPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuClientes,
-            this.menuProductos,
+            this.menuMaestros,
             this.menuVentas,
+            this.menuServicios,
+            this.menuInformes,
             this.menuSeguridad,
             this.menuSalir});
             this.menuPrincipal.Location = new System.Drawing.Point(0, 0);
@@ -62,33 +54,25 @@ namespace mb506.BMTech
             this.menuPrincipal.Size = new System.Drawing.Size(950, 27);
             this.menuPrincipal.TabIndex = 0;
             this.menuPrincipal.Text = "menuStrip1";
-            // 
             // menuClientes
-            // 
             this.menuClientes.ForeColor = System.Drawing.Color.White;
             this.menuClientes.Name = "menuClientes";
             this.menuClientes.Size = new System.Drawing.Size(73, 23);
             this.menuClientes.Text = "Clientes";
             this.menuClientes.Click += new System.EventHandler(this.mb506menuClientes_Click);
-            // 
             // menuProductos
-            // 
             this.menuProductos.ForeColor = System.Drawing.Color.White;
             this.menuProductos.Name = "menuProductos";
             this.menuProductos.Size = new System.Drawing.Size(89, 23);
             this.menuProductos.Text = "Productos";
             this.menuProductos.Click += new System.EventHandler(this.mb506menuProductos_Click);
-            // 
             // menuVentas
-            // 
             this.menuVentas.ForeColor = System.Drawing.Color.White;
             this.menuVentas.Name = "menuVentas";
             this.menuVentas.Size = new System.Drawing.Size(64, 23);
             this.menuVentas.Text = "Ventas";
             this.menuVentas.Click += new System.EventHandler(this.mb506menuVentas_Click);
-            // 
             // menuSeguridad
-            // 
             this.menuSeguridad.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuControlCambiosProducto,
             this.menuVerificarIntegridad,
@@ -97,37 +81,40 @@ namespace mb506.BMTech
             this.menuSeguridad.Name = "menuSeguridad";
             this.menuSeguridad.Size = new System.Drawing.Size(90, 23);
             this.menuSeguridad.Text = "Seguridad";
-            // 
+            this.menuServicios.Name = "menuServicios";
+            this.menuServicios.Text = "Servicio tecnico";
+            this.menuServicios.ForeColor = System.Drawing.Color.White;
+            this.menuServicios.Click += new System.EventHandler(this.mb506menuServicios_Click);
+            this.menuInformes.Name = "menuInformes";
+            this.menuInformes.Text = "Informes";
+            this.menuInformes.ForeColor = System.Drawing.Color.White;
+            this.menuInformes.Click += new System.EventHandler(this.mb506menuInformes_Click);
+            this.menuAyuda.Name = "menuAyuda";
+            this.menuAyuda.Text = "Ayuda";
+            this.menuAyuda.ForeColor = System.Drawing.Color.White;
+            this.menuAyuda.Click += new System.EventHandler(this.mb506menuAyuda_Click);
             // menuControlCambiosProducto
-            // 
             this.menuControlCambiosProducto.Name = "menuControlCambiosProducto";
             this.menuControlCambiosProducto.Size = new System.Drawing.Size(236, 24);
             this.menuControlCambiosProducto.Text = "Control cambios producto";
             this.menuControlCambiosProducto.Click += new System.EventHandler(this.mb506menuControlCambiosProducto_Click);
-            // 
             // menuVerificarIntegridad
-            // 
             this.menuVerificarIntegridad.Name = "menuVerificarIntegridad";
             this.menuVerificarIntegridad.Size = new System.Drawing.Size(236, 24);
             this.menuVerificarIntegridad.Text = "Verificar integridad";
             this.menuVerificarIntegridad.Click += new System.EventHandler(this.mb506menuVerificarIntegridad_Click);
-            // 
             // menuRegenerarIntegridad
-            // 
             this.menuRegenerarIntegridad.Name = "menuRegenerarIntegridad";
             this.menuRegenerarIntegridad.Size = new System.Drawing.Size(236, 24);
             this.menuRegenerarIntegridad.Text = "Regenerar integridad";
             this.menuRegenerarIntegridad.Click += new System.EventHandler(this.mb506menuRegenerarIntegridad_Click);
-            // 
             // menuSalir
-            // 
             this.menuSalir.ForeColor = System.Drawing.Color.White;
             this.menuSalir.Name = "menuSalir";
             this.menuSalir.Size = new System.Drawing.Size(51, 23);
             this.menuSalir.Text = "Salir";
             this.menuSalir.Click += new System.EventHandler(this.mb506menuSalir_Click);
             //             // pnlHeader
-            // 
             this.pnlHeader.BackColor = System.Drawing.Color.DarkCyan;
             this.pnlHeader.Controls.Add(this.lblSubtitulo);
             this.pnlHeader.Controls.Add(this.lblTitulo);
@@ -136,9 +123,7 @@ namespace mb506.BMTech
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Size = new System.Drawing.Size(950, 120);
             this.pnlHeader.TabIndex = 1;
-            // 
             // lblSubtitulo
-            // 
             this.lblSubtitulo.AutoSize = true;
             this.lblSubtitulo.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.lblSubtitulo.ForeColor = System.Drawing.Color.White;
@@ -147,9 +132,7 @@ namespace mb506.BMTech
             this.lblSubtitulo.Size = new System.Drawing.Size(294, 20);
             this.lblSubtitulo.TabIndex = 1;
             this.lblSubtitulo.Text = "Sistema de gestión comercial para BMTech";
-            // 
             // lblTitulo
-            // 
             this.lblTitulo.AutoSize = true;
             this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.lblTitulo.ForeColor = System.Drawing.Color.White;
@@ -158,9 +141,7 @@ namespace mb506.BMTech
             this.lblTitulo.Size = new System.Drawing.Size(139, 45);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "BMTech";
-            // 
             // pnlContenido
-            // 
             this.pnlContenido.BackColor = System.Drawing.Color.White;
             this.pnlContenido.Controls.Add(this.lblBienvenida);
             this.pnlContenido.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -168,9 +149,7 @@ namespace mb506.BMTech
             this.pnlContenido.Name = "pnlContenido";
             this.pnlContenido.Size = new System.Drawing.Size(950, 403);
             this.pnlContenido.TabIndex = 2;
-            // 
             // lblBienvenida
-            // 
             this.lblBienvenida.AutoSize = true;
             this.lblBienvenida.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
             this.lblBienvenida.ForeColor = System.Drawing.Color.Teal;
@@ -179,13 +158,12 @@ namespace mb506.BMTech
             this.lblBienvenida.Size = new System.Drawing.Size(343, 30);
             this.lblBienvenida.TabIndex = 0;
             this.lblBienvenida.Text = "Seleccione una opción del menú";
-            // 
             // FrmPrincipal
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(950, 550);
+            this.MinimumSize = new System.Drawing.Size(966, 589);
             this.Controls.Add(this.pnlContenido);
             this.Controls.Add(this.pnlHeader);
             this.Controls.Add(this.menuPrincipal);
@@ -201,6 +179,51 @@ namespace mb506.BMTech
             this.pnlHeader.PerformLayout();
             this.pnlContenido.ResumeLayout(false);
             this.pnlContenido.PerformLayout();
+            this.cmbIdioma = new System.Windows.Forms.ToolStripComboBox();
+            this.menuUsuarios = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPermisos = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuBitacora = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuIdiomas = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuBackup = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuRegistrarVenta = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuHistorialVentas = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuClave = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmbIdioma.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbIdioma.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.cmbIdioma.Name = "cmbIdioma";
+            this.menuUsuarios.Text = "Usuarios";
+            this.menuUsuarios.Name = "menuUsuarios";
+            this.menuPermisos.Text = "Permisos";
+            this.menuPermisos.Name = "menuPermisos";
+            this.menuBitacora.Text = "Bitacora";
+            this.menuBitacora.Name = "menuBitacora";
+            this.menuIdiomas.Text = "Idiomas";
+            this.menuIdiomas.Name = "menuIdiomas";
+            this.menuBackup.Text = "Copias de seguridad";
+            this.menuBackup.Name = "menuBackup";
+            this.menuRegistrarVenta.Text = "Registrar venta";
+            this.menuRegistrarVenta.Name = "menuRegistrarVenta";
+            this.menuHistorialVentas.Text = "Historial de ventas";
+            this.menuHistorialVentas.Name = "menuHistorialVentas";
+            this.menuClave.Text = "Cambiar contraseña";
+            this.menuClave.Name = "menuClave";
+            this.menuMaestros.Name = "menuMaestros";
+            this.menuMaestros.Text = "Maestros";
+            this.menuMaestros.ForeColor = System.Drawing.Color.White;
+            this.menuMaestros.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.menuClientes, this.menuProductos, this.menuUsuarios, this.menuPermisos, this.menuIdiomas });
+            this.menuSeguridad.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.menuBitacora, this.menuBackup });
+            this.menuVentas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.menuRegistrarVenta, this.menuHistorialVentas });
+            this.menuPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.cmbIdioma, this.menuClave, this.menuAyuda });
+            this.menuUsuarios.Click += new System.EventHandler(this.mb506menuUsuarios_Click);
+            this.menuPermisos.Click += new System.EventHandler(this.mb506menuPermisos_Click);
+            this.menuBitacora.Click += new System.EventHandler(this.mb506menuBitacora_Click);
+            this.menuIdiomas.Click += new System.EventHandler(this.mb506menuIdiomas_Click);
+            this.menuBackup.Click += new System.EventHandler(this.mb506menuBackup_Click);
+            this.menuRegistrarVenta.Click += new System.EventHandler(this.mb506menuRegistrarVenta_Click);
+            this.menuHistorialVentas.Click += new System.EventHandler(this.mb506menuHistorialVentas_Click);
+            this.menuClave.Click += new System.EventHandler(this.mb506menuClave_Click);
+            this.cmbIdioma.SelectedIndexChanged += new System.EventHandler(this.mb506IdiomaCambiado);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.mb506FrmPrincipal_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -209,9 +232,13 @@ namespace mb506.BMTech
         #endregion
 
         private System.Windows.Forms.MenuStrip menuPrincipal;
+        private System.Windows.Forms.ToolStripMenuItem menuMaestros;
         private System.Windows.Forms.ToolStripMenuItem menuClientes;
         private System.Windows.Forms.ToolStripMenuItem menuProductos;
         private System.Windows.Forms.ToolStripMenuItem menuVentas;
+        private System.Windows.Forms.ToolStripMenuItem menuServicios;
+        private System.Windows.Forms.ToolStripMenuItem menuInformes;
+        private System.Windows.Forms.ToolStripMenuItem menuAyuda;
         private System.Windows.Forms.ToolStripMenuItem menuSeguridad;
         private System.Windows.Forms.ToolStripMenuItem menuControlCambiosProducto;
         private System.Windows.Forms.ToolStripMenuItem menuVerificarIntegridad;
@@ -222,10 +249,15 @@ namespace mb506.BMTech
         private System.Windows.Forms.Label lblTitulo;
         private System.Windows.Forms.Panel pnlContenido;
         private System.Windows.Forms.Label lblBienvenida;
+        private System.Windows.Forms.ToolStripComboBox cmbIdioma;
+        private System.Windows.Forms.ToolStripMenuItem menuUsuarios;
+        private System.Windows.Forms.ToolStripMenuItem menuPermisos;
+        private System.Windows.Forms.ToolStripMenuItem menuBitacora;
+        private System.Windows.Forms.ToolStripMenuItem menuIdiomas;
+        private System.Windows.Forms.ToolStripMenuItem menuBackup;
+        private System.Windows.Forms.ToolStripMenuItem menuRegistrarVenta;
+        private System.Windows.Forms.ToolStripMenuItem menuHistorialVentas;
+        private System.Windows.Forms.ToolStripMenuItem menuClave;
+
     }
 }
-
-
-
-
-

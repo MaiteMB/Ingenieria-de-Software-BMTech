@@ -12,63 +12,11 @@ namespace mb506.BMTech
 
         public mb506FrmPrincipal()
         {
-            IdiomasFormulario.mb506Vincular(this);
             InitializeComponent();
+            if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime) return;
+            IdiomasFormulario.mb506Vincular(this);
+            AyudaSistema.mb506Vincular(this);
             bllRol = new BLLRol();
-            ToolStripComboBox cmbIdioma = new ToolStripComboBox();
-            cmbIdioma.DropDownStyle = ComboBoxStyle.DropDownList;
-            Load += delegate
-            {
-                try
-                {
-                    var idiomas = new BLLIdioma().mb506ObtenerIdiomas();
-                    string codigoActual = mb506.ServiciosBMTech.Idiomas.IdiomasStatic.Observer.idiomaActual;
-                    cmbIdioma.ComboBox.DataSource = idiomas;
-                    cmbIdioma.SelectedItem = idiomas.Find(i => i.codigo == codigoActual);
-                }
-                catch (Exception ex) { Mensajes.mb506Mostrar(ex.Message); }
-            };
-            cmbIdioma.SelectedIndexChanged += delegate
-            {
-                var idioma = cmbIdioma.SelectedItem as mb506.BEBMTech.Idiomas.Idioma;
-                if (idioma != null) mb506.ServiciosBMTech.Idiomas.IdiomasStatic.Observer.mb506CambiarIdioma(idioma.codigo);
-            };
-            cmbIdioma.Alignment = ToolStripItemAlignment.Right;
-            menuPrincipal.Items.Add(cmbIdioma);
-            menuSeguridad.DropDownItems.Add("Usuarios", null, delegate { new mb506FrmUsuarios().ShowDialog(this); });
-            menuSeguridad.DropDownItems.Add("Permisos", null, delegate
-            {
-                new mb506FrmPermisos().ShowDialog(this);
-                mb506AplicarPermisos();
-            });
-            menuSeguridad.DropDownItems.Add("Bitacora", null, delegate { new mb506FrmBitacora().ShowDialog(this); });
-            menuSeguridad.DropDownItems.Add("Idiomas", null, delegate
-            {
-                using (var formulario = new mb506FrmIdiomas()) formulario.ShowDialog(this);
-                try
-                {
-                    string codigoActual = mb506.ServiciosBMTech.Idiomas.IdiomasStatic.Observer.idiomaActual;
-                    var idiomas = new BLLIdioma().mb506ObtenerIdiomas();
-                    cmbIdioma.ComboBox.DataSource = idiomas;
-                    cmbIdioma.SelectedItem = idiomas.Find(i => i.codigo == codigoActual);
-                }
-                catch (Exception ex) { Mensajes.mb506Mostrar(ex.Message); }
-            });
-            menuSeguridad.DropDownItems.Add("Copias de seguridad", null, delegate { new mb506FrmBackup().ShowDialog(this); });
-            menuVentas.DropDownItems.Add("Registrar venta", null, delegate { new mb506FrmVenta().ShowDialog(this); });
-            menuVentas.DropDownItems.Add("Historial de ventas", null, delegate { new mb506FrmHistorialVentas().ShowDialog(this); });
-            ToolStripMenuItem menuClave = new ToolStripMenuItem("Cambiar contraseña");
-            menuClave.Click += delegate { new mb506FrmCambiarPassword().ShowDialog(this); };
-            menuPrincipal.Items.Add(menuClave);
-            FormClosed += delegate
-            {
-                if (SessionManager.IsSessionActive)
-                {
-                    try { new BLLLog().mb506RegistrarEvento("Logout", "Acceso", 1); }
-                    catch (Exception ex) { Mensajes.mb506Mostrar("No se pudo registrar el cierre de sesion. " + ex.Message); }
-                    finally { SessionManager.mb506Logout(); }
-                }
-            };
         }
 
         private void mb506menuClientes_Click(object sender, EventArgs e)
@@ -87,12 +35,26 @@ namespace mb506.BMTech
         {
         }
 
+        private void mb506menuServicios_Click(object sender, EventArgs e)
+        {
+            using (mb506FrmServicioTecnico formulario = new mb506FrmServicioTecnico()) formulario.ShowDialog(this);
+        }
+
+        private void mb506menuInformes_Click(object sender, EventArgs e)
+        {
+            using (mb506FrmInformes formulario = new mb506FrmInformes()) formulario.ShowDialog(this);
+        }
+
+        private void mb506menuAyuda_Click(object sender, EventArgs e)
+        {
+            AyudaSistema.mb506Mostrar(Name);
+        }
+
         private void mb506menuControlCambiosProducto_Click(object sender, EventArgs e)
         {
             mb506FrmControlCambiosProducto mb506FrmControlCambiosProducto = new mb506FrmControlCambiosProducto();
             mb506FrmControlCambiosProducto.ShowDialog();
         }
-
 
         private void mb506menuVerificarIntegridad_Click(object sender, EventArgs e)
         {
@@ -130,6 +92,7 @@ namespace mb506.BMTech
             }
             catch (Exception ex) { Mensajes.mb506Mostrar(ex.Message); }
         }
+
         private void mb506menuSalir_Click(object sender, EventArgs e)
         {
             Close();
@@ -137,28 +100,33 @@ namespace mb506.BMTech
 
         private void mb506FrmPrincipal_Load(object sender, EventArgs e)
         {
+            if (DesignMode) return;
+            mb506CargarIdiomas();
             try
             {
                 mb506AplicarPermisos();
                 List<string> diferencias = new BLLIntegridad().mb506VerificarSistema();
                 if (diferencias.Count > 0)
                 {
-                    menuClientes.Enabled = menuProductos.Enabled = menuVentas.Enabled = false;
+                    menuClientes.Enabled = menuProductos.Enabled = menuVentas.Enabled = menuServicios.Enabled = menuInformes.Enabled = false;
                     Mensajes.mb506Mostrar("Revise integridad antes de operar. Diferencias en: " + string.Join(", ", diferencias));
                 }
             }
             catch (Exception ex)
             {
-                menuClientes.Enabled = menuProductos.Enabled = menuVentas.Enabled = menuSeguridad.Enabled = false;
+                menuClientes.Enabled = menuProductos.Enabled = menuVentas.Enabled = menuServicios.Enabled = menuInformes.Enabled = menuSeguridad.Enabled = false;
                 Mensajes.mb506Mostrar(ex.Message);
             }
         }
 
         private void mb506AplicarPermisos()
         {
+            menuUsuarios.Enabled = menuPermisos.Enabled = menuIdiomas.Enabled = false;
             menuClientes.Enabled = false;
             menuProductos.Enabled = false;
             menuVentas.Enabled = false;
+            menuServicios.Enabled = false;
+            menuInformes.Enabled = false;
             menuSeguridad.Enabled = false;
 
             if (SessionManager.getSession.Usuario == null)
@@ -171,9 +139,78 @@ namespace mb506.BMTech
             menuClientes.Enabled = patentes.Contains("CLIENTES");
             menuProductos.Enabled = patentes.Contains("PRODUCTOS");
             menuVentas.Enabled = patentes.Contains("VENTAS");
+            menuServicios.Enabled = patentes.Contains("SERVICIOS");
+            menuInformes.Enabled = patentes.Contains("VENTAS") || patentes.Contains("SERVICIOS");
             menuSeguridad.Enabled = patentes.Contains("SEGURIDAD");
+            menuUsuarios.Enabled = menuPermisos.Enabled = menuIdiomas.Enabled = patentes.Contains("SEGURIDAD");
+        }
+
+        private void mb506CargarIdiomas()
+        {
+            try
+            {
+                var idiomas = new BLLIdioma().mb506ObtenerIdiomas();
+                string actual = mb506.ServiciosBMTech.Idiomas.IdiomasStatic.Observer.idiomaActual;
+                cmbIdioma.ComboBox.DataSource = idiomas;
+                cmbIdioma.SelectedItem = idiomas.Find(i => i.codigo == actual);
+            }
+            catch (Exception ex) { Mensajes.mb506Mostrar(ex.Message); }
+        }
+
+        private void mb506IdiomaCambiado(object sender, EventArgs e)
+        {
+            var idioma = cmbIdioma.SelectedItem as mb506.BEBMTech.Idiomas.Idioma;
+            if (idioma != null) mb506.ServiciosBMTech.Idiomas.IdiomasStatic.Observer.mb506CambiarIdioma(idioma.codigo);
+        }
+
+        private void mb506menuUsuarios_Click(object sender, EventArgs e)
+        {
+            using (var formulario = new mb506FrmUsuarios()) formulario.ShowDialog(this);
+        }
+
+        private void mb506menuBitacora_Click(object sender, EventArgs e)
+        {
+            using (var formulario = new mb506FrmBitacora()) formulario.ShowDialog(this);
+        }
+
+        private void mb506menuBackup_Click(object sender, EventArgs e)
+        {
+            using (var formulario = new mb506FrmBackup()) formulario.ShowDialog(this);
+        }
+
+        private void mb506menuRegistrarVenta_Click(object sender, EventArgs e)
+        {
+            using (var formulario = new mb506FrmVenta()) formulario.ShowDialog(this);
+        }
+
+        private void mb506menuHistorialVentas_Click(object sender, EventArgs e)
+        {
+            using (var formulario = new mb506FrmHistorialVentas()) formulario.ShowDialog(this);
+        }
+
+        private void mb506menuClave_Click(object sender, EventArgs e)
+        {
+            using (var formulario = new mb506FrmCambiarPassword()) formulario.ShowDialog(this);
+        }
+
+        private void mb506menuPermisos_Click(object sender, EventArgs e)
+        {
+            using (var formulario = new mb506FrmPermisos()) formulario.ShowDialog(this);
+            mb506AplicarPermisos();
+        }
+
+        private void mb506menuIdiomas_Click(object sender, EventArgs e)
+        {
+            using (var formulario = new mb506FrmIdiomas()) formulario.ShowDialog(this);
+            mb506CargarIdiomas();
+        }
+
+        private void mb506FrmPrincipal_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (!SessionManager.IsSessionActive) return;
+            try { new BLLLog().mb506RegistrarEvento("Logout", "Acceso", 1); }
+            catch (Exception ex) { Mensajes.mb506Mostrar("No se pudo registrar el cierre de sesion. " + ex.Message); }
+            finally { SessionManager.mb506Logout(); }
         }
     }
 }
-
-

@@ -2,7 +2,6 @@ using mb506.BEBMTech.Usuario;
 using mb506.BLLBMTech;
 using mb506.ServiciosBMTech.Seguridad;
 using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace mb506.BMTech
@@ -14,46 +13,10 @@ namespace mb506.BMTech
 
         public mb506FrmLogin()
         {
-            IdiomasFormulario.mb506Vincular(this);
             InitializeComponent();
-            ComboBox cmbIdioma = new ComboBox();
-            cmbIdioma.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbIdioma.SetBounds(ClientSize.Width - 150, 25, 125, 28);
-            cmbIdioma.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            Load += delegate
-            {
-                try
-                {
-                    var idiomas = new BLLIdioma().mb506ObtenerIdiomas();
-                    string codigoActual = mb506.ServiciosBMTech.Idiomas.IdiomasStatic.Observer.idiomaActual;
-                    cmbIdioma.DataSource = idiomas;
-                    cmbIdioma.SelectedItem = idiomas.Find(i => i.codigo == codigoActual);
-                    var diferencias = new BLLIntegridad().mb506VerificarSistema();
-                    if (diferencias.Count > 0) Mensajes.mb506Mostrar("Revise integridad antes de operar. Diferencias en: " + string.Join(", ", diferencias));
-                }
-                catch (Exception ex) { mb506MostrarMensaje("Revise la conexion y ejecute ActualizarEntrega1.sql. " + ex.Message, false); }
-            };
-            cmbIdioma.SelectedIndexChanged += delegate
-            {
-                var idioma = cmbIdioma.SelectedItem as mb506.BEBMTech.Idiomas.Idioma;
-                if (idioma != null) mb506.ServiciosBMTech.Idiomas.IdiomasStatic.Observer.mb506CambiarIdioma(idioma.codigo);
-            };
-            Controls.Add(cmbIdioma);
-            cmbIdioma.BringToFront();
-            Button btnPreparar = new Button { Text = "Preparar integridad" };
-            btnPreparar.SetBounds(390, 445, 185, 32);
-            btnPreparar.Click += delegate
-            {
-                try
-                {
-                    if (Mensajes.mb506Mostrar("Esto acepta los datos actuales como correctos. Revise la base antes de continuar.",
-                        "Preparar integridad", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
-                    bllUsuario.mb506InicializarIntegridad(txtEmail.Text, txtPassword.Text);
-                    Mensajes.mb506Mostrar("Integridad preparada. Ahora puede ingresar.");
-                }
-                catch (Exception ex) { Mensajes.mb506Mostrar(ex.Message); }
-            };
-            Controls.Add(btnPreparar);
+            if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime) return;
+            IdiomasFormulario.mb506Vincular(this);
+            AyudaSistema.mb506Vincular(this);
             bllUsuario = new BLLUsuario();
             bllLog = new BLLLog();
             lblMensaje.Text = "";
@@ -96,8 +59,40 @@ namespace mb506.BMTech
         {
             lblMensaje.Tag = mensaje;
             lblMensaje.Text = Mensajes.mb506Traducir(mensaje);
-            lblMensaje.ForeColor = correcto ? Color.Teal : Color.Firebrick;
+            mb506ColorMensaje(correcto);
+        }
+
+        private void mb506FrmLogin_Load(object sender, EventArgs e)
+        {
+            if (DesignMode) return;
+            try
+            {
+                var idiomas = new BLLIdioma().mb506ObtenerIdiomas();
+                string codigoActual = mb506.ServiciosBMTech.Idiomas.IdiomasStatic.Observer.idiomaActual;
+                cmbIdioma.DataSource = idiomas;
+                cmbIdioma.SelectedItem = idiomas.Find(i => i.codigo == codigoActual);
+                var diferencias = new BLLIntegridad().mb506VerificarSistema();
+                if (diferencias.Count > 0) Mensajes.mb506Mostrar("Revise integridad antes de operar. Diferencias en: " + string.Join(", ", diferencias));
+            }
+            catch (Exception ex) { mb506MostrarMensaje("Revise la conexion con la base de datos. " + ex.Message, false); }
+        }
+
+        private void mb506IdiomaCambiado(object sender, EventArgs e)
+        {
+            var idioma = cmbIdioma.SelectedItem as mb506.BEBMTech.Idiomas.Idioma;
+            if (idioma != null) mb506.ServiciosBMTech.Idiomas.IdiomasStatic.Observer.mb506CambiarIdioma(idioma.codigo);
+        }
+
+        private void mb506PrepararIntegridad(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Mensajes.mb506Mostrar("Esto acepta los datos actuales como correctos. Revise la base antes de continuar.",
+                    "Preparar integridad", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
+                bllUsuario.mb506InicializarIntegridad(txtEmail.Text, txtPassword.Text);
+                Mensajes.mb506Mostrar("Integridad preparada. Ahora puede ingresar.");
+            }
+            catch (Exception ex) { Mensajes.mb506Mostrar(ex.Message); }
         }
     }
 }
-

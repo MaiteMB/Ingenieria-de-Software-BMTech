@@ -26,7 +26,7 @@ namespace mb506.BLLBMTech
                 throw new Exception("Debe ingresar email y contraseña.");
             }
 
-            if (!new DALIntegridad().mb506VerificarTablas("Usuario", "Perfil", "Familia", "Patente", "FamiliaPatente", "PerfilFamilia"))
+            if (!new DALIntegridad().mb506VerificarTablas("Usuario", "Perfil", "Familia", "Patente", "FamiliaPatente", "PerfilFamilia", "PerfilPerfil", "PerfilPatente"))
                 throw new Exception("La integridad de Seguridad no esta preparada o presenta diferencias.");
             Usuario usuario = dalUsuario.mb506BuscarUsuario(email.Trim());
 
