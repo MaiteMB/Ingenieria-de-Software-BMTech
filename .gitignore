@@ -9,3 +9,5 @@ TestResults/
 *.bak
 *.key
 [Pp]ublish/
+Distribucion/
+Instalacion/SQLServer/

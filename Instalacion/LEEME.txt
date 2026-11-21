@@ -1,0 +1,20 @@
+BMTech - Instalacion
+
+El instalador BMTech_Setup.exe se genera con Inno Setup (Instalacion\BMTech.iss) desde CrearDistribucion.ps1.
+Copia el programa, sus bibliotecas, la ayuda y los scripts en Archivos de programa\BMTech
+y crea accesos directos en el escritorio y en el menu Inicio.
+Se requieren Windows de 64 bits y .NET Framework 4.8 (el instalador lo controla).
+Si el equipo no tiene SQL Server, instala SQL Server Express (instancia SQLEXPRESS).
+
+Al terminar ejecuta PrepararBase.ps1, que crea la base BMTech con un administrador y un empleado.
+La opcion Cargar datos de prueba agrega clientes, productos, una venta y ordenes de servicio.
+Si la base ya existe, no la modifica. El detalle queda en InstalacionBase.log.
+
+Para cargar los datos de prueba despues de instalar: ejecutar BaseDatos\DatosDePruebaBMTech.sql
+en SQL Server Management Studio y luego Seguridad > Regenerar integridad en BMTech.
+
+Las cuentas admin@bmtech.com y vendedor@bmtech.com tienen clave inicial 1234.
+Cambiar esas claves antes de usar informacion real.
+Ayuda.html, Operacion.html y Mantenimiento.html se pueden leer sin Internet.
+No distribuir copias de seguridad, claves AES ni informacion real del local.
+Desinstalar BMTech no borra la base ni las claves.
