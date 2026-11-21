@@ -1,55 +1,22 @@
 using System;
 using System.Data;
-using System.Drawing;
 using System.Windows.Forms;
 using mb506.BEBMTech.Idiomas;
 using mb506.BLLBMTech;
 
 namespace mb506.BMTech
 {
-    public class mb506FrmIdiomas : Form
+    public partial class mb506FrmIdiomas : Form
     {
-        private ComboBox cmbIdiomas = new ComboBox();
-        private TextBox txtCodigo = new TextBox();
-        private TextBox txtNombre = new TextBox();
-        private DataGridView dgvTextos = new DataGridView();
         private BLLIdioma bllIdioma = new BLLIdioma();
         private bool cargando;
 
         public mb506FrmIdiomas()
         {
+            InitializeComponent();
+            if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime) return;
             IdiomasFormulario.mb506Vincular(this);
-            Text = "Idiomas y traducciones";
-            ClientSize = new Size(950, 660);
-            StartPosition = FormStartPosition.CenterParent;
-            Font = new Font("Segoe UI", 10);
-            BackColor = Color.White;
-            cmbIdiomas.SetBounds(20, 20, 250, 30);
-            cmbIdiomas.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbIdiomas.SelectedIndexChanged += mb506Seleccionar;
-            Controls.Add(new Label { Text = "Codigo de idioma", Left = 300, Top = 24, Width = 140 });
-            txtCodigo.SetBounds(440, 20, 65, 30);
-            txtCodigo.MaxLength = 2;
-            Controls.Add(new Label { Text = "Nombre", Left = 525, Top = 24, Width = 75 });
-            txtNombre.SetBounds(605, 20, 320, 30);
-            txtNombre.MaxLength = 50;
-            dgvTextos.SetBounds(20, 75, 905, 510);
-            dgvTextos.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dgvTextos.AllowUserToAddRows = dgvTextos.AllowUserToDeleteRows = false;
-            dgvTextos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvTextos.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            string[] acciones = { "Nuevo", "Guardar", "Eliminar" };
-            for (int i = 0; i < acciones.Length; i++)
-            {
-                Button boton = new Button { Text = acciones[i], BackColor = Color.Teal, ForeColor = Color.White };
-                boton.SetBounds(20 + i * 150, 605, 135, 36);
-                boton.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
-                int accion = i;
-                boton.Click += delegate { mb506Accion(accion); };
-                Controls.Add(boton);
-            }
-            Controls.AddRange(new Control[] { cmbIdiomas, txtCodigo, txtNombre, dgvTextos });
-            Load += delegate { mb506Cargar(); };
+            AyudaSistema.mb506Vincular(this);
         }
 
         private void mb506Cargar()
@@ -82,10 +49,6 @@ namespace mb506.BMTech
         private void mb506Textos(string codigo)
         {
             dgvTextos.DataSource = bllIdioma.mb506ObtenerTextos(codigo);
-            dgvTextos.Columns["etiqueta"].ReadOnly = true;
-            dgvTextos.Columns["textoTraducido"].ReadOnly = false;
-            dgvTextos.Columns["etiqueta"].HeaderText = "Texto original";
-            dgvTextos.Columns["textoTraducido"].HeaderText = "Traduccion";
         }
 
         private void mb506Accion(int accion)
@@ -112,6 +75,27 @@ namespace mb506.BMTech
                 mb506Cargar();
             }
             catch (Exception ex) { Mensajes.mb506Mostrar(ex.Message); }
+        }
+
+        private void mb506Nuevo(object sender, EventArgs e)
+        {
+            mb506Accion(0);
+        }
+
+        private void mb506Guardar(object sender, EventArgs e)
+        {
+            mb506Accion(1);
+        }
+
+        private void mb506Eliminar(object sender, EventArgs e)
+        {
+            mb506Accion(2);
+        }
+
+        private void mb506FrmIdiomas_Load(object sender, EventArgs e)
+        {
+            if (DesignMode) return;
+            if (!DesignMode) mb506Cargar();
         }
     }
 }

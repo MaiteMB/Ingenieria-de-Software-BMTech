@@ -19,8 +19,6 @@ namespace mb506.BMTech
             form.Shown += delegate
             {
                 preparado = true;
-                if (formulario.MinimumSize.IsEmpty)
-                    formulario.MinimumSize = formulario.WindowState == FormWindowState.Normal ? formulario.Size : formulario.RestoreBounds.Size;
                 mb506VincularGrillas(formulario);
                 mb506VincularOpciones(formulario);
                 IdiomasStatic.Observer.mb506AgregarObservador(this);

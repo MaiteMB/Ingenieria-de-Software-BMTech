@@ -1,40 +1,19 @@
 using System;
-using System.Drawing;
 using System.Windows.Forms;
 using mb506.BLLBMTech;
 
 namespace mb506.BMTech
 {
-    public class mb506FrmBackup : Form
+    public partial class mb506FrmBackup : Form
     {
-        private DataGridView dgvBackups = new DataGridView();
         private BLLBackup bllBackup = new BLLBackup();
 
         public mb506FrmBackup()
         {
+            InitializeComponent();
+            if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime) return;
             IdiomasFormulario.mb506Vincular(this);
-            Text = "Copias de seguridad";
-            ClientSize = new Size(950, 510);
-            StartPosition = FormStartPosition.CenterParent;
-            BackColor = Color.White;
-            Font = new Font("Segoe UI", 10);
-            dgvBackups.SetBounds(20, 20, 910, 405);
-            dgvBackups.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dgvBackups.ReadOnly = true;
-            dgvBackups.AllowUserToAddRows = false;
-            dgvBackups.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            string[] acciones = { "Crear copia", "Restaurar copia", "Actualizar" };
-            for (int i = 0; i < acciones.Length; i++)
-            {
-                Button boton = new Button { Text = acciones[i], BackColor = Color.Teal, ForeColor = Color.White };
-                boton.SetBounds(20 + i * 180, 450, 160, 36);
-                boton.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
-                int accion = i;
-                boton.Click += delegate { mb506Accion(accion); };
-                Controls.Add(boton);
-            }
-            Controls.Add(dgvBackups);
-            Load += delegate { mb506Cargar(); };
+            AyudaSistema.mb506Vincular(this);
         }
 
         private void mb506Cargar()
@@ -80,6 +59,26 @@ namespace mb506.BMTech
                 if (!mb506.ServiciosBMTech.Seguridad.SessionManager.IsSessionActive) Application.Exit();
             }
             finally { Cursor = Cursors.Default; }
+        }
+
+        private void mb506Crear(object sender, EventArgs e)
+        {
+            mb506Accion(0);
+        }
+
+        private void mb506Restaurar(object sender, EventArgs e)
+        {
+            mb506Accion(1);
+        }
+
+        private void mb506Actualizar(object sender, EventArgs e)
+        {
+            mb506Accion(2);
+        }
+
+        private void mb506FrmBackup_Load(object sender, EventArgs e)
+        {
+            if (!DesignMode) mb506Cargar();
         }
     }
 }

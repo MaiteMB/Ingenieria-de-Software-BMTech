@@ -10,8 +10,10 @@ namespace mb506.DALBMTech
     {
         public static readonly string[] tablas = {
             "Cliente", "Producto", "Usuario", "Perfil", "Familia", "Patente",
-            "FamiliaPatente", "PerfilFamilia", "LogEventos", "Venta", "DetalleVenta",
-            "HistorialCambiosProducto", "Idioma", "Etiqueta", "Traduccion", "Pago", "Comprobante", "Backup"
+            "FamiliaPatente", "PerfilFamilia", "PerfilPerfil", "PerfilPatente", "LogEventos", "Venta", "DetalleVenta",
+            "HistorialCambiosProducto", "Idioma", "Etiqueta", "Traduccion", "Pago", "Comprobante", "Backup",
+            "Equipo", "OrdenServicio", "Diagnostico", "Presupuesto", "DetallePresupuesto", "Reparacion",
+            "RepuestoServicio", "PruebaEquipo", "AvisoRetiro", "PagoServicio", "ComprobanteServicio", "EntregaServicio"
         };
 
         private string mb506ObtenerColumnas(string tabla)
@@ -26,12 +28,26 @@ namespace mb506.DALBMTech
                 case "Patente": return "idPatente,nombre";
                 case "FamiliaPatente": return "idFamilia,idPatente";
                 case "PerfilFamilia": return "idperfil,idFamilia";
+                case "PerfilPerfil": return "idPerfilPadre,idPerfilHijo";
+                case "PerfilPatente": return "idperfil,idPatente";
                 case "LogEventos": return "idLog,email,fecha,accion,modulo,criticidad";
                 case "Venta": return "idVenta,dniCliente,emailUsuario,fecha,total,estado,fechaEntrega";
                 case "DetalleVenta": return "idDetalleVenta,idVenta,idProducto,cantidad,precioUnitario,subtotal,codigoProducto,descripcionProducto";
                 case "Pago": return "idPago,idVenta,medioPago,importe,numeroOperacion,fecha,verificado";
                 case "Comprobante": return "idComprobante,idVenta,fecha,cliente,dniCliente,vendedor,total";
                 case "Backup": return "idBackup,fecha,usuario,ruta";
+                case "Equipo": return "idEquipo,dniCliente,tipo,marca,modelo,numeroSerie";
+                case "OrdenServicio": return "idOrden,idEquipo,fechaIngreso,problema,accesorios,observaciones,estado,tecnico,fechaAsignacion,prioridad";
+                case "Diagnostico": return "idDiagnostico,idOrden,fecha,falla,trabajo,repuestosPrevistos,diasEstimados";
+                case "Presupuesto": return "idPresupuesto,idOrden,fecha,vigencia,manoObra,total,comunicado,fechaComunicacion,respuesta,fechaRespuesta,observaciones";
+                case "DetallePresupuesto": return "idDetallePresupuesto,idPresupuesto,idProducto,cantidad,precioUnitario";
+                case "Reparacion": return "idReparacion,idOrden,fecha,tareas";
+                case "RepuestoServicio": return "idRepuestoServicio,idReparacion,idProducto,cantidad";
+                case "PruebaEquipo": return "idPrueba,idReparacion,fecha,descripcion,satisfactoria";
+                case "AvisoRetiro": return "idAviso,idOrden,fecha,medio";
+                case "PagoServicio": return "idPagoServicio,idOrden,fecha,medioPago,importe,numeroOperacion,verificado";
+                case "ComprobanteServicio": return "idComprobante,idOrden,idPagoServicio,fecha,cliente,equipo,trabajo,total,medioPago";
+                case "EntregaServicio": return "idEntrega,idOrden,fecha,personaRetira,garantia";
                 case "HistorialCambiosProducto": return "idHistorial,idProducto,codigo,descripcion,marca,modelo,precio,stock,activo,usuario,fecha,accion";
                 case "Idioma": return "codigo,nombre";
                 case "Etiqueta": return "etiqueta";
@@ -44,6 +60,8 @@ namespace mb506.DALBMTech
         {
             if (tabla == "FamiliaPatente") return new[] { "idFamilia", "idPatente" };
             if (tabla == "PerfilFamilia") return new[] { "idperfil", "idFamilia" };
+            if (tabla == "PerfilPerfil") return new[] { "idPerfilPadre", "idPerfilHijo" };
+            if (tabla == "PerfilPatente") return new[] { "idperfil", "idPatente" };
             if (tabla == "Traduccion") return new[] { "codigoIdioma", "etiqueta" };
             return new[] { mb506ObtenerColumnas(tabla).Split(',')[0] };
         }
