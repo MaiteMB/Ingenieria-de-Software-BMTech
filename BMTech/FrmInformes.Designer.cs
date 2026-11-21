@@ -1,0 +1,154 @@
+namespace mb506.BMTech
+{
+    partial class mb506FrmInformes
+    {
+        private System.ComponentModel.IContainer components = null;
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && components != null) components.Dispose();
+            base.Dispose(disposing);
+        }
+        #region Windows Form Designer generated code
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.lblTipoInforme = new System.Windows.Forms.Label();
+            this.cmbTipo = new System.Windows.Forms.ComboBox();
+            this.lblDesdeInforme = new System.Windows.Forms.Label();
+            this.dtpDesde = new System.Windows.Forms.DateTimePicker();
+            this.lblHastaInforme = new System.Windows.Forms.Label();
+            this.dtpHasta = new System.Windows.Forms.DateTimePicker();
+            this.btnBuscarInforme = new System.Windows.Forms.Button();
+            this.dgvInforme = new System.Windows.Forms.DataGridView();
+            this.colInformeNumero = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colInformeFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colInformeCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colInformeEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colInformeTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colInformeCobrado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colInformePendiente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtResumen = new System.Windows.Forms.TextBox();
+            this.btnExportarInforme = new System.Windows.Forms.Button();
+            this.btnCerrarInforme = new System.Windows.Forms.Button();
+            this.dlgInformePdf = new System.Windows.Forms.SaveFileDialog();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvInforme)).BeginInit();
+            this.SuspendLayout();
+            this.lblTipoInforme.Name = "lblTipoInforme";
+            this.lblTipoInforme.Text = "Tipo de informe";
+            this.lblTipoInforme.Location = new System.Drawing.Point(20,15);
+            this.lblTipoInforme.Size = new System.Drawing.Size(200,24);
+            this.cmbTipo.Name = "cmbTipo";
+            this.cmbTipo.Location = new System.Drawing.Point(20,42);
+            this.cmbTipo.Size = new System.Drawing.Size(230,28);
+            this.cmbTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTipo.Items.AddRange(new object[] { "Ventas", "Servicio tecnico" });
+            this.cmbTipo.SelectedIndex = 0;
+            this.lblDesdeInforme.Name = "lblDesdeInforme";
+            this.lblDesdeInforme.Text = "Desde";
+            this.lblDesdeInforme.Location = new System.Drawing.Point(275,15);
+            this.lblDesdeInforme.Size = new System.Drawing.Size(160,24);
+            this.dtpDesde.Name = "dtpDesde";
+            this.dtpDesde.Location = new System.Drawing.Point(275,42);
+            this.dtpDesde.Size = new System.Drawing.Size(170,28);
+            this.dtpDesde.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.lblHastaInforme.Name = "lblHastaInforme";
+            this.lblHastaInforme.Text = "Hasta";
+            this.lblHastaInforme.Location = new System.Drawing.Point(470,15);
+            this.lblHastaInforme.Size = new System.Drawing.Size(160,24);
+            this.dtpHasta.Name = "dtpHasta";
+            this.dtpHasta.Location = new System.Drawing.Point(470,42);
+            this.dtpHasta.Size = new System.Drawing.Size(170,28);
+            this.dtpHasta.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.btnBuscarInforme.Name = "btnBuscarInforme";
+            this.btnBuscarInforme.Text = "Buscar";
+            this.btnBuscarInforme.Location = new System.Drawing.Point(665,38);
+            this.btnBuscarInforme.Size = new System.Drawing.Size(120,34);
+            this.btnBuscarInforme.Click += new System.EventHandler(this.mb506Buscar);
+            this.dgvInforme.Name = "dgvInforme";
+            this.dgvInforme.Location = new System.Drawing.Point(20,90);
+            this.dgvInforme.Size = new System.Drawing.Size(960,400);
+            this.dgvInforme.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.dgvInforme.AutoGenerateColumns = false;
+            this.dgvInforme.ReadOnly = true;
+            this.dgvInforme.AllowUserToAddRows = false;
+            this.dgvInforme.AllowUserToDeleteRows = false;
+            this.dgvInforme.RowHeadersVisible = false;
+            this.dgvInforme.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.colInformeNumero.Name = "colInformeNumero";
+            this.colInformeNumero.DataPropertyName = "numero";
+            this.colInformeNumero.HeaderText = "Numero";
+            this.colInformeFecha.Name = "colInformeFecha";
+            this.colInformeFecha.DataPropertyName = "fecha";
+            this.colInformeFecha.HeaderText = "Fecha";
+            this.colInformeCliente.Name = "colInformeCliente";
+            this.colInformeCliente.DataPropertyName = "cliente";
+            this.colInformeCliente.HeaderText = "Cliente";
+            this.colInformeEstado.Name = "colInformeEstado";
+            this.colInformeEstado.DataPropertyName = "estado";
+            this.colInformeEstado.HeaderText = "Estado";
+            this.colInformeTotal.Name = "colInformeTotal";
+            this.colInformeTotal.DataPropertyName = "total";
+            this.colInformeTotal.HeaderText = "Importe";
+            this.colInformeCobrado.Name = "colInformeCobrado";
+            this.colInformeCobrado.DataPropertyName = "cobrado";
+            this.colInformeCobrado.HeaderText = "Cobrado";
+            this.colInformePendiente.Name = "colInformePendiente";
+            this.colInformePendiente.DataPropertyName = "pendiente";
+            this.colInformePendiente.HeaderText = "Pendiente";
+            this.dgvInforme.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.colInformeNumero,this.colInformeFecha,this.colInformeCliente,this.colInformeEstado,this.colInformeTotal,this.colInformeCobrado,this.colInformePendiente });
+            this.txtResumen.Name = "txtResumen";
+            this.txtResumen.ReadOnly = true;
+            this.txtResumen.Location = new System.Drawing.Point(20,505);
+            this.txtResumen.Size = new System.Drawing.Size(960,28);
+            this.txtResumen.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.btnExportarInforme.Name = "btnExportarInforme";
+            this.btnExportarInforme.Text = "Exportar PDF";
+            this.btnExportarInforme.Location = new System.Drawing.Point(20,550);
+            this.btnExportarInforme.Size = new System.Drawing.Size(170,34);
+            this.btnExportarInforme.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            this.btnExportarInforme.Click += new System.EventHandler(this.mb506Exportar);
+            this.btnCerrarInforme.Name = "btnCerrarInforme";
+            this.btnCerrarInforme.Text = "Cerrar";
+            this.btnCerrarInforme.Location = new System.Drawing.Point(850,550);
+            this.btnCerrarInforme.Size = new System.Drawing.Size(130,34);
+            this.btnCerrarInforme.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            this.btnCerrarInforme.Click += new System.EventHandler(this.mb506Cerrar);
+            this.components.Add(this.dlgInformePdf);
+            this.dlgInformePdf.Filter = "PDF (*.pdf)|*.pdf";
+            this.dlgInformePdf.DefaultExt = "pdf";
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F,96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(1000,600);
+            this.MinimumSize = new System.Drawing.Size(1016,639);
+            this.Font = new System.Drawing.Font("Segoe UI",10F);
+            this.Name = "mb506FrmInformes";
+            this.Text = "Informes de operaciones";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Controls.AddRange(new System.Windows.Forms.Control[] { this.lblTipoInforme,this.cmbTipo,this.lblDesdeInforme,this.dtpDesde,this.lblHastaInforme,this.dtpHasta,this.btnBuscarInforme,this.dgvInforme,this.txtResumen,this.btnExportarInforme,this.btnCerrarInforme });
+            this.Load += new System.EventHandler(this.mb506FrmInformes_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvInforme)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+        #endregion
+        private System.Windows.Forms.Label lblTipoInforme;
+        private System.Windows.Forms.ComboBox cmbTipo;
+        private System.Windows.Forms.Label lblDesdeInforme;
+        private System.Windows.Forms.DateTimePicker dtpDesde;
+        private System.Windows.Forms.Label lblHastaInforme;
+        private System.Windows.Forms.DateTimePicker dtpHasta;
+        private System.Windows.Forms.Button btnBuscarInforme;
+        private System.Windows.Forms.DataGridView dgvInforme;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colInformeNumero;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colInformeFecha;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colInformeCliente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colInformeEstado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colInformeTotal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colInformeCobrado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colInformePendiente;
+        private System.Windows.Forms.TextBox txtResumen;
+        private System.Windows.Forms.Button btnExportarInforme;
+        private System.Windows.Forms.Button btnCerrarInforme;
+        private System.Windows.Forms.SaveFileDialog dlgInformePdf;
+    }
+}
