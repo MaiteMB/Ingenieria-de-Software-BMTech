@@ -28,7 +28,7 @@ class PruebasBasicas
         public int llamadas;
         public void mb506ActualizarIdioma() { llamadas++; }
     }
-    static int Main()
+    public static int Ejecutar()
     {
         try
         {

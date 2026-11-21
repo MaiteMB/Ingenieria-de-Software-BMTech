@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7C1E4B2A-5D93-4F61-A8B0-3E2D9C6F1A47}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>mb506.Pruebas</RootNamespace>
+    <AssemblyName>mb506.Pruebas</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="PruebasBasicas.cs" />
+    <Compile Include="PruebasExportacion.cs" />
+    <Compile Include="PruebasEntrega3.cs" />
+    <Compile Include="PruebasServicioTecnico.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BEBMTech\BEBMTech.csproj">
+      <Project>{2177E226-BAC3-4CF7-B429-08735ABDF037}</Project>
+      <Name>BEBMTech</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BLLBMTech\BLLBMTech.csproj">
+      <Project>{C457EA75-7D64-47D9-B07F-8F36C7C43804}</Project>
+      <Name>BLLBMTech</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DALBMTech\DALBMTech.csproj">
+      <Project>{BAEE4737-F509-40D6-A453-05066DAED918}</Project>
+      <Name>DALBMTech</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiciosBMTech\ServiciosBMTech.csproj">
+      <Project>{4AAB94AD-30A2-4930-BCE2-2FD3B1ED1316}</Project>
+      <Name>ServiciosBMTech</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BMTech\BMTech.csproj">
+      <Project>{3B4AE596-3D16-43D0-8EF8-46E38E3DDCDA}</Project>
+      <Name>BMTech</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="PDFsharp-GDI" Version="6.2.4" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

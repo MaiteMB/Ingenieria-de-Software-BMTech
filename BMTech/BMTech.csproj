@@ -59,24 +59,87 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrmUsuarios.cs"><SubType>Form</SubType></Compile>
-    <Compile Include="FrmPermisos.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="FrmUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmServicioTecnico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmServicioTecnico.Designer.cs">
+      <DependentUpon>FrmServicioTecnico.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="FrmServicioTecnico.resx">
+      <DependentUpon>FrmServicioTecnico.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="FrmUsuarios.Designer.cs">
+      <DependentUpon>FrmUsuarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmPermisos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPermisos.Designer.cs">
+      <DependentUpon>FrmPermisos.cs</DependentUpon>
+    </Compile>
     <Compile Include="IdiomasFormulario.cs" />
-    <Compile Include="FrmHistorialVentas.cs"><SubType>Form</SubType></Compile>
-    <Compile Include="FrmPago.cs"><SubType>Form</SubType></Compile>
-    <Compile Include="FrmIdiomas.cs"><SubType>Form</SubType></Compile>
-    <Compile Include="FrmBackup.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="AyudaSistema.cs" />
+    <Compile Include="FrmInformes.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="FrmInformes.Designer.cs"><DependentUpon>FrmInformes.cs</DependentUpon></Compile>
+    <EmbeddedResource Include="FrmInformes.resx"><DependentUpon>FrmInformes.cs</DependentUpon></EmbeddedResource>
+    <Content Include="Ayuda.html"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="Ayuda.css"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="Operacion.html"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="Mantenimiento.html"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Compile Include="FrmHistorialVentas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmHistorialVentas.Designer.cs">
+      <DependentUpon>FrmHistorialVentas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmPago.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPago.Designer.cs">
+      <DependentUpon>FrmPago.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmIdiomas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmIdiomas.Designer.cs">
+      <DependentUpon>FrmIdiomas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmBackup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmBackup.Designer.cs">
+      <DependentUpon>FrmBackup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Mensajes.cs" />
     <Compile Include="ExportacionComprobante.cs" />
-    <Compile Include="FrmComprobante.cs"><SubType>Form</SubType></Compile>
-    <Compile Include="FrmCambiarPassword.cs"><SubType>Form</SubType></Compile>
-    <Compile Include="FrmBitacora.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="FrmComprobante.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmComprobante.Designer.cs">
+      <DependentUpon>FrmComprobante.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCambiarPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCambiarPassword.Designer.cs">
+      <DependentUpon>FrmCambiarPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmBitacora.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmBitacora.Designer.cs">
+      <DependentUpon>FrmBitacora.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmControlCambiosProducto.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmControlCambiosProducto.Designer.cs">
       <DependentUpon>FrmControlCambiosProducto.cs</DependentUpon>
-    </Compile>    <Compile Include="FrmCliente.cs">
+    </Compile>
+    <Compile Include="FrmCliente.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmCliente.Designer.cs">
@@ -87,7 +150,8 @@
     </Compile>
     <Compile Include="FrmLogin.Designer.cs">
       <DependentUpon>FrmLogin.cs</DependentUpon>
-    </Compile>    <Compile Include="FrmPrincipal.cs">
+    </Compile>
+    <Compile Include="FrmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmPrincipal.Designer.cs">
@@ -110,6 +174,9 @@
     <EmbeddedResource Include="FrmCliente.resx">
       <DependentUpon>FrmCliente.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmHistorialVentas.resx">
+      <DependentUpon>FrmHistorialVentas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmPrincipal.resx">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </EmbeddedResource>
@@ -118,6 +185,33 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmVenta.resx">
       <DependentUpon>FrmVenta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmUsuarios.resx">
+      <DependentUpon>FrmUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPermisos.resx">
+      <DependentUpon>FrmPermisos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPago.resx">
+      <DependentUpon>FrmPago.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmIdiomas.resx">
+      <DependentUpon>FrmIdiomas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmBackup.resx">
+      <DependentUpon>FrmBackup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmComprobante.resx">
+      <DependentUpon>FrmComprobante.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCambiarPassword.resx">
+      <DependentUpon>FrmCambiarPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmBitacora.resx">
+      <DependentUpon>FrmBitacora.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmLogin.resx">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -161,4 +255,3 @@
     <PackageReference Include="System.Memory" Version="4.6.3" />
   </ItemGroup>
 </Project>
-

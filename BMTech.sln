@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DALBMTech", "DALBMTech\DALB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiciosBMTech", "ServiciosBMTech\ServiciosBMTech.csproj", "{4AAB94AD-30A2-4930-BCE2-2FD3B1ED1316}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pruebas", "Pruebas\Pruebas.csproj", "{7C1E4B2A-5D93-4F61-A8B0-3E2D9C6F1A47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{4AAB94AD-30A2-4930-BCE2-2FD3B1ED1316}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AAB94AD-30A2-4930-BCE2-2FD3B1ED1316}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AAB94AD-30A2-4930-BCE2-2FD3B1ED1316}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C1E4B2A-5D93-4F61-A8B0-3E2D9C6F1A47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C1E4B2A-5D93-4F61-A8B0-3E2D9C6F1A47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C1E4B2A-5D93-4F61-A8B0-3E2D9C6F1A47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C1E4B2A-5D93-4F61-A8B0-3E2D9C6F1A47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
