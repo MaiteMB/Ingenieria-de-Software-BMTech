@@ -1,0 +1,5 @@
+body { font: 16px/1.6 Arial, sans-serif; color: #222; background: white; max-width: 900px; margin: 32px auto; padding: 0 24px; }
+h1 { font-size: 28px; } h2 { font-size: 21px; margin-top: 36px; border-bottom: 1px solid #ccc; }
+a { color: #006f72; } nav { border-bottom: 1px solid #ccc; padding-bottom: 16px; }
+code { font-size: 14px; background: #f3f3f3; padding: 2px 4px; }
+@media print { body { max-width: none; margin: 0; } nav { display: none; } h2 { break-after: avoid; } }
